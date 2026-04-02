@@ -1,0 +1,1948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HNH Flight Hub API — 合作伙伴集成指南 | Partner Integration Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-primary: #0a0e1a;
+  --bg-secondary: #0f1628;
+  --bg-card: #141c2e;
+  --bg-code: #0d1117;
+  --bg-table-alt: #111827;
+  --border: #1e2d4a;
+  --border-bright: #2a3f63;
+  --accent: #00c8ff;
+  --accent-dim: rgba(0,200,255,0.15);
+  --accent-green: #00e5a0;
+  --accent-orange: #ff9500;
+  --accent-red: #ff4757;
+  --text-primary: #e8edf5;
+  --text-secondary: #8ca0bc;
+  --text-muted: #4a6080;
+  --text-code: #7dd3fc;
+  --sidebar-w: 280px;
+  --header-h: 56px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  font-size: 14px;
+}
+
+/* ── HEADER ── */
+.header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  height: var(--header-h);
+  background: rgba(10,14,26,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; padding: 0 24px;
+  gap: 16px;
+}
+.header-logo {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; font-weight: 600; color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+.header-logo .dot { color: var(--accent-green); }
+.header-title {
+  font-size: 13px; color: var(--text-secondary);
+  border-left: 1px solid var(--border-bright);
+  padding-left: 16px; margin-left: 4px;
+}
+.header-badge {
+  margin-left: auto;
+  background: var(--accent-dim);
+  border: 1px solid rgba(0,200,255,0.3);
+  color: var(--accent);
+  font-size: 11px; font-family: 'JetBrains Mono', monospace;
+  padding: 3px 10px; border-radius: 4px;
+}
+.lang-toggle {
+  display: flex; gap: 4px; margin-left: 12px;
+}
+.lang-btn {
+  background: none; border: 1px solid var(--border-bright);
+  color: var(--text-secondary); font-size: 11px;
+  padding: 3px 8px; border-radius: 3px; cursor: pointer;
+  font-family: 'IBM Plex Sans', sans-serif;
+  transition: all 0.2s;
+}
+.lang-btn.active {
+  background: var(--accent-dim); border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── LAYOUT ── */
+.layout {
+  display: flex;
+  padding-top: var(--header-h);
+  min-height: 100vh;
+}
+
+/* ── SIDEBAR ── */
+.sidebar {
+  position: fixed;
+  top: var(--header-h); left: 0; bottom: 0;
+  width: var(--sidebar-w);
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  overflow-y: auto; overflow-x: hidden;
+  padding: 20px 0 40px;
+}
+.sidebar::-webkit-scrollbar { width: 4px; }
+.sidebar::-webkit-scrollbar-track { background: transparent; }
+.sidebar::-webkit-scrollbar-thumb { background: var(--border-bright); border-radius: 2px; }
+
+.nav-section {
+  margin-bottom: 4px;
+}
+.nav-section-title {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--text-muted);
+  padding: 10px 20px 4px;
+}
+.nav-link {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 20px;
+  color: var(--text-secondary); font-size: 13px;
+  text-decoration: none; cursor: pointer;
+  transition: all 0.15s;
+  border-left: 2px solid transparent;
+}
+.nav-link:hover { color: var(--text-primary); background: rgba(255,255,255,0.03); }
+.nav-link.active {
+  color: var(--accent);
+  border-left-color: var(--accent);
+  background: var(--accent-dim);
+}
+.nav-link .method {
+  font-size: 9px; font-family: 'JetBrains Mono', monospace;
+  font-weight: 600; padding: 1px 5px; border-radius: 3px;
+  min-width: 32px; text-align: center;
+}
+.method-post { background: rgba(0,229,160,0.15); color: var(--accent-green); }
+.method-get  { background: rgba(0,200,255,0.15); color: var(--accent); }
+
+.nav-step {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; border-radius: 50%;
+  background: var(--border-bright); color: var(--text-muted);
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  flex-shrink: 0;
+}
+.nav-link.active .nav-step {
+  background: var(--accent); color: var(--bg-primary);
+}
+
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  padding: 40px 48px 80px;
+  max-width: 900px;
+}
+
+/* ── SECTIONS ── */
+.section { margin-bottom: 64px; }
+
+.section-header {
+  display: flex; align-items: flex-start; gap: 16px;
+  margin-bottom: 28px; padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.section-number {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--accent);
+  background: var(--accent-dim);
+  border: 1px solid rgba(0,200,255,0.2);
+  padding: 3px 8px; border-radius: 4px;
+  white-space: nowrap; margin-top: 4px;
+}
+.section-titles h2 {
+  font-size: 22px; font-weight: 600; color: var(--text-primary);
+  line-height: 1.3;
+}
+.section-titles .subtitle {
+  font-size: 13px; color: var(--text-muted); margin-top: 2px;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+h3 {
+  font-size: 15px; font-weight: 600;
+  color: var(--text-primary); margin: 28px 0 12px;
+  display: flex; align-items: center; gap: 10px;
+}
+h3::before {
+  content: ''; display: block;
+  width: 3px; height: 16px;
+  background: var(--accent); border-radius: 2px;
+}
+
+/* ── ENDPOINT BLOCK ── */
+.endpoint {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 32px;
+  overflow: hidden;
+}
+.endpoint-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 20px;
+  background: rgba(255,255,255,0.02);
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+}
+.endpoint-header:hover { background: rgba(255,255,255,0.04); }
+.ep-method {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700;
+  padding: 3px 8px; border-radius: 4px;
+}
+.ep-post { background: rgba(0,229,160,0.2); color: var(--accent-green); }
+.ep-get  { background: rgba(0,200,255,0.2); color: var(--accent); }
+.ep-path {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px; color: var(--text-code);
+}
+.ep-title {
+  margin-left: auto; font-size: 12px; color: var(--text-secondary);
+}
+.ep-title .cn { font-family: 'Noto Sans SC', sans-serif; }
+.ep-toggle {
+  margin-left: 8px; color: var(--text-muted); font-size: 12px;
+  transition: transform 0.2s;
+}
+.ep-toggle.open { transform: rotate(180deg); }
+
+.endpoint-body { padding: 20px; }
+.endpoint-body.collapsed { display: none; }
+
+/* ── FIELD TABLE ── */
+.field-table {
+  width: 100%; border-collapse: collapse;
+  font-size: 12.5px; margin: 12px 0;
+}
+.field-table th {
+  text-align: left; padding: 8px 12px;
+  background: var(--bg-secondary);
+  color: var(--text-muted); font-size: 10px;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--border);
+}
+.field-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid rgba(30,45,74,0.6);
+  vertical-align: top;
+}
+.field-table tr:last-child td { border-bottom: none; }
+.field-table tr:nth-child(even) td { background: rgba(255,255,255,0.015); }
+.field-table tr:hover td { background: rgba(0,200,255,0.03); }
+
+.field-name {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: var(--text-code);
+}
+.field-type {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; color: var(--accent-orange);
+}
+.req-badge {
+  display: inline-block;
+  font-size: 9px; padding: 1px 5px; border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace; font-weight: 600;
+}
+.req-yes { background: rgba(255,71,87,0.15); color: var(--accent-red); }
+.req-no  { background: rgba(74,96,128,0.2); color: var(--text-muted); }
+.desc-en { color: var(--text-secondary); margin-bottom: 3px; }
+.desc-cn { color: var(--text-muted); font-family: 'Noto Sans SC', sans-serif; font-size: 12px; }
+
+/* ── CODE BLOCK ── */
+.code-block {
+  background: var(--bg-code);
+  border: 1px solid var(--border);
+  border-radius: 6px; margin: 12px 0;
+  overflow: hidden;
+}
+.code-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 14px;
+  background: rgba(255,255,255,0.03);
+  border-bottom: 1px solid var(--border);
+}
+.code-lang {
+  font-size: 10px; font-family: 'JetBrains Mono', monospace;
+  color: var(--text-muted); text-transform: uppercase;
+}
+.copy-btn {
+  background: none; border: 1px solid var(--border-bright);
+  color: var(--text-muted); font-size: 10px; cursor: pointer;
+  padding: 2px 8px; border-radius: 3px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  transition: all 0.2s;
+}
+.copy-btn:hover { color: var(--accent); border-color: var(--accent); }
+.code-block pre {
+  padding: 16px; overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; line-height: 1.7;
+  color: var(--text-primary);
+}
+.code-block pre::-webkit-scrollbar { height: 4px; }
+.code-block pre::-webkit-scrollbar-thumb { background: var(--border-bright); }
+
+/* Syntax highlight */
+.kw { color: #c678dd; }
+.str { color: #98c379; }
+.num { color: #d19a66; }
+.key { color: var(--text-code); }
+.cmt { color: #5c6370; font-style: italic; }
+
+/* ── FLOW DIAGRAM ── */
+.flow {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 0; margin: 20px 0; padding: 20px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px;
+}
+.flow-step {
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; min-width: 90px;
+}
+.flow-step .num {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--accent); color: var(--bg-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin-bottom: 6px;
+}
+.flow-step .label { font-size: 11px; color: var(--text-secondary); line-height: 1.4; }
+.flow-step .label .cn { font-family: 'Noto Sans SC', sans-serif; color: var(--text-muted); font-size: 10px; }
+.flow-arrow {
+  color: var(--text-muted); font-size: 18px; padding: 0 8px;
+  padding-bottom: 20px;
+}
+.flow-opt {
+  font-size: 10px; color: var(--text-muted); text-align: center;
+  margin-top: 4px; font-style: italic;
+}
+
+/* ── CALLOUT ── */
+.callout {
+  padding: 14px 16px; border-radius: 6px; margin: 14px 0;
+  display: flex; gap: 10px; font-size: 13px; line-height: 1.5;
+}
+.callout-info { background: rgba(0,200,255,0.08); border-left: 3px solid var(--accent); }
+.callout-warn { background: rgba(255,149,0,0.08); border-left: 3px solid var(--accent-orange); }
+.callout-tip  { background: rgba(0,229,160,0.08); border-left: 3px solid var(--accent-green); }
+.callout-icon { font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+.callout-content .cn { font-family: 'Noto Sans SC', sans-serif; color: var(--text-muted); font-size: 12px; margin-top: 4px; }
+
+/* ── HERO BANNER ── */
+.hero {
+  background: linear-gradient(135deg, #0a0e1a 0%, #0f1e3a 50%, #091428 100%);
+  border: 1px solid var(--border);
+  border-radius: 10px; padding: 36px 40px;
+  margin-bottom: 40px; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(0,200,255,0.08) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.hero h1 {
+  font-size: 28px; font-weight: 600;
+  line-height: 1.3; margin-bottom: 8px;
+}
+.hero h1 span { color: var(--accent); }
+.hero .sub {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 15px; color: var(--text-muted); margin-bottom: 20px;
+}
+.hero-meta {
+  display: flex; gap: 24px; flex-wrap: wrap;
+}
+.hero-meta-item { font-size: 12px; color: var(--text-secondary); }
+.hero-meta-item .label { color: var(--text-muted); font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; display: block; margin-bottom: 2px; }
+.hero-meta-item code {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent); font-size: 12px;
+}
+
+/* ── STATUS CODES ── */
+.status-list { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+.status-item {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 6px; padding: 8px 14px; font-size: 12px;
+}
+.status-item .code {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--accent-orange); font-weight: 600; display: block; margin-bottom: 2px;
+}
+.status-item .name { color: var(--text-secondary); }
+.status-item .cn { color: var(--text-muted); font-size: 11px; font-family: 'Noto Sans SC', sans-serif; }
+
+/* ── RESPONSE STRUCTURE ── */
+.resp-structure {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; padding: 16px 20px; margin: 12px 0;
+}
+
+/* ── TOC PROGRESS ── */
+.progress-bar {
+  position: fixed; top: var(--header-h); left: 0; right: 0;
+  height: 2px; background: var(--border); z-index: 99;
+}
+.progress-fill {
+  height: 100%; background: var(--accent);
+  width: 0%; transition: width 0.1s;
+}
+
+/* ── SEARCH BOX ── */
+.search-box {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+.search-input {
+  width: 100%; background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text-primary); font-size: 12px;
+  padding: 7px 12px; border-radius: 5px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  outline: none; transition: border-color 0.2s;
+}
+.search-input:focus { border-color: var(--accent); }
+.search-input::placeholder { color: var(--text-muted); }
+
+/* ── BILINGUAL ROW ── */
+.bi { display: flex; flex-direction: column; gap: 2px; }
+.bi .en { color: var(--text-secondary); }
+.bi .cn { font-family: 'Noto Sans SC', sans-serif; color: var(--text-muted); font-size: 12px; }
+
+/* ── PAXTYPE TAG ── */
+.pax { display: inline-block; font-family: 'JetBrains Mono', monospace; font-size: 10px; padding: 1px 5px; border-radius: 3px; margin: 1px; }
+.pax-adt { background: rgba(0,200,255,0.1); color: var(--accent); }
+.pax-chd { background: rgba(0,229,160,0.1); color: var(--accent-green); }
+.pax-inf { background: rgba(255,149,0,0.1); color: var(--accent-orange); }
+
+.tag {
+  display: inline-block; font-size: 10px; padding: 1px 6px; border-radius: 3px;
+  font-family: 'JetBrains Mono', monospace; margin: 1px;
+}
+.tag-blue { background: rgba(0,200,255,0.12); color: var(--accent); }
+.tag-green { background: rgba(0,229,160,0.12); color: var(--accent-green); }
+.tag-orange { background: rgba(255,149,0,0.12); color: var(--accent-orange); }
+.tag-red { background: rgba(255,71,87,0.12); color: var(--accent-red); }
+
+.divider {
+  border: none; border-top: 1px solid var(--border);
+  margin: 32px 0;
+}
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 20px; }
+}
+</style>
+</head>
+<body>
+
+<div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-logo">
+    <span>HNH</span><span class="dot">●</span><span>FlightHub</span>
+  </div>
+  <div class="header-title">API Integration Guide &nbsp;|&nbsp; API 集成指南</div>
+  <div class="header-badge">v1.0 · 2026</div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" data-lang="both">EN + 中</button>
+    <button class="lang-btn" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="cn">中文</button>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<nav class="sidebar">
+  <div class="search-box">
+    <input class="search-input" placeholder="Search API... / 搜索..." id="navSearch">
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Getting Started / 入门</div>
+    <a class="nav-link active" data-section="overview"><span class="nav-step">i</span> Overview 概述</a>
+    <a class="nav-link" data-section="auth"><span class="nav-step">🔑</span> Authentication 认证</a>
+    <a class="nav-link" data-section="flow"><span class="nav-step">→</span> Booking Flow 预订流程</a>
+    <a class="nav-link" data-section="response"><span class="nav-step">{ }</span> Response Format 响应格式</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Core Flow / 核心流程</div>
+    <a class="nav-link" data-section="search"><span class="method method-post">POST</span> Search 搜索航班</a>
+    <a class="nav-link" data-section="select"><span class="method method-post">POST</span> Select 确认价格</a>
+    <a class="nav-link" data-section="book"><span class="method method-post">POST</span> Book 创建预订</a>
+    <a class="nav-link" data-section="issue"><span class="method method-post">POST</span> Issue Ticket 出票</a>
+    <a class="nav-link" data-section="retrieve"><span class="method method-post">POST</span> Retrieve 查询预订</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Add-on Services / 附加服务</div>
+    <a class="nav-link" data-section="baggage"><span class="method method-post">POST</span> Baggage 行李</a>
+    <a class="nav-link" data-section="seatmap"><span class="method method-post">POST</span> Seat Map 座位图</a>
+    <a class="nav-link" data-section="ancillary"><span class="method method-post">POST</span> Ancillary 特殊服务</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Post-Sale / 售后管理</div>
+    <a class="nav-link" data-section="cancel"><span class="method method-post">POST</span> Cancel 取消预订</a>
+    <a class="nav-link" data-section="refund"><span class="method method-post">POST</span> Refund 退票</a>
+    <a class="nav-link" data-section="void"><span class="method method-post">POST</span> Void 作废机票</a>
+    <a class="nav-link" data-section="exchange"><span class="method method-post">POST</span> Exchange 改签</a>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-section-title">Reference / 参考</div>
+    <a class="nav-link" data-section="farerule"><span class="method method-post">POST</span> Fare Rule 运价规则</a>
+    <a class="nav-link" data-section="errors"><span class="nav-step">!</span> Error Codes 错误代码</a>
+    <a class="nav-link" data-section="example"><span class="nav-step">⚡</span> Full Example 完整示例</a>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+<!-- HERO -->
+<div class="hero" id="overview">
+  <h1>HNH <span>Flight Hub</span> API</h1>
+  <div class="sub">合作伙伴集成指南 | Partner Integration Guide</div>
+  <p style="color: var(--text-secondary); font-size: 13px; max-width: 560px; margin-bottom: 20px;">
+    本文档为中国OTA合作伙伴提供越南航班API完整集成指南，涵盖认证、搜索、预订、出票及售后全流程。<br>
+    <span style="color:var(--text-muted)">This guide covers the complete integration workflow for Chinese OTA partners — from authentication through search, booking, ticketing, and post-sale operations.</span>
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item">
+      <span class="label">Base URL (DEV)</span>
+      <code>https://flight-api-hub-dev.tripota.com.vn</code>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Format 格式</span>
+      <code>application/json</code>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Auth 认证</span>
+      <code>Bearer JWT</code>
+    </div>
+    <div class="hero-meta-item">
+      <span class="label">Provider 提供方</span>
+      <code>Hong Ngoc Ha Travel (HNH)</code>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: AUTH -->
+<div class="section" id="auth">
+  <div class="section-header">
+    <div class="section-number">01</div>
+    <div class="section-titles">
+      <h2>Authentication — 认证</h2>
+      <div class="subtitle">获取访问令牌 | Obtain Access Token</div>
+    </div>
+  </div>
+
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <div class="callout-content">
+      All API requests require a JWT Bearer token in the <code style="color:var(--accent)">Authorization</code> header.<br>
+      <span class="cn">所有API请求都需要在 Authorization 请求头中携带 JWT Bearer 令牌。请联系HNH获取您的 partnerCode、userName 和 password。</span>
+    </div>
+  </div>
+
+  <!-- Sign In -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/sign-in</span>
+      <span class="ep-title"><span class="cn">登录 / </span>Sign In</span>
+      <span class="ep-toggle open">▼</span>
+    </div>
+    <div class="endpoint-body">
+      <h3>Request Body — 请求体</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Required 必填</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">partnerCode</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Partner code assigned by HNH</span><span class="cn">HNH分配的合作伙伴代码，请联系HNH获取</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">userName</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Username provided by HNH</span><span class="cn">HNH提供的用户名</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">password</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Password provided by HNH</span><span class="cn">HNH提供的密码</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request JSON</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"partnerCode"</span>: <span class="str">"YOUR_PARTNER_CODE"</span>,  <span class="cmt">// 请联系HNH获取 / Contact HNH to obtain</span>
+  <span class="key">"userName"</span>: <span class="str">"your_username"</span>,
+  <span class="key">"password"</span>: <span class="str">"your_password"</span>
+}</pre>
+      </div>
+
+      <h3>Response — 响应</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">accessToken</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><div class="bi"><span class="en">JWT access token — use in all subsequent requests</span><span class="cn">JWT访问令牌，后续所有请求都需要携带此令牌</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">refreshToken</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><div class="bi"><span class="en">Token for refreshing access without re-login</span><span class="cn">用于刷新访问令牌，避免重新登录</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">expiresAt</span></td>
+            <td><span class="field-type">datetime</span></td>
+            <td><div class="bi"><span class="en">Token expiry datetime</span><span class="cn">令牌过期时间</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">expiresIn</span></td>
+            <td><span class="field-type">integer</span></td>
+            <td><div class="bi"><span class="en">Expiry duration in seconds</span><span class="cn">令牌有效期（秒）</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Using the Token — 令牌使用方式</h3>
+      <div class="callout callout-tip">
+        <span class="callout-icon">✅</span>
+        <div class="callout-content">
+          Add the token to the <strong>Authorization</strong> header of every request:<br>
+          <span class="cn">在每个请求的 Authorization 请求头中添加令牌：</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">HTTP Header</span><button class="copy-btn">Copy</button></div>
+        <pre>Authorization: <span class="str">Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</span></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Refresh Token -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/refresh-token</span>
+      <span class="ep-title"><span class="cn">刷新令牌 / </span>Refresh Token</span>
+      <span class="ep-toggle open">▼</span>
+    </div>
+    <div class="endpoint-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request JSON</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"refreshToken"</span>: <span class="str">"your_refresh_token_here"</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Get System List -->
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-get">GET</span>
+      <span class="ep-path">/api/v1/system</span>
+      <span class="ep-title"><span class="cn">获取系统列表 / </span>Get Available Systems</span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-content">
+          Call this endpoint to get the list of booking systems available to your account. The <code style="color:var(--accent)">system</code> code returned here is required in almost every subsequent API call.<br>
+          <span class="cn">调用此接口获取您账户可用的预订系统列表。返回的 system 代码在后续几乎所有接口中都是必填字段。</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Common system codes 常见系统代码</span></div>
+        <pre><span class="cmt">// GDS Systems (全球分销系统)</span>
+<span class="str">"1A"</span>  <span class="cmt">→ Amadeus</span>
+<span class="str">"1S"</span>  <span class="cmt">→ Sabre</span>
+<span class="str">"1G"</span>  <span class="cmt">→ Galileo / Travelport</span>
+
+<span class="cmt">// Direct airline systems (直销系统)</span>
+<span class="str">"VNA"</span> <span class="cmt">→ Vietnam Airlines (越南航空)</span>
+<span class="str">"VJ"</span>  <span class="cmt">→ Vietjet Air (越捷航空)</span>
+<span class="str">"BL"</span>  <span class="cmt">→ Pacific Airlines (太平洋航空)</span></pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: FLOW -->
+<div class="section" id="flow">
+  <div class="section-header">
+    <div class="section-number">02</div>
+    <div class="section-titles">
+      <h2>Booking Flow — 预订流程</h2>
+      <div class="subtitle">询价 → 预订 → 出票 标准流程</div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-step">
+      <div class="num">1</div>
+      <div class="label">Search<br><span class="cn">搜索航班</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="num">2</div>
+      <div class="label">Select<br><span class="cn">确认价格</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="num">3</div>
+      <div class="label">Book<br><span class="cn">创建预订</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="num" style="background:var(--accent-orange)">4</div>
+      <div class="label">Add-ons<span class="flow-opt">optional</span><br><span class="cn">附加服务（可选）</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="num" style="background:var(--accent-green)">5</div>
+      <div class="label">Issue Ticket<br><span class="cn">出票</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="num" style="background:var(--border-bright)">6</div>
+      <div class="label">Retrieve<br><span class="cn">查询确认</span></div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-content">
+      <strong>Key rule:</strong> The <code style="color:var(--accent)">flightValue</code> field from each step is encrypted and must be passed exactly as-is to the next step. Do not modify it.<br>
+      <span class="cn"><strong>重要规则：</strong>每个步骤中的 flightValue 字段是加密字符串，必须原样传入下一步，不可修改。</span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: RESPONSE FORMAT -->
+<div class="section" id="response">
+  <div class="section-header">
+    <div class="section-number">03</div>
+    <div class="section-titles">
+      <h2>Response Format — 通用响应格式</h2>
+      <div class="subtitle">所有接口响应的统一结构</div>
+    </div>
+  </div>
+
+  <p style="color:var(--text-secondary); margin-bottom:16px;">All API responses share a common base structure. Check <code style="color:var(--accent)">status</code> first before processing data. <span style="color:var(--text-muted);font-family:'Noto Sans SC',sans-serif;font-size:13px;">所有接口响应共用相同的基础结构，处理数据前请先检查 status 字段。</span></p>
+
+  <table class="field-table">
+    <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Description 说明</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><span class="field-name">status</span></td>
+        <td><span class="field-type">boolean</span></td>
+        <td><div class="bi"><span class="en"><span class="tag tag-green">true</span> = success &nbsp;<span class="tag tag-red">false</span> = error</span><span class="cn">true = 成功，false = 失败，失败时检查 error 字段</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">error.id</span></td>
+        <td><span class="field-type">string</span></td>
+        <td><div class="bi"><span class="en">Error code when status=false (e.g. "00004")</span><span class="cn">状态为false时的错误代码</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">error.message</span></td>
+        <td><span class="field-type">string</span></td>
+        <td><div class="bi"><span class="en">Error message description</span><span class="cn">错误信息描述</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">description</span></td>
+        <td><span class="field-type">string</span></td>
+        <td><div class="bi"><span class="en">Detailed error description</span><span class="cn">详细错误描述</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">trackingId</span></td>
+        <td><span class="field-type">string</span></td>
+        <td><div class="bi"><span class="en">Unique ID for log tracking — include when reporting issues</span><span class="cn">日志追踪唯一ID，报告问题时请提供此ID</span></div></td>
+      </tr>
+      <tr>
+        <td><span class="field-name">trackingTime</span></td>
+        <td><span class="field-type">datetime</span></td>
+        <td><div class="bi"><span class="en">Timestamp of the request</span><span class="cn">请求时间戳</span></div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION: SEARCH -->
+<div class="section" id="search">
+  <div class="section-header">
+    <div class="section-number">04</div>
+    <div class="section-titles">
+      <h2>Search Flights — 搜索航班</h2>
+      <div class="subtitle">Step 1 第一步 — 询价搜索</div>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/search</span>
+      <span class="ep-title"><span class="cn">搜索可用航班及价格</span></span>
+      <span class="ep-toggle open">▼</span>
+    </div>
+    <div class="endpoint-body">
+      <h3>Request Body — 请求参数</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Required 必填</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">system</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Booking system code (from /api/v1/system)</span><span class="cn">预订系统代码，从 /api/v1/system 接口获取</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">adt</span></td>
+            <td><span class="field-type">integer</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Number of adults (≥1)</span><span class="cn">成人数量（至少1人）</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">chd</span></td>
+            <td><span class="field-type">integer</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Number of children (age 2–11)</span><span class="cn">儿童数量（2-11岁）</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">inf</span></td>
+            <td><span class="field-type">integer</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Number of infants (under 2 years old)</span><span class="cn">婴儿数量（2岁以下）</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flights</span></td>
+            <td><span class="field-type">array</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Array of flight route objects (see below)</span><span class="cn">航班路线对象数组，详见下方字段说明</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flights[].startPoint</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Departure airport IATA code (e.g. "SGN", "HAN", "DAD")</span><span class="cn">出发机场的IATA代码，如 "SGN"=胡志明市, "HAN"=河内, "DAD"=岘港</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flights[].endPoint</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Destination airport IATA code</span><span class="cn">到达机场的IATA代码</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flights[].departDate</span></td>
+            <td><span class="field-type">date</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Departure date in format <code>yyyy-MM-dd</code> (e.g. "2026-05-15")</span><span class="cn">出发日期，格式为 yyyy-MM-dd，例如 "2026-05-15"</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flights[].leg</span></td>
+            <td><span class="field-type">integer</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Leg index: 0 = outbound, 1 = return</span><span class="cn">行程编号：0=去程, 1=返程</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flights[].preferCabin</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi">
+              <span class="en">Preferred cabin class</span>
+              <span class="cn">首选舱位等级：
+                <span class="tag tag-blue">Y</span> Economy经济舱
+                <span class="tag tag-orange">C</span> Business商务舱
+                <span class="tag tag-blue">F</span> First头等舱
+                <span class="tag tag-blue">W</span> Premium Economy超级经济舱
+              </span>
+            </div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">airlines</span></td>
+            <td><span class="field-type">string[]</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Filter by specific airlines (IATA 2-letter codes)</span><span class="cn">按指定航空公司筛选，使用IATA两字母代码，如 ["VN","VJ"]</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">specialType</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi">
+              <span class="en">Special passenger type</span>
+              <span class="cn">特殊旅客类型：
+                <span class="tag tag-blue">STU</span> 留学生
+                <span class="tag tag-blue">YTH</span> 青年学生
+              </span>
+            </div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request Example — SGN→HAN, 1 Adult 示例</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,           <span class="cmt">// Use system code from /api/v1/system / 从系统列表接口获取</span>
+  <span class="key">"adt"</span>: <span class="num">1</span>,               <span class="cmt">// 1 adult / 1名成人</span>
+  <span class="key">"chd"</span>: <span class="num">0</span>,               <span class="cmt">// 0 children / 0名儿童</span>
+  <span class="key">"inf"</span>: <span class="num">0</span>,               <span class="cmt">// 0 infants / 0名婴儿</span>
+  <span class="key">"flights"</span>: [
+    {
+      <span class="key">"leg"</span>: <span class="num">0</span>,             <span class="cmt">// Outbound / 去程</span>
+      <span class="key">"startPoint"</span>: <span class="str">"SGN"</span>, <span class="cmt">// Ho Chi Minh City / 胡志明市</span>
+      <span class="key">"endPoint"</span>: <span class="str">"HAN"</span>,   <span class="cmt">// Hanoi / 河内</span>
+      <span class="key">"departDate"</span>: <span class="str">"2026-05-15"</span>,
+      <span class="key">"preferCabin"</span>: <span class="str">"Y"</span>  <span class="cmt">// Economy / 经济舱</span>
+    }
+  ]
+}</pre>
+      </div>
+
+      <h3>Response Key Fields — 响应关键字段</h3>
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          The response returns an array of <code style="color:var(--accent)">fareDatas[]</code>. Each item contains pricing and flight options. Extract <code style="color:var(--accent)">flightValue</code> from the flight you want to pass to the Select step.<br>
+          <span class="cn">响应返回 fareDatas[] 数组，每项包含价格和航班选项。提取您想要的航班的 flightValue，传入下一步 Select 接口。</span>
+        </div>
+      </div>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field-name">fareDatas[].totalPrice</span></td><td><div class="bi"><span class="en">Total price for all passengers</span><span class="cn">所有旅客的总票价</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].fareAdt / fareChd / fareInf</span></td><td><div class="bi"><span class="en">Base fare per adult / child / infant</span><span class="cn">每位成人/儿童/婴儿的基础票价</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].taxAdt / taxChd / taxInf</span></td><td><div class="bi"><span class="en">Tax per adult / child / infant</span><span class="cn">每位成人/儿童/婴儿的税费</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].currency</span></td><td><div class="bi"><span class="en">Currency code (e.g. VND, USD)</span><span class="cn">货币代码（如 VND越南盾, USD美元）</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].options[].flights[].flightValue</span></td><td><div class="bi"><span class="en">⭐ Encrypted flight token — required for Select step</span><span class="cn">⭐ 加密的航班令牌，Select步骤的必填参数</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].options[].flights[].startDate</span></td><td><div class="bi"><span class="en">Departure datetime</span><span class="cn">出发时间</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].options[].flights[].endDate</span></td><td><div class="bi"><span class="en">Arrival datetime</span><span class="cn">到达时间</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].options[].flights[].segments[]</span></td><td><div class="bi"><span class="en">Array of flight segments (for connecting flights)</span><span class="cn">航班段数组（中转航班包含多段）</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].options[].flights[].segments[].flightNumber</span></td><td><div class="bi"><span class="en">Flight number (e.g. VN123)</span><span class="cn">航班号，如 VN123</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].options[].flights[].noRefund</span></td><td><div class="bi"><span class="en">true = non-refundable ticket</span><span class="cn">true = 不可退票</span></div></td></tr>
+          <tr><td><span class="field-name">fareDatas[].options[].flights[].timeLimit</span></td><td><div class="bi"><span class="en">Offer expiry time — must book before this time</span><span class="cn">报价有效期，必须在此时间前完成预订</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: SELECT -->
+<div class="section" id="select">
+  <div class="section-header">
+    <div class="section-number">05</div>
+    <div class="section-titles">
+      <h2>Select Flight — 确认选定价格</h2>
+      <div class="subtitle">Step 2 第二步 — 选定航班并确认最终价格</div>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/select</span>
+      <span class="ep-title"><span class="cn">确认选定航班价格</span></span>
+      <span class="ep-toggle open">▼</span>
+    </div>
+    <div class="endpoint-body">
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Required 必填</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">system</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Same system code as Search step</span><span class="cn">与搜索步骤相同的系统代码</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flightValues</span></td>
+            <td><span class="field-type">string[]</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Array of flightValue strings from Search response. Pass all legs together.</span><span class="cn">来自搜索响应的 flightValue 数组，所有行程段一起传入</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">validatingCarrier</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Validating carrier for GDS systems (1A/1S/1G)</span><span class="cn">GDS系统的出票航空公司代码（1A/1S/1G时使用）</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request Example 请求示例</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"flightValues"</span>: [
+    <span class="str">"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpX..."</span>  <span class="cmt">// Copied from Search response / 从搜索结果复制</span>
+  ]
+}</pre>
+      </div>
+      <div class="callout callout-tip">
+        <span class="callout-icon">💡</span>
+        <div class="callout-content">
+          The Select response returns the confirmed <code style="color:var(--accent)">totalPrice</code> and updated <code style="color:var(--accent)">fareDatas[]</code>. Use these <code style="color:var(--accent)">flightValues</code> in the Book step.<br>
+          <span class="cn">Select 响应返回已确认的 totalPrice 和更新后的 fareDatas[]，将其中的 flightValues 传入 Book 步骤。</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: BOOK -->
+<div class="section" id="book">
+  <div class="section-header">
+    <div class="section-number">06</div>
+    <div class="section-titles">
+      <h2>Create Booking — 创建预订</h2>
+      <div class="subtitle">Step 3 第三步 — 提交旅客信息完成预订</div>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/book</span>
+      <span class="ep-title"><span class="cn">创建新的机票预订</span></span>
+      <span class="ep-toggle open">▼</span>
+    </div>
+    <div class="endpoint-body">
+      <h3>Top-level Fields — 顶层字段</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Required 必填</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">system</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Booking system code</span><span class="cn">预订系统代码</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">flightValues</span></td>
+            <td><span class="field-type">string[]</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">flightValue array from Select response</span><span class="cn">来自 Select 响应的 flightValue 数组</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">passengers</span></td>
+            <td><span class="field-type">array</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Array of passenger objects (see below)</span><span class="cn">旅客对象数组，详见下方</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">contact</span></td>
+            <td><span class="field-type">object</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Booking contact information (agent/OTA info)</span><span class="cn">预订联系人信息（代理商/OTA的信息）</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">autoIssue</span></td>
+            <td><span class="field-type">boolean</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">true = auto-issue ticket immediately after booking</span><span class="cn">true = 预订后立即自动出票，false = 仅创建预订（需手动调用 Issue Ticket 接口）</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">tourCode</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Promo/tour code for Vietnam Airlines only</span><span class="cn">越南航空专用促销代码（仅VNA）</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Passenger Object — 旅客对象字段</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Required 必填</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr>
+            <td><span class="field-name">index</span></td>
+            <td><span class="field-type">integer</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Sequential index starting from 1</span><span class="cn">旅客序号，从1开始</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">surname</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">Last name (family name) in CAPITAL LETTERS</span><span class="cn">姓氏，必须全部大写，如 "NGUYEN"</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">givenName</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi"><span class="en">First name + middle name in CAPITAL LETTERS</span><span class="cn">名字+中间名，必须全部大写，如 "VAN AN"</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">type</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-yes">YES</span></td>
+            <td><div class="bi">
+              <span class="en">Passenger type</span>
+              <span class="cn">旅客类型：<span class="pax pax-adt">ADT</span> 成人(≥12岁) <span class="pax pax-chd">CHD</span> 儿童(2-11岁) <span class="pax pax-inf">INF</span> 婴儿(&lt;2岁)</span>
+            </div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">title</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi">
+              <span class="en">Title / salutation</span>
+              <span class="cn">称谓：<span class="tag tag-blue">MR</span>先生 <span class="tag tag-blue">MRS</span>已婚女士 <span class="tag tag-blue">MS</span>女士 <span class="tag tag-blue">MSTR</span>小男孩</span>
+            </div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">gender</span></td>
+            <td><span class="field-type">boolean</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">true = Male, false = Female</span><span class="cn">性别：true=男，false=女</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">dateOfBirth</span></td>
+            <td><span class="field-type">date</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Date of birth in format yyyy-MM-dd. Required for CHD and INF.</span><span class="cn">出生日期，格式 yyyy-MM-dd，儿童和婴儿必填</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">parentId</span></td>
+            <td><span class="field-type">integer</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Index of accompanying adult (required for INF type)</span><span class="cn">同行成人的序号，婴儿类型必填</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">document.type</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Document type: <span class="tag tag-blue">P</span> Passport &nbsp;<span class="tag tag-blue">I</span> ID Card</span><span class="cn">证件类型：P=护照，I=身份证/居民身份证</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">document.number</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Passport number (6–15 chars) or ID card number (12 chars)</span><span class="cn">护照号码（6-15位）或身份证号码（12位）</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">document.expiryDate</span></td>
+            <td><span class="field-type">date</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Passport expiry date (yyyy-MM-dd). Required for international flights.</span><span class="cn">护照有效期（yyyy-MM-dd），国际航班必填</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">document.national</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Nationality (3-letter ISO code, e.g. "CHN", "VNM")</span><span class="cn">国籍（ISO 3字母代码，如 "CHN"=中国, "VNM"=越南）</span></div></td>
+          </tr>
+          <tr>
+            <td><span class="field-name">document.issueCountry</span></td>
+            <td><span class="field-type">string</span></td>
+            <td><span class="req-badge req-no">NO</span></td>
+            <td><div class="bi"><span class="en">Passport issuing country (3-letter ISO code)</span><span class="cn">护照签发国（ISO 3字母代码）</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Contact Object — 联系人字段</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Required 必填</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field-name">name</span></td><td><span class="req-badge req-yes">YES</span></td><td><div class="bi"><span class="en">Contact full name</span><span class="cn">联系人姓名</span></div></td></tr>
+          <tr><td><span class="field-name">phone</span></td><td><span class="req-badge req-yes">YES</span></td><td><div class="bi"><span class="en">Contact phone number</span><span class="cn">联系人电话</span></div></td></tr>
+          <tr><td><span class="field-name">email</span></td><td><span class="req-badge req-yes">YES</span></td><td><div class="bi"><span class="en">Contact email address</span><span class="cn">联系人邮箱</span></div></td></tr>
+          <tr><td><span class="field-name">receiveEmail</span></td><td><span class="req-badge req-no">NO</span></td><td><div class="bi"><span class="en">true = send booking confirmation email</span><span class="cn">true = 发送预订确认邮件</span></div></td></tr>
+        </tbody>
+      </table>
+
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Full Request Example 完整请求示例</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"flightValues"</span>: [<span class="str">"eyJhbGciOiJSUzI1..."</span>], <span class="cmt">// From Select response</span>
+  <span class="key">"autoIssue"</span>: <span class="kw">false</span>,           <span class="cmt">// false = hold booking, issue separately</span>
+  <span class="key">"contact"</span>: {
+    <span class="key">"name"</span>: <span class="str">"MARTIN XU"</span>,
+    <span class="key">"phone"</span>: <span class="str">"+8613800138000"</span>,
+    <span class="key">"email"</span>: <span class="str">"martin@example.com"</span>,
+    <span class="key">"receiveEmail"</span>: <span class="kw">true</span>
+  },
+  <span class="key">"passengers"</span>: [
+    {
+      <span class="key">"index"</span>: <span class="num">1</span>,
+      <span class="key">"surname"</span>: <span class="str">"NGUYEN"</span>,       <span class="cmt">// CAPITAL LETTERS / 全大写</span>
+      <span class="key">"givenName"</span>: <span class="str">"VAN AN"</span>,    <span class="cmt">// CAPITAL LETTERS / 全大写</span>
+      <span class="key">"type"</span>: <span class="str">"ADT"</span>,           <span class="cmt">// ADT / CHD / INF</span>
+      <span class="key">"title"</span>: <span class="str">"MR"</span>,           <span class="cmt">// MR / MRS / MS / MSTR</span>
+      <span class="key">"gender"</span>: <span class="kw">true</span>,           <span class="cmt">// true=Male / 男, false=Female / 女</span>
+      <span class="key">"dateOfBirth"</span>: <span class="str">"1990-05-15"</span>,
+      <span class="key">"document"</span>: {
+        <span class="key">"type"</span>: <span class="str">"P"</span>,             <span class="cmt">// P=Passport 护照</span>
+        <span class="key">"number"</span>: <span class="str">"B12345678"</span>,
+        <span class="key">"national"</span>: <span class="str">"VNM"</span>,      <span class="cmt">// VNM=Vietnam 越南</span>
+        <span class="key">"issueCountry"</span>: <span class="str">"VNM"</span>,
+        <span class="key">"expiryDate"</span>: <span class="str">"2030-12-31"</span>
+      }
+    }
+  ]
+}</pre>
+      </div>
+
+      <h3>Response — 响应关键字段</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field-name">bookingCode</span></td><td><div class="bi"><span class="en">⭐ Booking reference (PNR) — save this for all subsequent operations</span><span class="cn">⭐ 预订代码（PNR），保存此代码用于后续所有操作</span></div></td></tr>
+          <tr><td><span class="field-name">totalAmount</span></td><td><div class="bi"><span class="en">Total amount including fare + tax + service fee</span><span class="cn">总金额（含票价+税费+服务费）</span></div></td></tr>
+          <tr><td><span class="field-name">expirationDate</span></td><td><div class="bi"><span class="en">Booking hold expiry — must issue ticket before this time</span><span class="cn">预订保留截止时间，必须在此时间前出票</span></div></td></tr>
+          <tr><td><span class="field-name">timePurchase</span></td><td><div class="bi"><span class="en">Price hold expiry — fare guarantee deadline</span><span class="cn">价格保留截止时间</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: ISSUE TICKET -->
+<div class="section" id="issue">
+  <div class="section-header">
+    <div class="section-number">07</div>
+    <div class="section-titles">
+      <h2>Issue Ticket — 出票</h2>
+      <div class="subtitle">Step 4 第四步 — 正式出票（不可逆操作）</div>
+    </div>
+  </div>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">⚠️</span>
+    <div class="callout-content">
+      <strong>Irreversible action!</strong> Once issued, the ticket cannot be cancelled without penalty fees. Ensure payment is confirmed before calling this endpoint.<br>
+      <span class="cn"><strong>不可逆操作！</strong>出票后如需取消将产生手续费。请确认付款完成后再调用此接口。</span>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/issueticket</span>
+      <span class="ep-title"><span class="cn">正式出票</span></span>
+      <span class="ep-toggle open">▼</span>
+    </div>
+    <div class="endpoint-body">
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Type 类型</th><th>Required 必填</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field-name">system</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">YES</span></td><td><div class="bi"><span class="en">Booking system code</span><span class="cn">预订系统代码</span></div></td></tr>
+          <tr><td><span class="field-name">bookingCode</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">YES</span></td><td><div class="bi"><span class="en">Booking reference from Book step</span><span class="cn">来自预订步骤的预订代码</span></div></td></tr>
+          <tr><td><span class="field-name">comAmount</span></td><td><span class="field-type">number</span></td><td><span class="req-badge req-no">NO</span></td><td><div class="bi"><span class="en">Commission amount value</span><span class="cn">佣金金额</span></div></td></tr>
+          <tr><td><span class="field-name">comPercentage</span></td><td><span class="field-type">boolean</span></td><td><span class="req-badge req-no">NO</span></td><td><div class="bi"><span class="en">true = comAmount is percentage; false = fixed amount</span><span class="cn">true=按百分比计算佣金；false=按固定金额</span></div></td></tr>
+          <tr><td><span class="field-name">bookerCode</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-no">NO</span></td><td><div class="bi"><span class="en">Agent/booker code</span><span class="cn">代理商/订票员代码</span></div></td></tr>
+        </tbody>
+      </table>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request Example 请求示例</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>  <span class="cmt">// From Book response / 来自预订响应</span>
+}</pre>
+      </div>
+      <h3>Response — 响应</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field-name">tickets[].ticketNumber</span></td><td><div class="bi"><span class="en">Ticket number for each passenger</span><span class="cn">每位旅客的机票号码</span></div></td></tr>
+          <tr><td><span class="field-name">tickets[].ticketStatus</span></td><td><div class="bi"><span class="en">
+            <span class="tag tag-green">OPEN</span> Confirmed &nbsp;
+            <span class="tag tag-red">VOID</span> Voided &nbsp;
+            <span class="tag tag-blue">USED</span> Used &nbsp;
+            <span class="tag tag-orange">RFND</span> Refunded &nbsp;
+            <span class="tag tag-orange">EXCH</span> Exchanged</span>
+            <span class="cn">机票状态：OPEN=已确认 VOID=已作废 USED=已使用 RFND=已退票 EXCH=已改签</span></div></td></tr>
+          <tr><td><span class="field-name">tickets[].passengerType</span></td><td><div class="bi"><span class="en">Passenger type for this ticket</span><span class="cn">该机票对应的旅客类型</span></div></td></tr>
+          <tr><td><span class="field-name">tickets[].totalFare</span></td><td><div class="bi"><span class="en">Total fare for this ticket</span><span class="cn">该机票的总票价</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: RETRIEVE -->
+<div class="section" id="retrieve">
+  <div class="section-header">
+    <div class="section-number">08</div>
+    <div class="section-titles">
+      <h2>Retrieve Booking — 查询预订</h2>
+      <div class="subtitle">Step 5 第五步 — 查询预订详细信息</div>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/retrieve</span>
+      <span class="ep-title"><span class="cn">获取预订完整信息</span></span>
+      <span class="ep-toggle open">▼</span>
+    </div>
+    <div class="endpoint-body">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request Example 请求示例</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>,
+  <span class="key">"showFaceBooking"</span>: <span class="kw">false</span>  <span class="cmt">// true = include raw ticket face / 是否返回原始票面</span>
+}</pre>
+      </div>
+      <h3>Response Key Fields — 响应关键字段</h3>
+      <table class="field-table">
+        <thead><tr><th>Field 字段</th><th>Description 说明</th></tr></thead>
+        <tbody>
+          <tr><td><span class="field-name">bookingStatus</span></td><td><div class="bi">
+            <span class="en"><span class="tag tag-green">OK</span> Booked <span class="tag tag-blue">TICKETED</span> Issued <span class="tag tag-red">CANCELED</span> Cancelled <span class="tag tag-orange">PENDINGISSUE</span> Awaiting issue</span>
+            <span class="cn">预订状态：OK=已预订 TICKETED=已出票 CANCELED=已取消 PENDINGISSUE=待出票</span>
+          </div></td></tr>
+          <tr><td><span class="field-name">expirationDate</span></td><td><div class="bi"><span class="en">Booking hold deadline (format: ddMMyyyy HHmm)</span><span class="cn">预订保留截止时间，格式：ddMMyyyy HHmm</span></div></td></tr>
+          <tr><td><span class="field-name">flights[].startDate / endDate</span></td><td><div class="bi"><span class="en">Departure and arrival datetime</span><span class="cn">出发和到达时间</span></div></td></tr>
+          <tr><td><span class="field-name">passengers[].baggages[]</span></td><td><div class="bi"><span class="en">Pre-booked baggage info for each passenger</span><span class="cn">每位旅客已预订的行李信息</span></div></td></tr>
+          <tr><td><span class="field-name">passengers[].seatMaps[]</span></td><td><div class="bi"><span class="en">Pre-selected seat info for each passenger</span><span class="cn">每位旅客已预选的座位信息</span></div></td></tr>
+          <tr><td><span class="field-name">tickets[].ticketNumber</span></td><td><div class="bi"><span class="en">Issued ticket numbers (if ticketed)</span><span class="cn">已出票号码（已出票时）</span></div></td></tr>
+          <tr><td><span class="field-name">passengers[].passengerId</span></td><td><div class="bi"><span class="en">⭐ Passenger ID — required for baggage/seat/ancillary add-on calls</span><span class="cn">⭐ 旅客ID，后续添加行李/座位/附加服务时必须使用此ID</span></div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: BAGGAGE -->
+<div class="section" id="baggage">
+  <div class="section-header">
+    <div class="section-number">09</div>
+    <div class="section-titles">
+      <h2>Baggage — 行李</h2>
+      <div class="subtitle">查询并添加额外行李额度</div>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/getbaggages</span>
+      <span class="ep-title"><span class="cn">获取可购行李列表</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"flightValue"</span>: <span class="str">"eyJ..."</span>,  <span class="cmt">// From search result / 从搜索结果获取</span>
+  <span class="key">"airline"</span>: <span class="str">"VN"</span>          <span class="cmt">// IATA airline code / 航空公司IATA代码</span>
+}</pre>
+      </div>
+      <p style="color:var(--text-secondary); font-size:13px;">Response returns <code style="color:var(--accent)">baggages[]</code> array. Each item has a <code style="color:var(--accent)">prices[].value</code> field (encoded) — pass this as <code style="color:var(--accent)">baggageValue</code> when adding baggage.<br>
+      <span style="color:var(--text-muted); font-family:'Noto Sans SC',sans-serif; font-size:12px;">响应返回 baggages[] 数组，每项包含 prices[].value（编码字符串），添加行李时将此值作为 baggageValue 传入。</span></p>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/addbaggage</span>
+      <span class="ep-title"><span class="cn">添加行李到预订</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>,
+  <span class="key">"baggages"</span>: [
+    {
+      <span class="key">"quantity"</span>: <span class="num">1</span>,
+      <span class="key">"baggageValue"</span>: <span class="str">"eyJ..."</span>  <span class="cmt">// prices[].value from getbaggages / 从行李列表获取</span>
+    }
+  ]
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: SEATMAP -->
+<div class="section" id="seatmap">
+  <div class="section-header">
+    <div class="section-number">10</div>
+    <div class="section-titles">
+      <h2>Seat Map — 座位图</h2>
+      <div class="subtitle">查看并选择座位</div>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/getseatmap</span>
+      <span class="ep-title"><span class="cn">获取航班座位图</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"flightValue"</span>: <span class="str">"eyJ..."</span>  <span class="cmt">// Flight value from search / 搜索结果中的航班值</span>
+}</pre>
+      </div>
+      <p style="color:var(--text-secondary); font-size:13px; margin-top:12px;">Response returns <code style="color:var(--accent)">flightSeats[].cabins[].rows[].seats[]</code>. Each seat has <code style="color:var(--accent)">available</code>, <code style="color:var(--accent)">prices[].value</code> (use as seatValue when booking), and <code style="color:var(--accent)">description[]</code> for seat characteristics.<br>
+      <span style="color:var(--text-muted); font-family:'Noto Sans SC',sans-serif; font-size:12px;">响应返回座位数据，每个座位包含 available（是否可选）、prices[].value（预订座位时用作seatValue）、description[]（座位特性描述）。</span></p>
+    </div>
+  </div>
+
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/addseatmap</span>
+      <span class="ep-title"><span class="cn">为旅客选择座位</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>,
+  <span class="key">"seatMaps"</span>: [
+    {
+      <span class="key">"passengerId"</span>: <span class="str">"pax_id_from_retrieve"</span>, <span class="cmt">// From Retrieve response / 从查询预订获取</span>
+      <span class="key">"seatValue"</span>: <span class="str">"eyJ..."</span>              <span class="cmt">// prices[].value from getseatmap / 从座位图获取</span>
+    }
+  ]
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: ANCILLARY -->
+<div class="section" id="ancillary">
+  <div class="section-header">
+    <div class="section-number">11</div>
+    <div class="section-titles">
+      <h2>Ancillary Services — 特殊服务</h2>
+      <div class="subtitle">餐食、轮椅、婴儿车等附加服务</div>
+    </div>
+  </div>
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/getancillaries</span>
+      <span class="ep-title"><span class="cn">获取可购附加服务列表</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <p style="color:var(--text-secondary); font-size:13px; padding: 4px 0 12px;">Same request structure as <code style="color:var(--accent)">getbaggages</code>. Response returns <code style="color:var(--accent)">ancillaries[]</code> array with service type, name, route, and prices. Service types include: <span class="tag tag-blue">MEAL</span> Meals 餐食 &nbsp;<span class="tag tag-blue">WCHR</span> Wheelchair 轮椅 &nbsp;<span class="tag tag-blue">OTHER</span> Other 其他<br>
+      <span style="color:var(--text-muted); font-family:'Noto Sans SC',sans-serif; font-size:12px;">请求结构与 getbaggages 相同。响应返回 ancillaries[] 数组，包含服务类型、名称、适用航段和价格。</span></p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- SECTION: CANCEL -->
+<div class="section" id="cancel">
+  <div class="section-header">
+    <div class="section-number">12</div>
+    <div class="section-titles">
+      <h2>Cancel Booking — 取消预订</h2>
+      <div class="subtitle">取消尚未出票的预订（PNR）</div>
+    </div>
+  </div>
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/cancelbooking</span>
+      <span class="ep-title"><span class="cn">取消预订</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-content">Only for bookings that have NOT been ticketed yet. For ticketed bookings, use Refund or Void instead.<br><span class="cn">仅适用于尚未出票的预订。已出票的预订请使用退票或作废接口。</span></div>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: REFUND -->
+<div class="section" id="refund">
+  <div class="section-header">
+    <div class="section-number">13</div>
+    <div class="section-titles">
+      <h2>Refund Ticket — 退票</h2>
+      <div class="subtitle">已出票机票的退款流程（两步确认）</div>
+    </div>
+  </div>
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/refundticket</span>
+      <span class="ep-title"><span class="cn">退票（两步流程）</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="callout callout-info">
+        <span class="callout-icon">ℹ️</span>
+        <div class="callout-content">
+          <strong>2-step process:</strong> First call with <code style="color:var(--accent)">confirm: false</code> to preview refund amount, then call again with <code style="color:var(--accent)">confirm: true</code> to execute.<br>
+          <span class="cn"><strong>两步流程：</strong>第一次调用时 confirm=false 预览退款金额，确认无误后再以 confirm=true 调用执行退票。</span>
+        </div>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Step 1: Preview 预览退款金额</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>,
+  <span class="key">"ticketNumber"</span>: <span class="str">"738-1234567890"</span>,
+  <span class="key">"confirm"</span>: <span class="kw">false</span>,   <span class="cmt">// Dry run — preview only / 仅预览，不执行退票</span>
+  <span class="key">"refundAll"</span>: <span class="kw">false</span>,
+  <span class="key">"isEMD"</span>: <span class="kw">false</span>      <span class="cmt">// false=flight ticket; true=EMD / false=机票；true=EMD</span>
+}</pre>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Step 2: Confirm Refund 确认退票</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>,
+  <span class="key">"refundValue"</span>: <span class="str">"eyJ..."</span>, <span class="cmt">// From Step 1 response / 来自第一步响应</span>
+  <span class="key">"confirm"</span>: <span class="kw">true</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: VOID -->
+<div class="section" id="void">
+  <div class="section-header">
+    <div class="section-number">14</div>
+    <div class="section-titles">
+      <h2>Void Ticket — 作废机票</h2>
+      <div class="subtitle">出票当日可作废机票（无手续费）</div>
+    </div>
+  </div>
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/voidticket</span>
+      <span class="ep-title"><span class="cn">作废机票</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="callout callout-warn">
+        <span class="callout-icon">⚠️</span>
+        <div class="callout-content">Void is only possible on the same day the ticket was issued. After midnight, use Refund instead.<br><span class="cn">作废仅在出票当日有效。过了午夜需改用退票接口。</span></div>
+      </div>
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>,
+  <span class="key">"ticketNumbers"</span>: [<span class="str">"738-1234567890"</span>],
+  <span class="key">"isVoidAllTicket"</span>: <span class="kw">false</span>,    <span class="cmt">// true = void all tickets / true=作废所有机票</span>
+  <span class="key">"isCancelBooking"</span>: <span class="kw">true</span>     <span class="cmt">// true = also cancel PNR / true=同时取消PNR</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: EXCHANGE -->
+<div class="section" id="exchange">
+  <div class="section-header">
+    <div class="section-number">15</div>
+    <div class="section-titles">
+      <h2>Exchange Ticket — 改签</h2>
+      <div class="subtitle">更改已出票机票的航班（三步流程）</div>
+    </div>
+  </div>
+  <div class="callout callout-info">
+    <span class="callout-icon">ℹ️</span>
+    <div class="callout-content">
+      <strong>3-step process:</strong> Search new flights → Reprice (check fees) → Confirm exchange<br>
+      <span class="cn"><strong>三步流程：</strong>搜索新航班 → 重新定价（查看改签费用）→ 确认改签</span>
+    </div>
+  </div>
+  <div class="flow" style="margin: 16px 0 24px;">
+    <div class="flow-step"><div class="num">1</div><div class="label">exchange-search<br><span class="cn">搜索新航班</span></div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num">2</div><div class="label">exchange-reprice<br><span class="cn">查看改签费用</span></div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step"><div class="num" style="background:var(--accent-green)">3</div><div class="label">exchange-confirm<br><span class="cn">确认改签</span></div></div>
+  </div>
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/exchange-search</span>
+      <span class="ep-title"><span class="cn">Step 1: 搜索可改签航班</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span>,
+  <span class="key">"flightValueCancels"</span>: [<span class="str">"eyJ..."</span>],  <span class="cmt">// Current flight to cancel / 要取消的当前航班</span>
+  <span class="key">"newFlights"</span>: [
+    {
+      <span class="key">"startPoint"</span>: <span class="str">"SGN"</span>,
+      <span class="key">"endPoint"</span>: <span class="str">"HAN"</span>,
+      <span class="key">"departDate"</span>: <span class="str">"2026-05-20"</span>    <span class="cmt">// New date / 新日期</span>
+    }
+  ]
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: FARE RULE -->
+<div class="section" id="farerule">
+  <div class="section-header">
+    <div class="section-number">16</div>
+    <div class="section-titles">
+      <h2>Fare Rule — 运价规则</h2>
+      <div class="subtitle">查询机票退改签条件</div>
+    </div>
+  </div>
+  <div class="endpoint">
+    <div class="endpoint-header">
+      <span class="ep-method ep-post">POST</span>
+      <span class="ep-path">/api/v1/flight/farerule</span>
+      <span class="ep-title"><span class="cn">获取运价规则（退改签条件）</span></span>
+      <span class="ep-toggle">▼</span>
+    </div>
+    <div class="endpoint-body collapsed">
+      <div class="code-block">
+        <div class="code-header"><span class="code-lang">Request 请求</span><button class="copy-btn">Copy</button></div>
+        <pre>{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"flightValues"</span>: [<span class="str">"eyJ..."</span>],
+  <span class="key">"isMiniRule"</span>: <span class="kw">true</span>  <span class="cmt">// true = summary only / true=仅摘要信息</span>
+}</pre>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: ERRORS -->
+<div class="section" id="errors">
+  <div class="section-header">
+    <div class="section-number">17</div>
+    <div class="section-titles">
+      <h2>Error Codes — 错误代码</h2>
+      <div class="subtitle">常见错误及处理方式</div>
+    </div>
+  </div>
+  <div class="status-list">
+    <div class="status-item">
+      <span class="code">00004</span>
+      <span class="name">Endpoint not found</span>
+      <span class="cn">接口地址不存在</span>
+    </div>
+    <div class="status-item">
+      <span class="code">status: false</span>
+      <span class="name">Operation failed</span>
+      <span class="cn">操作失败，检查 error.message</span>
+    </div>
+    <div class="status-item">
+      <span class="code">401</span>
+      <span class="name">Unauthorized</span>
+      <span class="cn">未授权，令牌无效或已过期</span>
+    </div>
+    <div class="status-item">
+      <span class="code">Token Expired</span>
+      <span class="name">Token expired</span>
+      <span class="cn">令牌已过期，调用 refresh-token 刷新</span>
+    </div>
+  </div>
+  <div class="callout callout-tip">
+    <span class="callout-icon">💡</span>
+    <div class="callout-content">
+      When reporting issues to HNH support, always include the <code style="color:var(--accent)">trackingId</code> from the response.<br>
+      <span class="cn">向HNH技术支持反馈问题时，请务必提供响应中的 trackingId 字段。</span>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION: FULL EXAMPLE -->
+<div class="section" id="example">
+  <div class="section-header">
+    <div class="section-number">18</div>
+    <div class="section-titles">
+      <h2>Full Integration Example — 完整集成示例</h2>
+      <div class="subtitle">SGN→HAN 一次完整预订出票流程</div>
+    </div>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">Step 1: Sign In 登录获取令牌</span><button class="copy-btn">Copy</button></div>
+    <pre><span class="cmt">// POST /api/v1/sign-in</span>
+{
+  <span class="key">"partnerCode"</span>: <span class="str">"YOUR_PARTNER_CODE"</span>,
+  <span class="key">"userName"</span>: <span class="str">"your_username"</span>,
+  <span class="key">"password"</span>: <span class="str">"your_password"</span>
+}
+<span class="cmt">// → save accessToken from response / 保存响应中的 accessToken</span></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">Step 2: Search Flights 搜索航班</span><button class="copy-btn">Copy</button></div>
+    <pre><span class="cmt">// POST /api/v1/flight/search</span>
+<span class="cmt">// Header: Authorization: Bearer {accessToken}</span>
+{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"adt"</span>: <span class="num">1</span>, <span class="key">"chd"</span>: <span class="num">0</span>, <span class="key">"inf"</span>: <span class="num">0</span>,
+  <span class="key">"flights"</span>: [{ <span class="key">"leg"</span>: <span class="num">0</span>, <span class="key">"startPoint"</span>: <span class="str">"SGN"</span>, <span class="key">"endPoint"</span>: <span class="str">"HAN"</span>, <span class="key">"departDate"</span>: <span class="str">"2026-05-15"</span> }]
+}
+<span class="cmt">// → save fareDatas[x].options[y].flights[z].flightValue / 保存 flightValue</span></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">Step 3: Select & Confirm Price 确认价格</span><button class="copy-btn">Copy</button></div>
+    <pre><span class="cmt">// POST /api/v1/flight/select</span>
+{ <span class="key">"system"</span>: <span class="str">"VNA"</span>, <span class="key">"flightValues"</span>: [<span class="str">"&lt;flightValue from search&gt;"</span>] }
+<span class="cmt">// → save updated flightValues from response / 保存响应中的 flightValues</span></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">Step 4: Book 创建预订</span><button class="copy-btn">Copy</button></div>
+    <pre><span class="cmt">// POST /api/v1/flight/book</span>
+{
+  <span class="key">"system"</span>: <span class="str">"VNA"</span>,
+  <span class="key">"flightValues"</span>: [<span class="str">"&lt;flightValue from select&gt;"</span>],
+  <span class="key">"autoIssue"</span>: <span class="kw">false</span>,
+  <span class="key">"contact"</span>: { <span class="key">"name"</span>: <span class="str">"AGENT NAME"</span>, <span class="key">"phone"</span>: <span class="str">"+84xxxxxxxxx"</span>, <span class="key">"email"</span>: <span class="str">"agent@ota.com"</span> },
+  <span class="key">"passengers"</span>: [{
+    <span class="key">"index"</span>: <span class="num">1</span>, <span class="key">"surname"</span>: <span class="str">"NGUYEN"</span>, <span class="key">"givenName"</span>: <span class="str">"VAN AN"</span>,
+    <span class="key">"type"</span>: <span class="str">"ADT"</span>, <span class="key">"title"</span>: <span class="str">"MR"</span>, <span class="key">"gender"</span>: <span class="kw">true</span>
+  }]
+}
+<span class="cmt">// → save bookingCode (e.g. "ABCDEF") / 保存 bookingCode</span></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">Step 5: Issue Ticket 出票</span><button class="copy-btn">Copy</button></div>
+    <pre><span class="cmt">// POST /api/v1/flight/issueticket</span>
+{ <span class="key">"system"</span>: <span class="str">"VNA"</span>, <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span> }
+<span class="cmt">// → tickets[].ticketNumber contains the issued ticket / 响应包含机票号码</span></pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-lang">Step 6: Verify — Retrieve Booking 核实预订</span><button class="copy-btn">Copy</button></div>
+    <pre><span class="cmt">// POST /api/v1/flight/retrieve</span>
+{ <span class="key">"system"</span>: <span class="str">"VNA"</span>, <span class="key">"bookingCode"</span>: <span class="str">"ABCDEF"</span> }
+<span class="cmt">// → bookingStatus should be "TICKETED" / bookingStatus 应为 "TICKETED"</span></pre>
+  </div>
+
+  <div class="callout callout-tip" style="margin-top: 24px;">
+    <span class="callout-icon">📧</span>
+    <div class="callout-content">
+      <strong>Technical Support / 技术支持:</strong> When contacting HNH for integration support, please provide your <code style="color:var(--accent)">partnerCode</code>, the <code style="color:var(--accent)">trackingId</code> of failed requests, and sample request/response JSON.<br>
+      <span class="cn">联系HNH技术支持时，请提供您的 partnerCode、失败请求的 trackingId，以及请求/响应的JSON样本。</span>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px; padding: 20px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; text-align: center;">
+    <div style="font-size: 12px; color: var(--text-muted); font-family: 'Noto Sans SC', sans-serif;">
+      Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; TripOTA Flight Hub API &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026<br>
+      Base URL: <code style="color:var(--accent); font-family:'JetBrains Mono',monospace;">https://flight-api-hub-dev.tripota.com.vn</code>
+    </div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ── Toggle endpoint expand/collapse ──
+function toggleEndpoint(header) {
+  var body = header.nextElementSibling;
+  var toggle = header.querySelector('.ep-toggle');
+  if (body.classList.contains('collapsed')) {
+    body.classList.remove('collapsed');
+    toggle.classList.add('open');
+  } else {
+    body.classList.add('collapsed');
+    toggle.classList.remove('open');
+  }
+}
+
+// ── Scroll to section (renamed to avoid conflict with window.scrollTo) ──
+function navScrollTo(id, clickedEl) {
+  var el = document.getElementById(id);
+  if (el) {
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active'); });
+  if (clickedEl) clickedEl.classList.add('active');
+}
+
+// ── Copy code (fallback for sandboxed clipboard) ──
+function copyCode(btn) {
+  var pre = btn.closest('.code-block').querySelector('pre');
+  var text = pre.innerText || pre.textContent;
+  // Try modern clipboard API first, fallback to execCommand
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(text).then(function() {
+      showCopied(btn);
+    }).catch(function() {
+      fallbackCopy(text, btn);
+    });
+  } else {
+    fallbackCopy(text, btn);
+  }
+}
+function fallbackCopy(text, btn) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.position = 'fixed';
+  ta.style.opacity = '0';
+  document.body.appendChild(ta);
+  ta.select();
+  try { document.execCommand('copy'); showCopied(btn); } catch(e) {}
+  document.body.removeChild(ta);
+}
+function showCopied(btn) {
+  btn.textContent = 'Copied!';
+  btn.style.color = 'var(--accent-green)';
+  btn.style.borderColor = 'var(--accent-green)';
+  setTimeout(function() {
+    btn.textContent = 'Copy';
+    btn.style.color = '';
+    btn.style.borderColor = '';
+  }, 2000);
+}
+
+// ── Language toggle ──
+function setLang(mode, btn) {
+  document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  var cnEls = document.querySelectorAll('.cn, .desc-cn');
+  var enEls = document.querySelectorAll('.en, .desc-en');
+  if (mode === 'cn') {
+    cnEls.forEach(function(el) { el.style.display = ''; });
+    enEls.forEach(function(el) { el.style.display = 'none'; });
+  } else if (mode === 'en') {
+    cnEls.forEach(function(el) { el.style.display = 'none'; });
+    enEls.forEach(function(el) { el.style.display = ''; });
+  } else {
+    cnEls.forEach(function(el) { el.style.display = ''; });
+    enEls.forEach(function(el) { el.style.display = ''; });
+  }
+}
+
+// ── Nav search filter ──
+function filterNav(val) {
+  val = val.toLowerCase();
+  document.querySelectorAll('.nav-link').forEach(function(l) {
+    var txt = l.textContent.toLowerCase();
+    l.style.display = (!val || txt.includes(val)) ? '' : 'none';
+  });
+  document.querySelectorAll('.nav-section-title').forEach(function(t) {
+    t.style.display = val ? 'none' : '';
+  });
+}
+
+// ── Progress bar + scroll spy ──
+window.addEventListener('scroll', function() {
+  var docHeight = document.documentElement.scrollHeight - window.innerHeight;
+  var pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+  var prog = document.getElementById('progress');
+  if (prog) prog.style.width = pct + '%';
+
+  var sections = ['overview','auth','flow','response','search','select','book','issue','retrieve','baggage','seatmap','ancillary','cancel','refund','void','exchange','farerule','errors','example'];
+  var current = '';
+  sections.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el && el.getBoundingClientRect().top < 120) current = id;
+  });
+  if (current) {
+    document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active'); });
+    document.querySelectorAll('.nav-link[data-section="' + current + '"]').forEach(function(l) {
+      l.classList.add('active');
+    });
+  }
+});
+
+// ── Bind all nav links via data-section on DOMContentLoaded ──
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.nav-link[data-section]').forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      var id = this.getAttribute('data-section');
+      navScrollTo(id, this);
+    });
+  });
+  document.querySelectorAll('.lang-btn[data-lang]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      setLang(this.getAttribute('data-lang'), this);
+    });
+  });
+  document.querySelectorAll('.endpoint-header').forEach(function(h) {
+    h.addEventListener('click', function() { toggleEndpoint(this); });
+  });
+  document.querySelectorAll('.copy-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { copyCode(this); });
+  });
+  document.getElementById('navSearch').addEventListener('input', function() {
+    filterNav(this.value);
+  });
+});
+</script>
+</body>
+</html>

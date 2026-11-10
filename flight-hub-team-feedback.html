@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Báo Cáo Thẩm Định & Đề Xuất Cải Tiến — Flight Hub API & Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg-main: #0b0f19;
+  --bg-card: #111827;
+  --bg-card-hover: #162032;
+  --bg-code: #0a0d14;
+  --border: #1f293d;
+  --border-focus: #38bdf8;
+  --primary: #0284c7;
+  --primary-light: #38bdf8;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --accent-amber: #f59e0b;
+  --accent-purple: #8b5cf6;
+  --text-main: #f3f4f6;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+code, pre {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+}
+
+/* Header */
+.header {
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 32px;
+  margin-bottom: 40px;
+}
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(56, 189, 248, 0.1);
+  color: var(--primary-light);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1.25;
+  background: linear-gradient(135deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 12px;
+}
+.header p {
+  color: var(--text-muted);
+  font-size: 15px;
+  max-width: 800px;
+}
+.header-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+.header-meta span strong {
+  color: var(--text-muted);
+}
+
+/* Reference Bar */
+.ref-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+.ref-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+}
+.ref-card:hover {
+  border-color: var(--border-focus);
+  transform: translateY(-2px);
+  background: var(--bg-card-hover);
+}
+.ref-card .label {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: var(--primary-light);
+  margin-bottom: 6px;
+}
+.ref-card .url {
+  font-size: 13px;
+  font-family: 'JetBrains Mono', monospace;
+  color: #e2e8f0;
+  word-break: break-all;
+}
+
+/* Scorecard */
+.scorecard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-bottom: 48px;
+}
+.score-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.score-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+}
+.score-card.red::before { background: var(--accent-red); }
+.score-card.amber::before { background: var(--accent-amber); }
+.score-card.green::before { background: var(--accent-green); }
+.score-card.purple::before { background: var(--accent-purple); }
+
+.score-title {
+  font-size: 13px;
+  color: var(--text-dim);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.score-value {
+  font-size: 30px;
+  font-weight: 800;
+  margin: 10px 0;
+  color: #fff;
+}
+.score-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Section styling */
+.section-block {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 32px;
+  margin-bottom: 40px;
+}
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+.icon-red { background: rgba(239, 68, 68, 0.15); color: var(--accent-red); }
+.icon-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+.icon-blue { background: rgba(56, 189, 248, 0.15); color: var(--primary-light); }
+.icon-purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+
+.section-title h2 {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+}
+.section-title p {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* Tables */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  margin-top: 16px;
+}
+.custom-table th {
+  background: rgba(255, 255, 255, 0.03);
+  text-align: left;
+  padding: 12px 16px;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.custom-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.custom-table tr:last-child td {
+  border-bottom: none;
+}
+.custom-table tr:hover td {
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  font-family: 'JetBrains Mono', monospace;
+}
+.tag-red { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border: 1px solid rgba(239, 68, 68, 0.3); }
+.tag-green { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+.tag-amber { background: rgba(245, 158, 11, 0.15); color: #fcd34d; border: 1px solid rgba(245, 158, 11, 0.3); }
+.tag-blue { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
+
+/* Callout Box */
+.callout {
+  padding: 18px 20px;
+  border-radius: 12px;
+  margin: 20px 0;
+  font-size: 13.5px;
+  display: flex;
+  gap: 14px;
+}
+.callout-warning {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  color: #fde68a;
+}
+.callout-danger {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  color: #fecaca;
+}
+.callout-info {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  color: #bae6fd;
+}
+
+/* Action Roadmap */
+.roadmap-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 20px;
+}
+.roadmap-col {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+}
+.roadmap-col h3 {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.roadmap-list {
+  list-style: none;
+}
+.roadmap-list li {
+  padding: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+.roadmap-list li strong {
+  display: block;
+  color: #fff;
+  font-size: 13.5px;
+  margin-bottom: 4px;
+}
+
+/* Footer */
+footer {
+  margin-top: 60px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  padding-top: 32px;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge-pill">Technical Audit Report — B2B Aviation Integration</div>
+    <h1>Đề Xuất Cải Tiến Kỹ Thuật & Tài Liệu API Flight Hub</h1>
+    <p>Báo cáo đối chiếu chéo giữa Hệ thống OpenAPI / Swagger thực tế (53 endpoints) và Cổng tài liệu Docusaurus hiện tại. Đóng góp xây dựng dành riêng cho Đội ngũ Kỹ thuật & Sản phẩm Flight Hub (TripOTA / Hong Ngoc Ha Travel).</p>
+    
+    <div class="header-meta">
+      <span>Đơn vị thẩm định: <strong>Platform Engineering Expert</strong></span>
+      <span>Ngày thẩm định: <strong>10/11/2026</strong></span>
+      <span>Phiên bản API phân tích: <strong>v1.0 (OpenAPI 3.0.1)</strong></span>
+      <span>Phạm vi: <strong>Documentation, Wording, Architecture & Code Resiliency</strong></span>
+    </div>
+  </div>
+
+  <!-- REFERENCE BAR (4 NGUỒN DỮ LIỆU) -->
+  <div class="ref-bar">
+    <a href="https://flight-doc.tripota.com.vn/docs/intro/" target="_blank" class="ref-card">
+      <span class="label">1. Cổng tài liệu (Docusaurus)</span>
+      <span class="url">flight-doc.tripota.com.vn/docs/intro</span>
+    </a>
+    <a href="https://sandbox-apihub.tripota.com.vn" target="_blank" class="ref-card">
+      <span class="label">2. Base URL Sandbox</span>
+      <span class="url">sandbox-apihub.tripota.com.vn</span>
+    </a>
+    <a href="https://flight-api-hub-dev.tripota.com.vn/swagger/index.html" target="_blank" class="ref-card">
+      <span class="label">3. Swagger UI Dev</span>
+      <span class="url">flight-api-hub-dev.tripota.com.vn/swagger</span>
+    </a>
+    <a href="https://flight-api-hub-dev.tripota.com.vn/swagger/flight-hub/swagger.json" target="_blank" class="ref-card">
+      <span class="label">4. OpenAPI Spec JSON</span>
+      <span class="url">.../swagger/flight-hub/swagger.json</span>
+    </a>
+  </div>
+
+  <!-- SCORECARD AUDIT -->
+  <div class="scorecard-grid">
+    <div class="score-card red">
+      <div class="score-title">Độ chuẩn xác Thuật ngữ</div>
+      <div class="score-value">6.5 / 10</div>
+      <div class="score-desc">Lẫn lộn SOTO vs Nguồn vé, xếp sai hãng LCC lớn vào mục "Others", sai chính tả tên hãng hàng không.</div>
+    </div>
+    <div class="score-card amber">
+      <div class="score-title">Độ bao phủ Nghiệp vụ API</div>
+      <div class="score-value">7.8 / 10</div>
+      <div class="score-desc">Swagger có 53 endpoint nhưng các API cao cấp (Split PNR, EMD, PriceQuote, MinFare) chưa có bài hướng dẫn luồng chạy.</div>
+    </div>
+    <div class="score-card green">
+      <div class="score-title">Cấu trúc OpenAPI JSON</div>
+      <div class="score-value">9.0 / 10</div>
+      <div class="score-desc">169 Schema định nghĩa chặt chẽ, đầy đủ DTO và validation rules theo C# .NET Kestrel.</div>
+    </div>
+    <div class="score-card purple">
+      <div class="score-title">Trải nghiệm Tích hợp OTA</div>
+      <div class="score-value">7.0 / 10</div>
+      <div class="score-desc">Trang Hỗ trợ (Support) trống trơn; chưa cung cấp Postman Collection và Mocking Sandbox data mẫu.</div>
+    </div>
+  </div>
+
+  <!-- SECTION 1: LỖI THUẬT NGỮ & WORDING -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-icon icon-red">⚠️</div>
+      <div class="section-title">
+        <h2>1. Lỗi Thuật Ngữ Hàng Không & Wording Cần Sửa Ngay (P0)</h2>
+        <p>Các lỗi hiển thị trực tiếp tại trang Giới thiệu (docs/intro) và Cấu hình Hệ thống (docs/system) gây hiểu lầm nghiêm trọng cho các kỹ sư OTA quốc tế.</p>
+      </div>
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th style="width: 18%;">Vị trí / Đối tượng</th>
+          <th style="width: 25%;">Hiện trạng trong Tài liệu</th>
+          <th style="width: 25%;">Đề xuất Sửa đổi Chuẩn hóa</th>
+          <th style="width: 32%;">Giải thích Chuyên môn Hàng không</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong style="color:#fff;">AK (AirAsia)<br>9C (Spring Airlines)</strong></td>
+          <td>Đang xếp vào nhóm: <span class="tag tag-red">Others</span></td>
+          <td>Chuyển sang nhóm: <span class="tag tag-green">LCC (Low-Cost Carriers)</span></td>
+          <td>AirAsia và Spring Airlines là 2 trong số các hãng LCC lớn nhất Đông Nam Á và Trung Quốc. Xếp vào "Others" làm giảm vị thế của Hub và khiến OTA tưởng đây là nguồn thứ cấp/không chính thống.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">TH, SH, FO<br>(Scoot & Batik, SkyHub, Flyone)</strong></td>
+          <td>Đang xếp vào nhóm: <span class="tag tag-red">Soto</span></td>
+          <td>Đổi tên nhóm thành: <span class="tag tag-green">Aggregators / Consolidators</span> hoặc <span class="tag tag-green">Specialized Hubs</span></td>
+          <td><strong>Sai bản chất:</strong> Trong nghiệp vụ IATA, <code>SOTO</code> (Sold Outside, Ticketed Outside) là kiểu hành trình vé, không phải là tên một nhóm nguồn cấp vé (Content Source). Các nguồn TH, SH, FO là các hệ thống tổng hợp vé/bán sỉ.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Mã hệ thống TR vs TH</strong></td>
+          <td>Vừa có <code>TR | Scoot Air NDC</code>, vừa ghi "Updated TR to TH - Scoot & Batik"</td>
+          <td>Phân tách và ghi chú rõ: <code>TR</code> là Direct NDC của Scoot (Singapore); <code>TH</code> là kênh Aggregator tích hợp Scoot & Batik Air</td>
+          <td>Tránh việc đối tác truyền nhầm <code>system: "TR"</code> sang <code>system: "TH"</code> khi tạo lệnh Search và Book, dẫn đến lệch chính sách giá và hành lý.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Hãng bay Vietnam Airlines & Vietravel Airlines</strong></td>
+          <td>Ghi: <code>Vietnam Airline</code> và <code>Viettravel Airline</code></td>
+          <td>Sửa thành: <span class="tag tag-green">Vietnam Airlines</span> và <span class="tag tag-green">Vietravel Airlines</span></td>
+          <td>Sai tên thương hiệu quốc tế: "Vietnam Airlines" luôn có 's'; "Vietravel" chỉ có một chữ 't' duy nhất.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Ngữ pháp Tiếng Anh các Menu chính</strong></td>
+          <td>
+            <code>Suplementary Informations</code><br>
+            <code>Ancilary Services</code><br>
+            <code>Baggages</code>
+          </td>
+          <td>
+            <span class="tag tag-green">Supplementary Information</span><br>
+            <span class="tag tag-green">Ancillary Services</span><br>
+            <span class="tag tag-green">Baggage</span> (không thêm 's')
+          </td>
+          <td>Tài liệu cho đối tác quốc tế cần chuẩn xác ngữ pháp: "Information" và "Baggage" là danh từ không đếm được; sửa lỗi chính tả thiếu 'p' và 'l'.</td>
+        </tr>
+        <tr>
+          <td><strong style="color:#fff;">Trang Hỗ trợ<br>(docs/contact-support)</strong></td>
+          <td>Chỉ có 1 câu cụt lủn: <em>"For support, contact directly to TripOTA support team."</em></td>
+          <td>Bổ sung: Email kỹ thuật <code>api-support@tripota.com.vn</code>, Hotline trực 24/7, Kênh WeChat/Telegram Dev và SLA phản hồi</td>
+          <td>Tạo sự tin cậy khi các OTA nước ngoài chuẩn bị ký kết hợp đồng thương mại.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warning">
+      <span style="font-size: 20px;">💡</span>
+      <div>
+        <strong>Khuyến nghị tổ chức lại Cây Nhóm Hệ Thống (Content Sources Tree):</strong>
+        <p style="margin-top: 4px; color: var(--text-muted);">
+          1. <code>Domestic Airlines</code>: VN (Vietnam Airlines), VJ (Vietjet Air), QH (Bamboo Airways), VU (Vietravel Airlines), 9G (Sun Phu Quoc Airways).<br>
+          2. <code>Global GDS</code>: 1A (Amadeus), 1G (Travelport / Galileo), 1B / 1S (Sabre).<br>
+          3. <code>Direct NDC</code>: TK (Turkish Airlines), PR (Philippine Airlines), TR (Scoot Air NDC), SQ (Singapore Airlines).<br>
+          4. <code>LCC (Low-Cost Carriers)</code>: AK (AirAsia), 9C (Spring Airlines).<br>
+          5. <code>Specialized Aggregators / Consolidators</code>: TH (Scoot & Batik Hub), SH (Sky Hub), FO (Flyone).
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION 2: ĐỐI SOÁT SWAGGER VS TÀI LIỆU -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-icon icon-amber">🔍</div>
+      <div class="section-title">
+        <h2>2. Đối Soát Swagger (53 Endpoints) vs Hướng Dẫn Thực Tế</h2>
+        <p>Nhiều endpoint đã có sẵn trong mã nguồn backend và Swagger nhưng thiếu các hướng dẫn luồng chạy (Use-case Scenarios) cho OTA.</p>
+      </div>
+    </div>
+
+    <table class="custom-table">
+      <thead>
+        <tr>
+          <th>Endpoint trong Swagger</th>
+          <th>Chức năng Backend</th>
+          <th>Tình trạng Tài liệu</th>
+          <th>Đề xuất Cải tiến Tài liệu</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>POST /api/v1/flight/searchminfare</code></td>
+          <td>Tìm vé rẻ nhất theo khoảng ngày (Low Fare Calendar)</td>
+          <td><span class="tag tag-amber">Có trang riêng nhưng thiếu biểu đồ</span></td>
+          <td>Cần bổ sung hình ảnh minh họa luồng và ví dụ payload tìm kiếm ma trận giá 30 ngày (rất quan trọng cho giao diện OTA).</td>
+        </tr>
+        <tr>
+          <td><code>POST /api/v1/flight/split</code></td>
+          <td>Tách hành khách khỏi PNR đoàn (Split Booking)</td>
+          <td><span class="tag tag-amber">Chỉ có bảng params, thiếu lưu ý</span></td>
+          <td>Cần lưu ý rõ: Sau khi split thì PNR mới mang mã gì? Vé cũ chuyển sang hay cần re-retrieve lại? Quy định khi split booking đã xuất vé vs chưa xuất vé.</td>
+        </tr>
+        <tr>
+          <td><code>POST /api/v1/flight/issueEMD</code></td>
+          <td>Xuất chứng từ dịch vụ bổ trợ độc lập (EMD)</td>
+          <td><span class="tag tag-amber">Thiếu luồng liên kết</span></td>
+          <td>Cần làm rõ: Khi nào dùng <code>autoIssue: true</code> trong <code>/addancillary</code> và khi nào phải gọi <code>/issueEMD</code> riêng lẻ? Cơ chế trừ tiền ký quỹ khi xuất EMD.</td>
+        </tr>
+        <tr>
+          <td><code>POST /api/v1/flight/facebooking</code></td>
+          <td>Xem mặt vé / tóm tắt PNR trước khi xuất</td>
+          <td><span class="tag tag-blue">Thuật ngữ nội bộ ngành</span></td>
+          <td>Đổi tên tiếng Anh thành <strong>"PNR Summary / Face Booking"</strong> và giải thích rõ đây là lệnh đọc thông tin PNR trực tiếp từ GDS/Hãng để so khớp trước khi bấm xuất vé.</td>
+        </tr>
+        <tr>
+          <td><code>POST /api/v1/flight/pricequote</code></td>
+          <td>Tính giá trước khi xuất vé (Reprice)</td>
+          <td><span class="tag tag-green">Đã có</span></td>
+          <td>Khuyến nghị OTA luôn gọi endpoint này trước khi bấm <code>/issueticket</code> nếu khoảng cách giữa Book và Issue lớn hơn 15 phút.</td>
+        </tr>
+        <tr>
+          <td><code>POST /api/v1/flight/compute-emission</code></td>
+          <td>Tính phát thải CO2 chuyến bay</td>
+          <td><span class="tag tag-blue">Tính năng mới</span></td>
+          <td>Rất giá trị cho các đối tác OTA châu Âu và các kênh đối tác B2B doanh nghiệp (ESG reporting). Cần làm nổi bật ở trang giới thiệu.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- SECTION 3: CẢI TIẾN KIẾN TRÚC & CODE -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-icon icon-blue">⚡</div>
+      <div class="section-title">
+        <h2>3. Đề Xuất Cải Tiến Kiến Trúc Hệ Thống & Mã Nguồn (Code Resiliency)</h2>
+        <p>Những cải tiến ở tầng Gateway và Core Booking Engine giúp hệ thống vận hành ổn định trước tải lớn từ các bot tìm kiếm của OTA.</p>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px;">
+      
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <h3 style="color: var(--primary-light); font-size: 15px; margin-bottom: 8px;">🛡️ 1. Idempotency Key cho Xuất Vé (P0)</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">
+          Tại endpoint <code>/issueticket</code> và <code>/issueEMD</code>, nguy cơ mạng quốc tế bị timeout sau 30s là rất cao. Nếu OTA retry mà không có khóa kiểm soát, tiền ký quỹ sẽ bị trừ đúp.<br><br>
+          👉 <strong>Giải pháp:</strong> Bắt buộc áp dụng header <code>X-Idempotency-Key</code> hoặc khóa Redis lock theo <code>bookingCode</code> trong 120 giây. Nếu request thứ 2 gửi đến khi request 1 đang chạy, trả về ngay <code>409 Conflict (REQUEST_IN_PROGRESS)</code>.
+        </p>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <h3 style="color: var(--accent-green); font-size: 15px; margin-bottom: 8px;">🚀 2. Redis Caching cho Search Fan-Out (P1)</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">
+          Một request Search từ OTA phân rã (Fan-out) thành 5-6 query đồng thời tới các hãng (VNA, Vietjet, Sabre, Amadeus). Tần suất bot cào giá liên tục sẽ làm nghẽn pipe GDS và tốn chi phí giao dịch.<br><br>
+          👉 <strong>Giải pháp:</strong> Áp dụng Short-lived Cache (Redis) với TTL 60 - 90 giây cho các chặng bay quốc nội phổ biến (SGN-HAN, SGN-DAD) kèm cơ chế Coalescing Request (gộp request trùng).
+        </p>
+      </div>
+
+      <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 12px; padding: 20px;">
+        <h3 style="color: var(--accent-purple); font-size: 15px; margin-bottom: 8px;">📡 3. Webhook Callback cho Tiến Trình Bất Đồng Bộ</h3>
+        <p style="font-size: 13px; color: var(--text-muted);">
+          Đối với xuất vé tự động hoặc hoàn/đổi vé, tiến trình hãng có thể mất vài phút. Việc bắt OTA liên tục polling <code>/retrieve</code> làm phí phạm băng thông.<br><br>
+          👉 <strong>Giải pháp:</strong> Cho phép OTA đăng ký Webhook URL trong hệ thống đối tác để nhận thông báo thời gian thực khi trạng thái vé đổi sang <code>TICKETED</code>, <code>FAILED</code> hoặc <code>CANCELLED</code>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SECTION 4: KẾ HOẠCH HÀNH ĐỘNG -->
+  <div class="section-block">
+    <div class="section-header">
+      <div class="section-icon icon-purple">🎯</div>
+      <div class="section-title">
+        <h2>4. Lộ Trình Hành Động Đề Xuất (Actionable Roadmap)</h2>
+        <p>Phân loại mức độ ưu tiên để đội ngũ Flight Hub dễ dàng đưa vào Sprint tiếp theo.</p>
+      </div>
+    </div>
+
+    <div class="roadmap-grid">
+      
+      <div class="roadmap-col">
+        <h3 style="color: var(--accent-red);">Ưu tiên P0 (Trong tuần này)</h3>
+        <ul class="roadmap-list">
+          <li>
+            <strong>Sửa đổi bảng Content Sources</strong>
+            Chuyển AK, 9C vào nhóm LCC. Bỏ chữ "Soto", đổi thành Aggregators/Consolidators. Sửa chính tả Vietnam Airlines, Vietravel.
+          </li>
+          <li>
+            <strong>Bổ sung thông tin trang Contact & Support</strong>
+            Thêm email kỹ thuật, kênh chat trực tiếp, quy trình escalations khi có sự cố nghẽn vé.
+          </li>
+          <li>
+            <strong>Làm rõ sự khác nhau giữa TR và TH</strong>
+            Tránh lỗi chọn nhầm system code khi tích hợp Scoot & Batik Air.
+          </li>
+        </ul>
+      </div>
+
+      <div class="roadmap-col">
+        <h3 style="color: var(--accent-amber);">Ưu tiên P1 (Sprint tiếp theo)</h3>
+        <ul class="roadmap-list">
+          <li>
+            <strong>Xuất bản Postman Collection & Environment</strong>
+            Tạo file Postman Collection chính thức có sẵn biến môi trường cho Sandbox (<code>https://sandbox-apihub.tripota.com.vn</code>).
+          </li>
+          <li>
+            <strong>Bổ sung hướng dẫn các API chuyên sâu</strong>
+            Viết tài liệu chi tiết cho <code>/searchminfare</code>, <code>/split</code>, <code>/pricequote</code>, và <code>/issueEMD</code>.
+          </li>
+          <li>
+            <strong>Áp dụng cơ chế Idempotency Key</strong>
+            Bảo vệ API xuất vé khỏi lỗi trừ tiền trùng khi rớt mạng.
+          </li>
+        </ul>
+      </div>
+
+      <div class="roadmap-col">
+        <h3 style="color: var(--accent-green);">Ưu tiên P2 (Kế hoạch Quý)</h3>
+        <ul class="roadmap-list">
+          <li>
+            <strong>Cổng Webhook Event Subscriptions</strong>
+            Cung cấp tính năng bắn sự kiện tự động cho các OTA lớn.
+          </li>
+          <li>
+            <strong>Giao diện Sandbox Test Console</strong>
+            Tích hợp bảng điều khiển test API trực quan kèm dữ liệu mock vé bay sẵn sàng cho đối tác tích hợp tự động.
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>Tài liệu thẩm định nội bộ dành cho Flight Hub Team &copy; 2026</p>
+    <p style="margin-top: 6px; font-weight: 500; color: var(--text-muted);">Designed with ♥ by Trung Nguyễn - Platform Expert</p>
+  </footer>
+
+</div>
+
+</body>
+</html>
+

@@ -1,0 +1,8 @@
+{
+  "name": "API-HNH-Guide-EN-CN",
+  "description": "Cổng tài liệu & Hướng dẫn tích hợp API vé máy bay B2B Hồng Ngọc Hà Travel (HNH Flight Hub API) - Song ngữ Việt / Trung / Anh.",
+  "github": "https://github.com/vantrung113/hnh-flighthub-api-docs.git",
+  "netlify_domain": "",
+  "dev_status": "ready",
+  "usage_status": "active"
+}

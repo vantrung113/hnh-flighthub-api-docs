@@ -1629,6 +1629,98 @@ html, body {
   background-color: var(--bg-card-alt);
 }
 
+
+/* FIX 1B/1S NO-WRAP & CLEAN CATEGORY PILL ALIGNMENT */
+.sys-badge-group {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 4px !important;
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+}
+.sys-badge-group .sys-badge {
+  min-width: 38px !important;
+  padding: 3px 8px !important;
+  font-size: 12px !important;
+}
+.sys-sep {
+  color: var(--text-muted) !important;
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  margin: 0 1px !important;
+  display: inline-block !important;
+}
+.field-table th.col-system,
+.field-table td.col-system {
+  width: 140px !important;
+  min-width: 135px !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+}
+.cat-pill {
+  display: inline-block !important;
+  padding: 4px 12px !important;
+  border-radius: 9999px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3px !important;
+  text-transform: uppercase !important;
+  white-space: nowrap !important;
+}
+
+
+/* STRICT NO-OVERFLOW LAYOUT RULES */
+html, body {
+  overflow-x: hidden !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  position: relative !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+.layout {
+  display: flex !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+}
+.main {
+  margin-left: var(--sidebar-w) !important;
+  width: calc(100% - var(--sidebar-w)) !important;
+  max-width: calc(100% - var(--sidebar-w)) !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box !important;
+  min-width: 0 !important;
+}
+.section, .endpoint, .code-block {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+.endpoint-body {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  box-sizing: border-box !important;
+}
+.code-block pre {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  white-space: pre-wrap !important;
+  word-break: break-word !important;
+  box-sizing: border-box !important;
+}
+.field-table {
+  width: 100% !important;
+  max-width: 100% !important;
+  box-sizing: border-box !important;
+}
+
 </style>
 </head>
 <body>
@@ -1835,113 +1927,130 @@ html, body {
       <thead>
         <tr>
           <th style="width: 22%;" data-vi="Phân nhóm (Category)" data-en="Category" data-cn="系统分类">Phân nhóm (Category)</th>
-          <th style="width: 15%; text-align: center;" data-vi="Mã hệ thống (System Code)" data-en="System Code" data-cn="系统代码">Mã hệ thống (System Code)</th>
-          <th style="width: 38%;" data-vi="Tên Hãng / Nhà cung cấp" data-en="Airline / Provider Name" data-cn="航司 / 渠道名称">Tên Hãng / Nhà cung cấp</th>
-          <th style="width: 25%;" data-vi="Phương thức kết nối" data-en="Connection Type" data-cn="对接类型">Phương thức kết nối</th>
+          <th class="col-system" data-vi="Mã hệ thống (System Code)" data-en="System Code" data-cn="系统代码">Mã hệ thống (System Code)</th>
+          <th style="width: 42%;" data-vi="Tên Hãng / Nhà cung cấp" data-en="Airline / Provider Name" data-cn="航司 / 渠道名称">Tên Hãng / Nhà cung cấp</th>
+          <th style="width: 24%;" data-vi="Phương thức kết nối" data-en="Connection Type" data-cn="对接类型">Phương thức kết nối</th>
         </tr>
       </thead>
       <tbody>
+        <!-- 1. VN -->
         <tr>
-          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-vn" title="Vietnam Airlines (Hãng Hàng Không Quốc Gia VN)">VN</span></td>
-          <td>Vietnam Airlines (Hãng Hàng Không Quốc Gia VN)</td>
-          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span>Direct Sabre / GDS</span></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Hãng Nội Địa VN" data-en="Domestic Airlines" data-cn="越南国内航司">Hãng Nội Địa VN</span></td>
+          <td class="col-system"><span class="sys-badge sys-vn" title="Vietnam Airlines (Hãng Hàng Không Quốc Gia VN)">VN</span></td>
+          <td><span data-vi="Vietnam Airlines (Hãng Hàng Không Quốc Gia VN)" data-en="Vietnam Airlines (Flag Carrier of Vietnam)" data-cn="越南航空 (越南国家航空公司 VN)">Vietnam Airlines (Hãng Hàng Không Quốc Gia VN)</span></td>
+          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span><span data-vi="Direct Sabre / GDS" data-en="Direct Sabre / GDS" data-cn="Sabre 直连 / GDS 分销">Direct Sabre / GDS</span></span></td>
         </tr>
+        <!-- 2. VJ -->
         <tr>
-          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-vj" title="Vietjet Air (Công ty CP Hàng không Vietjet)">VJ</span></td>
-          <td>Vietjet Air (Công ty CP Hàng không Vietjet)</td>
-          <td><span class="conn-badge conn-navitaire"><span class="badge-dot"></span>Navitaire API</span></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Hãng Nội Địa VN" data-en="Domestic Airlines" data-cn="越南国内航司">Hãng Nội Địa VN</span></td>
+          <td class="col-system"><span class="sys-badge sys-vj" title="Vietjet Air (Công ty CP Hàng không Vietjet)">VJ</span></td>
+          <td><span data-vi="Vietjet Air (Công ty CP Hàng không Vietjet)" data-en="Vietjet Air (Vietjet Aviation Joint Stock Company)" data-cn="越捷航空 (Vietjet Air 股份公司 VJ)">Vietjet Air (Công ty CP Hàng không Vietjet)</span></td>
+          <td><span class="conn-badge conn-navitaire"><span class="badge-dot"></span><span data-vi="Navitaire API" data-en="Navitaire API" data-cn="Navitaire 专线接口">Navitaire API</span></span></td>
         </tr>
+        <!-- 3. QH -->
         <tr>
-          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-qh" title="Bamboo Airways (Hãng Hàng không Tre Việt)">QH</span></td>
-          <td>Bamboo Airways (Hãng Hàng không Tre Việt)</td>
-          <td><span class="conn-badge conn-altea"><span class="badge-dot"></span>Amadeus Altea API</span></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Hãng Nội Địa VN" data-en="Domestic Airlines" data-cn="越南国内航司">Hãng Nội Địa VN</span></td>
+          <td class="col-system"><span class="sys-badge sys-qh" title="Bamboo Airways (Hãng Hàng không Tre Việt)">QH</span></td>
+          <td><span data-vi="Bamboo Airways (Hãng Hàng không Tre Việt)" data-en="Bamboo Airways (Bamboo Airways JSC)" data-cn="越竹航空 (Bamboo Airways 越竹 QH)">Bamboo Airways (Hãng Hàng không Tre Việt)</span></td>
+          <td><span class="conn-badge conn-altea"><span class="badge-dot"></span><span data-vi="Amadeus Altea API" data-en="Amadeus Altea API" data-cn="Amadeus Altea 专线接口">Amadeus Altea API</span></span></td>
         </tr>
+        <!-- 4. VU -->
         <tr>
-          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-vu" title="Vietravel Airlines (Hàng không Lữ hành VN)">VU</span></td>
-          <td>Vietravel Airlines (Hàng không Lữ hành VN)</td>
-          <td><span class="conn-badge conn-lcc"><span class="badge-dot"></span>Direct LCC API</span></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Hãng Nội Địa VN" data-en="Domestic Airlines" data-cn="越南国内航司">Hãng Nội Địa VN</span></td>
+          <td class="col-system"><span class="sys-badge sys-vu" title="Vietravel Airlines (Hàng không Lữ hành VN)">VU</span></td>
+          <td><span data-vi="Vietravel Airlines (Hàng không Lữ hành VN)" data-en="Vietravel Airlines (Vietravel Airlines JSC)" data-cn="越旅航空 (Vietravel Airlines 越旅 VU)">Vietravel Airlines (Hàng không Lữ hành VN)</span></td>
+          <td><span class="conn-badge conn-lcc"><span class="badge-dot"></span><span data-vi="Direct LCC API" data-en="Direct LCC API" data-cn="LCC 廉航直连接口">Direct LCC API</span></span></td>
         </tr>
+        <!-- 5. 9G -->
         <tr>
-          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-9g" title="Sun Phu Quoc Airways (Chuyến bay Phú Quốc)">9G</span></td>
-          <td>Sun Phu Quoc Airways (Chuyến bay Phú Quốc)</td>
-          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>Charter Hub</span></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Hãng Nội Địa VN" data-en="Domestic Airlines" data-cn="越南国内航司">Hãng Nội Địa VN</span></td>
+          <td class="col-system"><span class="sys-badge sys-9g" title="Sun Phu Quoc Airways (Chuyến bay Phú Quốc)">9G</span></td>
+          <td><span data-vi="Sun Phu Quoc Airways (Chuyến bay Phú Quốc)" data-en="Sun Phu Quoc Airways (Phu Quoc Dedicated Hub)" data-cn="太阳富国航空 (富国岛包机专线 9G)">Sun Phu Quoc Airways (Chuyến bay Phú Quốc)</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span><span data-vi="Charter Hub" data-en="Charter Hub" data-cn="包机专属渠道">Charter Hub</span></span></td>
         </tr>
+        <!-- 6. 1A -->
         <tr>
-          <td><span class="cat-pill cat-gds" data-vi="Global GDS" data-en="Global GDS" data-cn="全球分销系统">Global GDS</span><br><span class="cn">全球分销系统</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-1a" title="Amadeus Global GDS">1A</span></td>
-          <td>Amadeus (GDS Châu Âu / Toàn cầu)</td>
-          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>NDC &amp; Edifact</span></td>
+          <td><span class="cat-pill cat-gds" data-vi="GDS Toàn Cầu" data-en="Global GDS" data-cn="全球分销系统">GDS Toàn Cầu</span></td>
+          <td class="col-system"><span class="sys-badge sys-1a" title="Amadeus Global GDS">1A</span></td>
+          <td><span data-vi="Amadeus (GDS Châu Âu / Toàn cầu)" data-en="Amadeus (European & Global GDS)" data-cn="Amadeus 艾玛迪斯 (欧洲及全球 GDS 1A)">Amadeus (GDS Châu Âu / Toàn cầu)</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span><span data-vi="NDC & Edifact" data-en="NDC & Edifact" data-cn="NDC 与 Edifact 协议">NDC &amp; Edifact</span></span></td>
         </tr>
+        <!-- 7. 1G -->
         <tr>
-          <td><span class="cat-pill cat-gds" data-vi="Global GDS" data-en="Global GDS" data-cn="全球分销系统">Global GDS</span><br><span class="cn">全球分销系统</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-1g" title="Travelport Galileo GDS">1G</span></td>
-          <td>Travelport / Galileo (GDS Galileo)</td>
-          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span>Galileo XML</span></td>
+          <td><span class="cat-pill cat-gds" data-vi="GDS Toàn Cầu" data-en="Global GDS" data-cn="全球分销系统">GDS Toàn Cầu</span></td>
+          <td class="col-system"><span class="sys-badge sys-1g" title="Travelport Galileo GDS">1G</span></td>
+          <td><span data-vi="Travelport / Galileo (GDS Galileo)" data-en="Travelport / Galileo (Galileo GDS)" data-cn="Travelport / Galileo 伽利略 (Galileo GDS 1G)">Travelport / Galileo (GDS Galileo)</span></td>
+          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span><span data-vi="Galileo XML" data-en="Galileo XML" data-cn="Galileo XML 接口">Galileo XML</span></span></td>
         </tr>
+        <!-- 8. 1B / 1S (NEVER WRAPS) -->
         <tr>
-          <td><span class="cat-pill cat-gds" data-vi="Global GDS" data-en="Global GDS" data-cn="全球分销系统">Global GDS</span><br><span class="cn">全球分销系统</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-1b" title="Sabre GDS">1B</span> <span class="sys-sep">/</span> <span class="sys-badge sys-1s" title="Sabre GDS">1S</span></td>
-          <td>Sabre / Abacus (GDS Sabre Châu Á)</td>
-          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span>Sabre Web Services</span></td>
+          <td><span class="cat-pill cat-gds" data-vi="GDS Toàn Cầu" data-en="Global GDS" data-cn="全球分销系统">GDS Toàn Cầu</span></td>
+          <td class="col-system"><div class="sys-badge-group"><span class="sys-badge sys-1b" title="Sabre GDS">1B</span><span class="sys-sep">/</span><span class="sys-badge sys-1s" title="Sabre GDS">1S</span></div></td>
+          <td><span data-vi="Sabre / Abacus (GDS Sabre Châu Á)" data-en="Sabre / Abacus (Sabre Asia-Pacific GDS)" data-cn="Sabre / Abacus 沙伯 (Sabre 亚太区 GDS 1B/1S)">Sabre / Abacus (GDS Sabre Châu Á)</span></td>
+          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span><span data-vi="Sabre Web Services" data-en="Sabre Web Services" data-cn="Sabre Web 接口">Sabre Web Services</span></span></td>
         </tr>
+        <!-- 9. TR -->
         <tr>
-          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-tr" title="Scoot NDC (Singapore)">TR</span></td>
-          <td>Scoot Air NDC (Hãng Scoot Singapore trực tiếp)</td>
-          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Hãng Kết Nối NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Hãng Kết Nối NDC</span></td>
+          <td class="col-system"><span class="sys-badge sys-tr" title="Scoot NDC (Singapore)">TR</span></td>
+          <td><span data-vi="Scoot Air NDC (Hãng Scoot Singapore trực tiếp)" data-en="Scoot Air NDC (Direct Singapore Scoot NDC)" data-cn="酷航 NDC (新加坡 Scoot 航司直连 TR)">Scoot Air NDC (Hãng Scoot Singapore trực tiếp)</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span><span data-vi="IATA NDC Direct" data-en="IATA NDC Direct" data-cn="IATA NDC 官方直连">IATA NDC Direct</span></span></td>
         </tr>
+        <!-- 10. TK -->
         <tr>
-          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-tk" title="Turkish Airlines NDC">TK</span></td>
-          <td>Turkish Airlines (Hãng Hàng không Thổ Nhĩ Kỳ)</td>
-          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Hãng Kết Nối NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Hãng Kết Nối NDC</span></td>
+          <td class="col-system"><span class="sys-badge sys-tk" title="Turkish Airlines NDC">TK</span></td>
+          <td><span data-vi="Turkish Airlines (Hãng Hàng không Thổ Nhĩ Kỳ)" data-en="Turkish Airlines (Turkish Airlines NDC Direct)" data-cn="土耳其航空 (土耳其国家航空直连 TK)">Turkish Airlines (Hãng Hàng không Thổ Nhĩ Kỳ)</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span><span data-vi="IATA NDC Direct" data-en="IATA NDC Direct" data-cn="IATA NDC 官方直连">IATA NDC Direct</span></span></td>
         </tr>
+        <!-- 11. PR -->
         <tr>
-          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-pr" title="Philippine Airlines NDC">PR</span></td>
-          <td>Philippine Airlines (Hãng Hàng không Philippines)</td>
-          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Hãng Kết Nối NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Hãng Kết Nối NDC</span></td>
+          <td class="col-system"><span class="sys-badge sys-pr" title="Philippine Airlines NDC">PR</span></td>
+          <td><span data-vi="Philippine Airlines (Hãng Hàng không Philippines)" data-en="Philippine Airlines (Philippine Airlines NDC Direct)" data-cn="菲律宾航空 (菲律宾国家航空直连 PR)">Philippine Airlines (Hãng Hàng không Philippines)</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span><span data-vi="IATA NDC Direct" data-en="IATA NDC Direct" data-cn="IATA NDC 官方直连">IATA NDC Direct</span></span></td>
         </tr>
+        <!-- 12. SQ -->
         <tr>
-          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-sq" title="Singapore Airlines NDC">SQ</span></td>
-          <td>Singapore Airlines (Hãng Singapore Airlines)</td>
-          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Hãng Kết Nối NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Hãng Kết Nối NDC</span></td>
+          <td class="col-system"><span class="sys-badge sys-sq" title="Singapore Airlines NDC">SQ</span></td>
+          <td><span data-vi="Singapore Airlines (Hãng Singapore Airlines)" data-en="Singapore Airlines (Singapore Airlines NDC Direct)" data-cn="新加坡航空 (新航官方 NDC 直连 SQ)">Singapore Airlines (Hãng Singapore Airlines)</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span><span data-vi="IATA NDC Direct" data-en="IATA NDC Direct" data-cn="IATA NDC 官方直连">IATA NDC Direct</span></span></td>
         </tr>
+        <!-- 13. AK -->
         <tr>
-          <td><span class="cat-pill cat-lcc" data-vi="LCC (Low-Cost)" data-en="LCC (Low-Cost)" data-cn="国际低成本航空">LCC (Low-Cost)</span><br><span class="cn">国际低成本航空</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-ak" title="AirAsia LCC">AK</span></td>
-          <td>AirAsia (Tập đoàn Hàng không Giá rẻ Châu Á)</td>
-          <td><span class="conn-badge conn-navitaire"><span class="badge-dot"></span>Newskies Direct API</span></td>
+          <td><span class="cat-pill cat-lcc" data-vi="Hãng Giá Rẻ (LCC)" data-en="Low-Cost (LCC)" data-cn="国际低成本航空">Hãng Giá Rẻ (LCC)</span></td>
+          <td class="col-system"><span class="sys-badge sys-ak" title="AirAsia LCC">AK</span></td>
+          <td><span data-vi="AirAsia (Tập đoàn Hàng không Giá rẻ Châu Á)" data-en="AirAsia (Asian Low-Cost Carrier Group)" data-cn="亚洲航空 (亚洲最大廉价航空集团 AK)">AirAsia (Tập đoàn Hàng không Giá rẻ Châu Á)</span></td>
+          <td><span class="conn-badge conn-navitaire"><span class="badge-dot"></span><span data-vi="Newskies Direct API" data-en="Newskies Direct API" data-cn="Newskies 廉航专线">Newskies Direct API</span></span></td>
         </tr>
+        <!-- 14. 9C -->
         <tr>
-          <td><span class="cat-pill cat-lcc" data-vi="LCC (Low-Cost)" data-en="LCC (Low-Cost)" data-cn="国际低成本航空">LCC (Low-Cost)</span><br><span class="cn">国际低成本航空</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-9c" title="Spring Airlines (Xuân Thu - TQ)">9C</span></td>
-          <td>Spring Airlines (Hãng Hàng không Xuân Thu - TQ)</td>
-          <td><span class="conn-badge conn-lcc"><span class="badge-dot"></span>LCC Direct Connect</span></td>
+          <td><span class="cat-pill cat-lcc" data-vi="Hãng Giá Rẻ (LCC)" data-en="Low-Cost (LCC)" data-cn="国际低成本航空">Hãng Giá Rẻ (LCC)</span></td>
+          <td class="col-system"><span class="sys-badge sys-9c" title="Spring Airlines (Xuân Thu - TQ)">9C</span></td>
+          <td><span data-vi="Spring Airlines (Hãng Hàng không Xuân Thu - TQ)" data-en="Spring Airlines (Spring Airlines China)" data-cn="春秋航空 (中国春秋航空直连 9C)">Spring Airlines (Hãng Hàng không Xuân Thu - TQ)</span></td>
+          <td><span class="conn-badge conn-lcc"><span class="badge-dot"></span><span data-vi="LCC Direct Connect" data-en="LCC Direct Connect" data-cn="LCC 专线直连">LCC Direct Connect</span></span></td>
         </tr>
+        <!-- 15. TH -->
         <tr>
-          <td><span class="cat-pill cat-hub" data-vi="Aggregators" data-en="Aggregators" data-cn="专业聚合/批发渠道">Aggregators</span><br><span class="cn">专业聚合/批发渠道</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-th" title="Scoot &amp; Batik Consolidator">TH</span></td>
-          <td>Scoot &amp; Batik Consolidator (Tổng hợp Scoot + Batik)</td>
-          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>Specialized Hub</span></td>
+          <td><span class="cat-pill cat-hub" data-vi="Kênh Bán Sỉ / Hub" data-en="Aggregators / Hub" data-cn="专业聚合/批发渠道">Kênh Bán Sỉ / Hub</span></td>
+          <td class="col-system"><span class="sys-badge sys-th" title="Scoot &amp; Batik Consolidator">TH</span></td>
+          <td><span data-vi="Scoot &amp; Batik Consolidator (Tổng hợp Scoot + Batik)" data-en="Scoot &amp; Batik Consolidator (Scoot + Batik Hub)" data-cn="酷航与巴迪航空聚合 (Scoot + Batik 批发渠道 TH)">Scoot &amp; Batik Consolidator (Tổng hợp Scoot + Batik)</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span><span data-vi="Specialized Hub" data-en="Specialized Hub" data-cn="专业批发聚合渠道">Specialized Hub</span></span></td>
         </tr>
+        <!-- 16. SH -->
         <tr>
-          <td><span class="cat-pill cat-hub" data-vi="Aggregators" data-en="Aggregators" data-cn="专业聚合/批发渠道">Aggregators</span><br><span class="cn">专业聚合/批发渠道</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-sh" title="SkyHub Aggregator">SH</span></td>
-          <td>SkyHub Aggregator (Kênh vé sỉ SkyHub)</td>
-          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>B2B Consolidator</span></td>
+          <td><span class="cat-pill cat-hub" data-vi="Kênh Bán Sỉ / Hub" data-en="Aggregators / Hub" data-cn="专业聚合/批发渠道">Kênh Bán Sỉ / Hub</span></td>
+          <td class="col-system"><span class="sys-badge sys-sh" title="SkyHub Aggregator">SH</span></td>
+          <td><span data-vi="SkyHub Aggregator (Kênh vé sỉ SkyHub)" data-en="SkyHub Aggregator (SkyHub B2B Consolidator)" data-cn="SkyHub 航空聚合平台 (B2B 批发渠道 SH)">SkyHub Aggregator (Kênh vé sỉ SkyHub)</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span><span data-vi="B2B Consolidator" data-en="B2B Consolidator" data-cn="B2B 票务批发渠道">B2B Consolidator</span></span></td>
         </tr>
+        <!-- 17. FO -->
         <tr>
-          <td><span class="cat-pill cat-hub" data-vi="Aggregators" data-en="Aggregators" data-cn="专业聚合/批发渠道">Aggregators</span><br><span class="cn">专业聚合/批发渠道</span></td>
-          <td style="text-align: center;"><span class="sys-badge sys-fo" title="Flyone Hub">FO</span></td>
-          <td>Flyone Hub (Kênh vé liên tuyến Flyone)</td>
-          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>B2B Wholesale</span></td>
+          <td><span class="cat-pill cat-hub" data-vi="Kênh Bán Sỉ / Hub" data-en="Aggregators / Hub" data-cn="专业聚合/批发渠道">Kênh Bán Sỉ / Hub</span></td>
+          <td class="col-system"><span class="sys-badge sys-fo" title="Flyone Hub">FO</span></td>
+          <td><span data-vi="Flyone Hub (Kênh vé liên tuyến Flyone)" data-en="Flyone Hub (Flyone Interline Wholesale)" data-cn="Flyone 联运聚合平台 (B2B 批发分销 FO)">Flyone Hub (Kênh vé liên tuyến Flyone)</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span><span data-vi="B2B Wholesale" data-en="B2B Wholesale" data-cn="B2B 联程批发渠道">B2B Wholesale</span></span></td>
         </tr>
       </tbody>
     </table>
@@ -2151,7 +2260,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/sign-in</span>
-        <span class="ep-title" data-vi="Đăng nhập lấy Token" data-en="Sign In (Get Bearer Token)" data-cn="账号登录获取 Token">Đăng nhập lấy Token</span>Sign In</span>
+        <span class="ep-title" data-vi="Đăng nhập lấy Token" data-en="Sign In (Get Bearer Token)" data-cn="账号登录获取 Token">Đăng nhập lấy Token</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
@@ -2190,7 +2299,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/refresh-token</span>
-        <span class="ep-title" data-vi="Gia hạn Token" data-en="Refresh Access Token" data-cn="刷新访问令牌">Gia hạn Token</span>Refresh Access Token</span>
+        <span class="ep-title" data-vi="Gia hạn Token" data-en="Refresh Access Token" data-cn="刷新访问令牌">Gia hạn Token</span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2208,7 +2317,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-get">GET</span>
         <span class="ep-path">/api/v1/system?isNDC=true</span>
-        <span class="ep-title"><span class="vi">Lấy danh sách hệ thống khả dụng / </span>Get Available Systems</span>
+        <span class="ep-title"><span class="vi">Lấy danh sách hệ thống khả dụng / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2303,7 +2412,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/search</span>
-        <span class="ep-title" data-vi="Tìm kiếm chuyến bay theo ngày" data-en="Search Flights by Date" data-cn="实时航班运价查询">Tìm kiếm chuyến bay theo ngày</span>Search Flights</span>
+        <span class="ep-title" data-vi="Tìm kiếm chuyến bay theo ngày" data-en="Search Flights by Date" data-cn="实时航班运价查询">Tìm kiếm chuyến bay theo ngày</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
@@ -2376,7 +2485,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/searchminfare</span>
-        <span class="ep-title"><span class="vi">Tìm giá vé rẻ nhất theo khoảng ngày (Lịch vé rẻ) / </span>Search Min Fare Calendar</span>
+        <span class="ep-title"><span class="vi">Tìm giá vé rẻ nhất theo khoảng ngày (Lịch vé rẻ) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2411,7 +2520,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/select</span>
-        <span class="ep-title" data-vi="Xác nhận chọn chuyến bay & Khóa chỗ" data-en="Select Flight & Lock Price" data-cn="确认航班并锁定价格 (验舱)">Xác nhận chọn chuyến bay & Khóa chỗ</span>Select Flight</span>
+        <span class="ep-title" data-vi="Xác nhận chọn chuyến bay & Khóa chỗ" data-en="Select Flight & Lock Price" data-cn="确认航班并锁定价格 (验舱)">Xác nhận chọn chuyến bay & Khóa chỗ</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
@@ -2433,7 +2542,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/pricequote</span>
-        <span class="ep-title"><span class="vi">Tái thẩm định giá trước khi xuất vé / </span>Price Quote</span>
+        <span class="ep-title"><span class="vi">Tái thẩm định giá trước khi xuất vé / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2470,7 +2579,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/book</span>
-        <span class="ep-title" data-vi="Tạo đặt chỗ (Sinh mã PNR)" data-en="Create Booking (Acquire PNR)" data-cn="创建预订 (生成航司 PNR)">Tạo đặt chỗ (Sinh mã PNR)</span>Book Flight</span>
+        <span class="ep-title" data-vi="Tạo đặt chỗ (Sinh mã PNR)" data-en="Create Booking (Acquire PNR)" data-cn="创建预订 (生成航司 PNR)">Tạo đặt chỗ (Sinh mã PNR)</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
@@ -2529,7 +2638,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/facebooking</span>
-        <span class="ep-title"><span class="vi">Xem mặt vé (Kiểm tra lại PNR) / </span>Face Booking</span>
+        <span class="ep-title"><span class="vi">Xem mặt vé (Kiểm tra lại PNR) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2567,7 +2676,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/issueticket</span>
-        <span class="ep-title"><span class="vi">Thực hiện xuất vé / </span>Issue E-Ticket</span>
+        <span class="ep-title"><span class="vi">Thực hiện xuất vé / </span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
@@ -2614,7 +2723,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/retrieve</span>
-        <span class="ep-title"><span class="vi">Tra cứu đơn đặt chỗ / </span>Retrieve Booking</span>
+        <span class="ep-title"><span class="vi">Tra cứu đơn đặt chỗ / </span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
@@ -2643,7 +2752,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/getbaggages</span>
-        <span class="ep-title"><span class="vi">Tra cứu các gói hành lý mua thêm / </span>Get Baggage Options</span>
+        <span class="ep-title"><span class="vi">Tra cứu các gói hành lý mua thêm / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2661,7 +2770,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/getseatmap</span>
-        <span class="ep-title"><span class="vi">Lấy sơ đồ chỗ ngồi trên máy bay / </span>Get Seat Map</span>
+        <span class="ep-title"><span class="vi">Lấy sơ đồ chỗ ngồi trên máy bay / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2679,7 +2788,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/issueEMD</span>
-        <span class="ep-title"><span class="vi">Xuất chứng từ dịch vụ phụ trợ (EMD) / </span>Issue EMD</span>
+        <span class="ep-title"><span class="vi">Xuất chứng từ dịch vụ phụ trợ (EMD) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2710,7 +2819,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/infant</span>
-        <span class="ep-title"><span class="vi">Thêm em bé vào booking / </span>Add Infant</span>
+        <span class="ep-title"><span class="vi">Thêm em bé vào booking / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2736,7 +2845,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/adddocument</span>
-        <span class="ep-title"><span class="vi">Thêm giấy tờ tùy thân (Hộ chiếu/CCCD) / </span>Add Document</span>
+        <span class="ep-title"><span class="vi">Thêm giấy tờ tùy thân (Hộ chiếu/CCCD) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2765,7 +2874,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/addmembership</span>
-        <span class="ep-title"><span class="vi">Thêm thẻ khách hàng thân thiết / </span>Add Frequent Flyer Membership</span>
+        <span class="ep-title"><span class="vi">Thêm thẻ khách hàng thân thiết / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2787,7 +2896,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/addosi</span>
-        <span class="ep-title"><span class="vi">Thêm chỉ thị hãng (OSI / SK / Remark) / </span>Add OSI / SK / Remark</span>
+        <span class="ep-title"><span class="vi">Thêm chỉ thị hãng (OSI / SK / Remark) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2808,7 +2917,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/updatecontact</span>
-        <span class="ep-title"><span class="vi">Cập nhật thông tin liên hệ &amp; hành khách / </span>Update Contact &amp; Passenger</span>
+        <span class="ep-title"><span class="vi">Cập nhật thông tin liên hệ &amp; hành khách / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2843,7 +2952,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/split</span>
-        <span class="ep-title"><span class="vi">Tách hành khách khỏi đoàn (Split PNR) / </span>Split Booking</span>
+        <span class="ep-title"><span class="vi">Tách hành khách khỏi đoàn (Split PNR) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2864,7 +2973,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/changeflight</span>
-        <span class="ep-title"><span class="vi">Thay đổi hành trình khi chưa xuất vé / </span>Change Flight</span>
+        <span class="ep-title"><span class="vi">Thay đổi hành trình khi chưa xuất vé / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2885,7 +2994,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/cancelbooking</span>
-        <span class="ep-title"><span class="vi">Hủy giữ chỗ PNR (Chưa xuất vé) / </span>Cancel Booking</span>
+        <span class="ep-title"><span class="vi">Hủy giữ chỗ PNR (Chưa xuất vé) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2905,7 +3014,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/refundticket</span>
-        <span class="ep-title"><span class="vi">Quy trình hoàn vé 2 bước / </span>Refund Ticket</span>
+        <span class="ep-title"><span class="vi">Quy trình hoàn vé 2 bước / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2926,7 +3035,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/voidticket</span>
-        <span class="ep-title"><span class="vi">Hủy vé trong ngày không mất phí (Void Ticket) / </span>Void Ticket</span>
+        <span class="ep-title"><span class="vi">Hủy vé trong ngày không mất phí (Void Ticket) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2951,7 +3060,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/exchange-search</span>
-        <span class="ep-title"><span class="vi">Đổi vé máy bay (Quy trình 3 bước) / </span>Exchange Ticket</span>
+        <span class="ep-title"><span class="vi">Đổi vé máy bay (Quy trình 3 bước) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2973,7 +3082,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/farerule</span>
-        <span class="ep-title"><span class="vi">Tra cứu điều kiện vé (Fare Rule) / </span>Get Fare Rules</span>
+        <span class="ep-title"><span class="vi">Tra cứu điều kiện vé (Fare Rule) / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -2994,7 +3103,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/checkin-online</span>
-        <span class="ep-title"><span class="vi">Làm thủ tục chuyến bay trực tuyến / </span>Online Check-in</span>
+        <span class="ep-title"><span class="vi">Làm thủ tục chuyến bay trực tuyến / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -3015,7 +3124,7 @@ html, body {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/compute-emission</span>
-        <span class="ep-title"><span class="vi">Tính toán phát thải CO2 chuyến bay / </span>CO2 Carbon Emission</span>
+        <span class="ep-title"><span class="vi">Tính toán phát thải CO2 chuyến bay / </span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -3301,6 +3410,9 @@ print(<span class="str">"Xuất vé thành công! Số vé:"</span>, issue_res[<
 
 <!-- JAVASCRIPT: THEME, DROPDOWN LANGUAGE, PLAYGROUND, SEARCH, PROGRESS -->
 <script>
+// GLOBAL PASSENGER STATE (DEFINED AT VERY TOP OF SCRIPT)
+var paxState = { adt: 1, chd: 0, inf: 0 };
+
 // 1. THEME TOGGLE (DEFAULT LIGHT)
 var currentTheme = localStorage.getItem('hnh_theme') || 'light';
 document.documentElement.setAttribute('data-theme', currentTheme);
@@ -3519,7 +3631,6 @@ window.addEventListener('scroll', function() {
 });
 
 // 7. SANDBOX CURL PLAYGROUND GENERATOR (IATA PAX RULES + ONE-WAY / ROUND-TRIP / MULTI-CITY)
-var paxState = { adt: 1, chd: 0, inf: 0 };
 
 function initDynamicDates() {
   var today = new Date();
@@ -3557,6 +3668,7 @@ function initDynamicDates() {
 initDynamicDates();
 
 function updatePaxUI() {
+  if (typeof paxState === 'undefined' || !paxState) return;
   // Strict Aviation Rules:
   // 1. adt + chd <= 9 (Max 9 seated passengers)
   // 2. inf <= adt (Lap infants cannot exceed adult count)
@@ -3698,6 +3810,7 @@ function initPaxEvents() {
 initPaxEvents();
 
 function updateSandboxCurl() {
+  if (typeof paxState === 'undefined' || !paxState) return;
   var tripTypeEl = document.getElementById('pgTripType');
   var tripType = tripTypeEl ? tripTypeEl.value : 'oneway';
 

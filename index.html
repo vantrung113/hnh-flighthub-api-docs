@@ -787,6 +787,50 @@ code, pre {
   .main { margin-left: 0; max-width: 100vw; padding: 24px; }
   .header-resources { display: none; }
 }
+
+/* MULTI-LANGUAGE DISPLAY RULES */
+[data-lang="vi"] .lang-cn, [data-lang="vi"] .lang-en,
+[data-lang="vi"] .bi .cn, [data-lang="vi"] .bi .en {
+  display: none !important;
+}
+[data-lang="vi"] .lang-vi, [data-lang="vi"] .bi .vi {
+  display: block !important;
+}
+[data-lang="vi"] span.lang-vi, [data-lang="vi"] .bi span.vi {
+  display: inline !important;
+}
+
+[data-lang="cn"] .lang-vi, [data-lang="cn"] .lang-en,
+[data-lang="cn"] .bi .vi, [data-lang="cn"] .bi .en {
+  display: none !important;
+}
+[data-lang="cn"] .lang-cn, [data-lang="cn"] .bi .cn {
+  display: block !important;
+}
+[data-lang="cn"] span.lang-cn, [data-lang="cn"] .bi span.cn {
+  display: inline !important;
+}
+
+[data-lang="en"] .lang-vi, [data-lang="en"] .lang-cn,
+[data-lang="en"] .bi .vi, [data-lang="en"] .bi .cn {
+  display: none !important;
+}
+[data-lang="en"] .lang-en, [data-lang="en"] .bi .en {
+  display: block !important;
+}
+[data-lang="en"] span.lang-en, [data-lang="en"] .bi span.en {
+  display: inline !important;
+}
+
+[data-lang="all"] .lang-vi, [data-lang="all"] .lang-cn, [data-lang="all"] .lang-en,
+[data-lang="all"] .bi .vi, [data-lang="all"] .bi .cn, [data-lang="all"] .bi .en {
+  display: block !important;
+}
+[data-lang="all"] span.lang-vi, [data-lang="all"] span.lang-cn, [data-lang="all"] span.lang-en,
+[data-lang="all"] .bi span.vi, [data-lang="all"] .bi span.cn, [data-lang="all"] .bi span.en {
+  display: inline !important;
+}
+
 </style>
 </head>
 <body>
@@ -821,7 +865,7 @@ code, pre {
     <!-- Search Bar -->
     <div class="nav-search">
       <span class="search-icon">🔍</span>
-      <input type="text" id="globalSearch" placeholder="Tìm API, mã lỗi (Ctrl+K)...">
+      <input type="text" id="globalSearch" data-vi-ph="Tìm kiếm API, mã lỗi (Ctrl+K)..." data-en-ph="Search API, error codes (Ctrl+K)..." data-cn-ph="搜索 API、错误代码 (Ctrl+K)..." placeholder="Tìm kiếm API, mã lỗi (Ctrl+K)...">
     </div>
 
     <!-- Dropdown Language Selector (Compact & Clean) -->
@@ -856,68 +900,69 @@ code, pre {
 <!-- SIDEBAR NAVIGATION -->
 <nav class="sidebar" id="sidebarNav">
   <div class="nav-section">
-    <div class="nav-section-title">Tổng quan / Overview</div>
-    <a class="nav-link active" data-target="overview"><span>🌐</span> Giới thiệu / Overview</a>
-    <a class="nav-link" data-target="systems"><span>🏢</span> Content Sources Nguồn vé</a>
-    <a class="nav-link" data-target="playground"><span>⚡</span> Sandbox cURL Generator</a>
+    <div class="nav-section-title" data-vi="TỔNG QUAN" data-en="OVERVIEW" data-cn="概览导引">TỔNG QUAN</div>
+    <a class="nav-link active" data-target="overview"><span>🌐</span> <span class="nav-text" data-vi="Giới thiệu chung" data-en="Introduction & Overview" data-cn="平台概览">Giới thiệu chung</span></a>
+    <a class="nav-link" data-target="systems"><span>🏢</span> <span class="nav-text" data-vi="Hệ thống nguồn vé" data-en="Content Sources & Airlines" data-cn="航司与系统渠道">Hệ thống nguồn vé</span></a>
+    <a class="nav-link" data-target="playground"><span>⚡</span> <span class="nav-text" data-vi="Trình tạo lệnh Sandbox cURL" data-en="Sandbox cURL Generator" data-cn="沙箱快速测试">Trình tạo lệnh Sandbox cURL</span></a>
   </div>
 
   <div class="nav-section">
-    <div class="nav-section-title">Xác thực / Auth</div>
-    <a class="nav-link" data-target="auth"><span class="nav-method method-post">POST</span> Sign In Đăng nhập</a>
-    <a class="nav-link" data-target="refresh-token"><span class="nav-method method-post">POST</span> Refresh Token Làm mới</a>
-    <a class="nav-link" data-target="system-list"><span class="nav-method method-get">GET</span> System List Hệ thống</a>
+    <div class="nav-section-title" data-vi="XÁC THỰC" data-en="AUTHENTICATION" data-cn="接口认证">XÁC THỰC</div>
+    <a class="nav-link" data-target="auth"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Đăng nhập tài khoản" data-en="Sign In" data-cn="账号登录">Đăng nhập tài khoản</span></a>
+    <a class="nav-link" data-target="refresh-token"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Làm mới Token" data-en="Refresh Token" data-cn="刷新令牌">Làm mới Token</span></a>
+    <a class="nav-link" data-target="system-list"><span class="nav-method method-get">GET</span> <span class="nav-text" data-vi="Danh sách hệ thống" data-en="System List" data-cn="航司系统列表">Danh sách hệ thống</span></a>
   </div>
 
   <div class="nav-section">
-    <div class="nav-section-title">Luồng chính / Core Flow</div>
-    <a class="nav-link" data-target="flow"><span>🔄</span> Flow & Token Chaining</a>
-    <a class="nav-link" data-target="search"><span class="nav-method method-post">POST</span> Search Tìm chuyến bay</a>
-    <a class="nav-link" data-target="searchminfare"><span class="nav-method method-post">POST</span> Min Fare Lịch vé rẻ <span class="nav-badge badge-new">New</span></a>
-    <a class="nav-link" data-target="select"><span class="nav-method method-post">POST</span> Select Chọn giá vé</a>
-    <a class="nav-link" data-target="pricequote"><span class="nav-method method-post">POST</span> Price Quote Kiểm giá</a>
-    <a class="nav-link" data-target="book"><span class="nav-method method-post">POST</span> Book Giữ chỗ (PNR)</a>
-    <a class="nav-link" data-target="facebooking"><span class="nav-method method-post">POST</span> Face Booking Mặt vé</a>
-    <a class="nav-link" data-target="issue"><span class="nav-method method-post">POST</span> Issue Ticket Xuất vé</a>
-    <a class="nav-link" data-target="retrieve"><span class="nav-method method-post">POST</span> Retrieve Booking Tra cứu</a>
+    <div class="nav-section-title" data-vi="LUỒNG ĐẶT VÉ CHÍNH" data-en="CORE BOOKING FLOW" data-cn="核心出票流程">LUỒNG ĐẶT VÉ CHÍNH</div>
+    <a class="nav-link" data-target="flow"><span>🔄</span> <span class="nav-text" data-vi="Quy trình & Chaining Token" data-en="Flow & State Chaining" data-cn="业务流与令牌串联">Quy trình & Chaining Token</span></a>
+    <a class="nav-link" data-target="search"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Tìm chuyến bay" data-en="Search Flights" data-cn="航班查询">Tìm chuyến bay</span></a>
+    <a class="nav-link" data-target="searchminfare"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Lịch vé rẻ theo tháng" data-en="Min Fare Calendar" data-cn="低价日历">Lịch vé rẻ theo tháng</span> <span class="nav-badge badge-new" data-vi="Mới" data-en="New" data-cn="新">Mới</span></a>
+    <a class="nav-link" data-target="select"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Chọn giá & Khóa chỗ" data-en="Select & Price Lock" data-cn="验价选座">Chọn giá & Khóa chỗ</span></a>
+    <a class="nav-link" data-target="pricequote"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Kiểm tra lại giá" data-en="Price Quote" data-cn="价格确认">Kiểm tra lại giá</span></a>
+    <a class="nav-link" data-target="book"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Giữ chỗ (Tạo PNR)" data-en="Create Booking (PNR)" data-cn="创建预订 (生单)">Giữ chỗ (Tạo PNR)</span></a>
+    <a class="nav-link" data-target="facebooking"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Xem mặt vé" data-en="Face Booking" data-cn="票面信息">Xem mặt vé</span></a>
+    <a class="nav-link" data-target="issue"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Xuất vé chính thức" data-en="Issue Ticket" data-cn="正式出票">Xuất vé chính thức</span></a>
+    <a class="nav-link" data-target="retrieve"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Tra cứu đơn đặt chỗ" data-en="Retrieve Booking" data-cn="订单检索">Tra cứu đơn đặt chỗ</span></a>
   </div>
 
   <div class="nav-section">
-    <div class="nav-section-title">Dịch vụ bổ trợ / Add-ons</div>
-    <a class="nav-link" data-target="baggage"><span class="nav-method method-post">POST</span> Baggage Hành lý</a>
-    <a class="nav-link" data-target="seatmap"><span class="nav-method method-post">POST</span> Seat Map Sơ đồ ghế</a>
-    <a class="nav-link" data-target="ancillary"><span class="nav-method method-post">POST</span> Ancillaries Dịch vụ thêm</a>
-    <a class="nav-link" data-target="issue-emd"><span class="nav-method method-post">POST</span> Issue EMD Xuất phí phụ</a>
+    <div class="nav-section-title" data-vi="DỊCH VỤ BỔ TRỢ" data-en="ANCILLARY SERVICES" data-cn="附加服务 (Add-ons)">DỊCH VỤ BỔ TRỢ</div>
+    <a class="nav-link" data-target="baggage"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Mua hành lý ký gửi" data-en="Baggage Allowance" data-cn="行李额度">Mua hành lý ký gửi</span></a>
+    <a class="nav-link" data-target="seatmap"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Sơ đồ & Chọn ghế" data-en="Seat Map" data-cn="机上选座">Sơ đồ & Chọn ghế</span></a>
+    <a class="nav-link" data-target="ancillary"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Dịch vụ bổ trợ khác" data-en="Ancillaries" data-cn="增值服务">Dịch vụ bổ trợ khác</span></a>
+    <a class="nav-link" data-target="issue-emd"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Xuất chứng từ phí phụ EMD" data-en="Issue EMD" data-cn="杂项凭证出票 (EMD)">Xuất chứng từ phí phụ EMD</span></a>
   </div>
 
   <div class="nav-section">
-    <div class="nav-section-title">Bổ sung thông tin / Updates</div>
-    <a class="nav-link" data-target="infant"><span class="nav-method method-post">POST</span> Infant Thêm em bé</a>
-    <a class="nav-link" data-target="document"><span class="nav-method method-post">POST</span> Document Hộ chiếu/CCCD</a>
-    <a class="nav-link" data-target="membership"><span class="nav-method method-post">POST</span> Membership Thẻ bông sen</a>
-    <a class="nav-link" data-target="osi-sk-remark"><span class="nav-method method-post">POST</span> OSI / SK / Remark Chỉ thị</a>
-    <a class="nav-link" data-target="update-contact"><span class="nav-method method-post">POST</span> Contact & Pax Cập nhật</a>
+    <div class="nav-section-title" data-vi="BỔ SUNG THÔNG TIN" data-en="SUPPLEMENTARY DATA" data-cn="信息补充与变更">BỔ SUNG THÔNG TIN</div>
+    <a class="nav-link" data-target="infant"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Thêm em bé (Infant)" data-en="Add Infant" data-cn="婴儿信息">Thêm em bé (Infant)</span></a>
+    <a class="nav-link" data-target="document"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Hộ chiếu / CCCD" data-en="Passport & ID Document" data-cn="证件信息">Hộ chiếu / CCCD</span></a>
+    <a class="nav-link" data-target="membership"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Thẻ bay thường xuyên" data-en="Frequent Flyer Card" data-cn="常旅客会员">Thẻ bay thường xuyên</span></a>
+    <a class="nav-link" data-target="osi-sk-remark"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Chỉ thị hãng OSI / SK" data-en="Airline OSI / SK Remarks" data-cn="航司特殊指令">Chỉ thị hãng OSI / SK</span></a>
+    <a class="nav-link" data-target="update-contact"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Cập nhật liên hệ & Hành khách" data-en="Update Contact & Pax" data-cn="联系人及旅客更新">Cập nhật liên hệ & Hành khách</span></a>
   </div>
 
   <div class="nav-section">
-    <div class="nav-section-title">Hậu mãi / Post-Sale</div>
-    <a class="nav-link" data-target="split"><span class="nav-method method-post">POST</span> Split PNR Tách đoàn</a>
-    <a class="nav-link" data-target="changeflight"><span class="nav-method method-post">POST</span> Change Flight Đổi hành trình</a>
-    <a class="nav-link" data-target="cancel"><span class="nav-method method-post">POST</span> Cancel Booking Hủy chỗ</a>
-    <a class="nav-link" data-target="refund"><span class="nav-method method-post">POST</span> Refund Ticket Hoàn vé</a>
-    <a class="nav-link" data-target="void"><span class="nav-method method-post">POST</span> Void Ticket Hủy vé trong ngày</a>
-    <a class="nav-link" data-target="exchange"><span class="nav-method method-post">POST</span> Exchange Ticket Đổi vé</a>
-    <a class="nav-link" data-target="farerule"><span class="nav-method method-post">POST</span> Fare Rule Điều kiện vé</a>
-    <a class="nav-link" data-target="checkin-online"><span class="nav-method method-post">POST</span> Check-in Online Làm thủ tục</a>
-    <a class="nav-link" data-target="emission"><span class="nav-method method-post">POST</span> CO2 Emission Phát thải</a>
+    <div class="nav-section-title" data-vi="NGHIỆP VỤ HẬU MÃI" data-en="POST-SALE OPERATIONS" data-cn="售后与客票处理">NGHIỆP VỤ HẬU MÃI</div>
+    <a class="nav-link" data-target="split"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Tách đoàn (Split PNR)" data-en="Split PNR" data-cn="订单拆单">Tách đoàn (Split PNR)</span></a>
+    <a class="nav-link" data-target="changeflight"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Đổi chuyến bay" data-en="Change Flight" data-cn="改期换开">Đổi chuyến bay</span></a>
+    <a class="nav-link" data-target="cancel"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Hủy chỗ đặt trước" data-en="Cancel Booking" data-cn="取消预订">Hủy chỗ đặt trước</span></a>
+    <a class="nav-link" data-target="refund"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Yêu cầu hoàn vé" data-en="Refund Ticket" data-cn="退票申请">Yêu cầu hoàn vé</span></a>
+    <a class="nav-link" data-target="void"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Hủy vé trong ngày (Void)" data-en="Void Ticket (Same-Day)" data-cn="当日废票 (Void)">Hủy vé trong ngày (Void)</span></a>
+    <a class="nav-link" data-target="exchange"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Đổi vé máy bay" data-en="Exchange Ticket" data-cn="客票换开">Đổi vé máy bay</span></a>
+    <a class="nav-link" data-target="farerule"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Tra cứu điều kiện vé" data-en="Fare Rules" data-cn="客票退改规则">Tra cứu điều kiện vé</span></a>
+    <a class="nav-link" data-target="checkin-online"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Làm thủ tục trực tuyến" data-en="Online Check-in" data-cn="在线值机">Làm thủ tục trực tuyến</span></a>
+    <a class="nav-link" data-target="emission"><span class="nav-method method-post">POST</span> <span class="nav-text" data-vi="Dữ liệu phát thải CO2" data-en="Carbon Emission" data-cn="碳排放数据">Dữ liệu phát thải CO2</span></a>
   </div>
 
   <div class="nav-section">
-    <div class="nav-section-title">Tra cứu & Hỗ trợ / Support</div>
-    <a class="nav-link" data-target="errors"><span>⚠️</span> Error Codes Bảng mã lỗi</a>
-    <a class="nav-link" data-target="example"><span>⚡</span> Full Example Code mẫu</a>
-    <a class="nav-link" data-target="support"><span>🎧</span> Support Liên hệ kỹ thuật</a>
+    <div class="nav-section-title" data-vi="TRA CỨU & HỖ TRỢ" data-en="REFERENCE & SUPPORT" data-cn="检索与技术支持">TRA CỨU & HỖ TRỢ</div>
+    <a class="nav-link" data-target="errors"><span>⚠️</span> <span class="nav-text" data-vi="Từ điển mã lỗi thông minh" data-en="Smart Error Code Dictionary" data-cn="智能错误码字典">Từ điển mã lỗi thông minh</span></a>
+    <a class="nav-link" data-target="example"><span>⚡</span> <span class="nav-text" data-vi="Mã nguồn Python mẫu" data-en="Full Python Integration Script" data-cn="完整集成代码 (Python)">Mã nguồn Python mẫu</span></a>
+    <a class="nav-link" data-target="support"><span>🎧</span> <span class="nav-text" data-vi="Kênh hỗ trợ kỹ thuật" data-en="Developer Support & SLA" data-cn="技术支持与 SLA">Kênh hỗ trợ kỹ thuật</span></a>
   </div>
+
 </nav>
 
 <!-- MAIN CONTENT -->
@@ -948,19 +993,19 @@ code, pre {
     <!-- 4 RESOURCE CARDS EMBEDDED IN HERO -->
     <div class="hero-meta-grid">
       <div class="hero-meta-card">
-        <div class="label">📘 Tài liệu chi tiết (Docs)</div>
+        <div class="label" data-vi="📘 Tài liệu chi tiết (Docs)" data-en="📘 Detailed Documentation (Docs)" data-cn="📘 详细技术文档 (Docs)">📘 Tài liệu chi tiết (Docs)</div>
         <code><a href="https://flight-doc.tripota.com.vn/docs/intro/" target="_blank" style="color:inherit;text-decoration:none;">flight-doc.tripota.com.vn</a></code>
       </div>
       <div class="hero-meta-card">
-        <div class="label">🧪 Môi trường Sandbox Test</div>
+        <div class="label" data-vi="🧪 Môi trường Sandbox Test" data-en="🧪 Sandbox Testing Environment" data-cn="🧪 沙箱测试环境 (Sandbox)">🧪 Môi trường Sandbox Test</div>
         <code><a href="https://sandbox-apihub.tripota.com.vn" target="_blank" style="color:inherit;text-decoration:none;">sandbox-apihub.tripota.com.vn</a></code>
       </div>
       <div class="hero-meta-card">
-        <div class="label">🛠️ Swagger UI Dev Console</div>
+        <div class="label" data-vi="🛠️ Swagger UI Dev Console" data-en="🛠️ Swagger UI Dev Console" data-cn="🛠️ Swagger 交互控制台">🛠️ Swagger UI Dev Console</div>
         <code><a href="https://flight-api-hub-dev.tripota.com.vn/swagger/index.html" target="_blank" style="color:inherit;text-decoration:none;">Swagger API Console v1.0</a></code>
       </div>
       <div class="hero-meta-card">
-        <div class="label">📄 OpenAPI 3.0 Spec JSON</div>
+        <div class="label" data-vi="📄 OpenAPI 3.0 Spec JSON" data-en="📄 OpenAPI 3.0 Spec JSON" data-cn="📄 OpenAPI 3.0 规范 JSON">📄 OpenAPI 3.0 Spec JSON</div>
         <code><a href="https://flight-api-hub-dev.tripota.com.vn/swagger/flight-hub/swagger.json" target="_blank" style="color:inherit;text-decoration:none;">swagger.json (53 Endpoints)</a></code>
       </div>
     </div>
@@ -971,8 +1016,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">00</div>
       <div class="section-titles">
-        <h2>Content Sources &amp; Airline Systems — Hệ Thống Nguồn Vé &amp; Hãng Bay</h2>
-        <div class="subtitle">Bảng mã kết nối chuẩn xác theo phân nhóm: Hãng nội địa, GDS, NDC, LCC và Kênh Aggregator</div>
+        <h2 data-vi="Hệ Thống Nguồn Vé & Hãng Bay" data-en="Content Sources & Airline Systems" data-cn="航司与系统渠道">Hệ Thống Nguồn Vé & Hãng Bay</h2>
+        <div class="subtitle" data-vi="Bảng mã kết nối chuẩn xác theo phân nhóm: Hãng nội địa, GDS, NDC, LCC và Kênh Aggregator" data-en="System codes categorized by type: Domestic carriers, GDS, NDC direct-connect, LCC, and Aggregators" data-cn="按系统类型分类的标准对接代码：越南本土航司、GDS 分销系统、NDC 直连、LCC 廉航及专业聚合渠道">Bảng mã kết nối chuẩn xác theo phân nhóm: Hãng nội địa, GDS, NDC, LCC và Kênh Aggregator</div>
       </div>
     </div>
 
@@ -991,10 +1036,10 @@ code, pre {
     <table class="field-table">
       <thead>
         <tr>
-          <th style="width: 25%;">Phân nhóm (Category)</th>
-          <th style="width: 15%;">Mã hệ thống (System Code)</th>
-          <th style="width: 35%;">Tên Hãng / Nhà cung cấp</th>
-          <th style="width: 25%;">Phương thức kết nối</th>
+          <th style="width: 25%;" data-vi="Phân nhóm (Category)" data-en="Category" data-cn="系统分类">Phân nhóm (Category)</th>
+          <th style="width: 15%;" data-vi="Mã hệ thống (System Code)" data-en="System Code" data-cn="系统代码">Mã hệ thống (System Code)</th>
+          <th style="width: 35%;" data-vi="Tên Hãng / Nhà cung cấp" data-en="Airline / Provider Name" data-cn="航司 / 渠道名称">Tên Hãng / Nhà cung cấp</th>
+          <th style="width: 25%;" data-vi="Phương thức kết nối" data-en="Connection Type" data-cn="对接类型">Phương thức kết nối</th>
         </tr>
       </thead>
       <tbody>
@@ -1109,8 +1154,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">⚡</div>
       <div class="section-titles">
-        <h2>Interactive Sandbox cURL Generator — Tạo Lệnh Test Nhanh</h2>
-        <div class="subtitle">Tự động lấy ngày tương lai (Hôm nay + 7 ngày), sinh lệnh cURL trỏ thẳng vào Sandbox</div>
+        <h2 data-vi="Interactive Sandbox cURL Generator — Tạo Lệnh Test Nhanh" data-en="Interactive Sandbox cURL Generator — Instant API Testing" data-cn="交互式沙箱 cURL 生成器 — 快速测试接口">Interactive Sandbox cURL Generator — Tạo Lệnh Test Nhanh</h2>
+        <div class="subtitle" data-vi="Tự động lấy ngày tương lai (Hôm nay + 7 ngày), sinh lệnh cURL trỏ thẳng vào Sandbox" data-en="Automatically sets future departure date (Today + 7 days) and generates instant Sandbox cURL commands" data-cn="自动获取未来起飞日期（今天 + 7天），即时生成直连沙箱环境的 cURL 测试命令">Tự động lấy ngày tương lai (Hôm nay + 7 ngày), sinh lệnh cURL trỏ thẳng vào Sandbox</div>
       </div>
     </div>
 
@@ -1169,8 +1214,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">01</div>
       <div class="section-titles">
-        <h2>Authentication — Cơ Chế Xác Thực</h2>
-        <div class="subtitle">Đăng nhập tài khoản B2B và duy trì JWT Bearer Token</div>
+        <h2 data-vi="Cơ Chế Xác Thực & Cấp Token — Đăng Nhập & Duy Trì Phiên Làm Việc" data-en="Authentication & Credentials — Sign In & Maintain Bearer Token" data-cn="接口认证与凭证 — 账号登录与 Bearer Token 维护">Cơ Chế Xác Thực & Cấp Token — Đăng Nhập & Duy Trì Phiên Làm Việc</h2>
+        <div class="subtitle" data-vi="Đăng nhập tài khoản B2B và duy trì JWT Bearer Token trong vòng 24 giờ" data-en="B2B partner authentication and 24-hour JWT Bearer token lifecycle" data-cn="B2B 合作伙伴登录认证及 24 小时 JWT Bearer 令牌生命周期">Đăng nhập tài khoản B2B và duy trì JWT Bearer Token trong vòng 24 giờ</div>
       </div>
     </div>
 
@@ -1188,16 +1233,16 @@ code, pre {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/sign-in</span>
-        <span class="ep-title"><span class="vi">Đăng nhập lấy Token / </span>Sign In</span>
+        <span class="ep-title" data-vi="Đăng nhập lấy Token" data-en="Sign In (Get Bearer Token)" data-cn="账号登录获取 Token">Đăng nhập lấy Token</span>Sign In</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
         <table class="field-table">
-          <thead><tr><th>Trường (Field)</th><th>Kiểu</th><th>Bắt buộc</th><th>Ý nghĩa &amp; Chú thích</th></tr></thead>
+          <thead><tr><th data-vi="Trường (Field)" data-en="Field" data-cn="参数名称">Trường (Field)</th><th data-vi="Kiểu" data-en="Type" data-cn="数据类型">Kiểu</th><th data-vi="Bắt buộc" data-en="Required" data-cn="必填">Bắt buộc</th><th data-vi="Ý nghĩa &amp; Chú thích" data-en="Description" data-cn="说明与注释">Ý nghĩa &amp; Chú thích</th></tr></thead>
           <tbody>
-            <tr><td><span class="field-name">partnerCode</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mã đối tác/đại lý được HNH cấp (Partner Code)</td></tr>
-            <tr><td><span class="field-name">userName</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Tên đăng nhập tài khoản kỹ thuật API</td></tr>
-            <tr><td><span class="field-name">password</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mật khẩu tài khoản API</td></tr>
+            <tr><td><span class="field-name">partnerCode</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mã đối tác/đại lý được HNH cấp (Partner Code)</td></tr>
+            <tr><td><span class="field-name">userName</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Tên đăng nhập tài khoản kỹ thuật API</td></tr>
+            <tr><td><span class="field-name">password</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mật khẩu tài khoản API</td></tr>
           </tbody>
         </table>
 
@@ -1227,7 +1272,7 @@ code, pre {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/refresh-token</span>
-        <span class="ep-title"><span class="vi">Gia hạn Token / </span>Refresh Access Token</span>
+        <span class="ep-title" data-vi="Gia hạn Token" data-en="Refresh Access Token" data-cn="刷新访问令牌">Gia hạn Token</span>Refresh Access Token</span>
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
@@ -1270,47 +1315,47 @@ code, pre {
     <div class="section-header">
       <div class="section-num">02</div>
       <div class="section-titles">
-        <h2>Luồng Đặt Vé &amp; Chuỗi Token — Booking Flow &amp; State Chaining</h2>
-        <div class="subtitle">Quy trình bắt buộc: Search → Select → Book → (Add-ons) → Issue Ticket → Retrieve</div>
+        <h2 data-vi="Luồng Đặt Vé Chuẩn & Chaining Token — Quy Trình 6 Bước Khép Kín" data-en="End-to-End Booking Flow & Token Chaining — Standard 6-Step Workflow" data-cn="完整预订业务流与令牌串联 — 标准六步闭环流程">Luồng Đặt Vé Chuẩn & Chaining Token — Quy Trình 6 Bước Khép Kín</h2>
+        <div class="subtitle" data-vi="Quy trình bắt buộc: Search → Select → Book → (Add-ons) → Issue Ticket → Retrieve" data-en="Mandatory sequence: Search → Select → Book → (Add-ons) → Issue Ticket → Retrieve" data-cn="核心调用时序：查询 (Search) → 验价 (Select) → 生单 (Book) → (附加服务) → 出票 (Issue) → 检索 (Retrieve)">Quy trình bắt buộc: Search → Select → Book → (Add-ons) → Issue Ticket → Retrieve</div>
       </div>
     </div>
 
     <div class="flow-diagram">
       <div class="flow-steps">
         <a href="#search" class="flow-node">
-          <div class="step-badge">Bước 1</div>
-          <div class="step-title">Search Tìm vé</div>
-          <div class="step-token">Sinh flightValue thô</div>
+          <div class="step-badge" data-vi="Bước 1" data-en="Step 1" data-cn="步骤 1">Bước 1</div>
+          <div class="step-title" data-vi="Search Tìm vé" data-en="Search Flights" data-cn="航班查询">Search Tìm vé</div>
+          <div class="step-token" data-vi="Sinh flightValue thô" data-en="Raw flightValue token" data-cn="生成原始 flightValue">Sinh flightValue thô</div>
         </a>
         <div class="flow-arrow">→</div>
         <a href="#select" class="flow-node">
-          <div class="step-badge">Bước 2</div>
-          <div class="step-title">Select Chọn giá</div>
-          <div class="step-token">Sinh flightValue khóa giá</div>
+          <div class="step-badge" data-vi="Bước 2" data-en="Step 2" data-cn="步骤 2">Bước 2</div>
+          <div class="step-title" data-vi="Select Chọn giá" data-en="Select &amp; Reprice" data-cn="验价选座">Select Chọn giá</div>
+          <div class="step-token" data-vi="Sinh flightValue khóa giá" data-en="Price-locked flightValue" data-cn="生成锁价 flightValue">Sinh flightValue khóa giá</div>
         </a>
         <div class="flow-arrow">→</div>
         <a href="#book" class="flow-node">
-          <div class="step-badge">Bước 3</div>
-          <div class="step-title">Book Giữ chỗ</div>
-          <div class="step-token">Sinh mã PNR (bookingCode)</div>
+          <div class="step-badge" data-vi="Bước 3" data-en="Step 3" data-cn="步骤 3">Bước 3</div>
+          <div class="step-title" data-vi="Book Giữ chỗ" data-en="Create Booking" data-cn="创建预订 (生单)">Book Giữ chỗ</div>
+          <div class="step-token" data-vi="Sinh mã PNR (bookingCode)" data-en="Airline PNR (bookingCode)" data-cn="生成航司 PNR (bookingCode)">Sinh mã PNR (bookingCode)</div>
         </a>
         <div class="flow-arrow">→</div>
         <a href="#baggage" class="flow-node">
-          <div class="step-badge">Bước 4 (Tùy chọn)</div>
-          <div class="step-title">Add-ons Dịch vụ</div>
-          <div class="step-token">Mua Ghế, Hành lý, EMD</div>
+          <div class="step-badge" data-vi="Bước 4 (Tùy chọn)" data-en="Step 4 (Optional)" data-cn="步骤 4 (可选)">Bước 4 (Tùy chọn)</div>
+          <div class="step-title" data-vi="Add-ons Dịch vụ" data-en="Ancillaries &amp; Add-ons" data-cn="增值附加服务">Add-ons Dịch vụ</div>
+          <div class="step-token" data-vi="Mua Ghế, Hành lý, EMD" data-en="Seats, Baggage &amp; EMD" data-cn="增购行李/选座/出EMD">Mua Ghế, Hành lý, EMD</div>
         </a>
         <div class="flow-arrow">→</div>
         <a href="#issue" class="flow-node" style="border-color:var(--accent-green);">
-          <div class="step-badge" style="color:var(--accent-green);">Bước 5</div>
-          <div class="step-title">Issue Xuất vé</div>
-          <div class="step-token">Sinh số vé điện tử (e-Ticket)</div>
+          <div class="step-badge" style="color:var(--accent-green);" data-vi="Bước 5" data-en="Step 5" data-cn="步骤 5">Bước 5</div>
+          <div class="step-title" data-vi="Issue Xuất vé" data-en="Issue E-Ticket" data-cn="正式出票">Issue Xuất vé</div>
+          <div class="step-token" data-vi="Sinh số vé điện tử (e-Ticket)" data-en="13-digit e-Ticket Number" data-cn="生成 13 位电子客票号">Sinh số vé điện tử (e-Ticket)</div>
         </a>
         <div class="flow-arrow">→</div>
         <a href="#retrieve" class="flow-node">
-          <div class="step-badge">Bước 6</div>
-          <div class="step-title">Retrieve Tra cứu</div>
-          <div class="step-token">Kiểm tra trạng thái TICKETED</div>
+          <div class="step-badge" data-vi="Bước 6" data-en="Step 6" data-cn="步骤 6">Bước 6</div>
+          <div class="step-title" data-vi="Retrieve Tra cứu" data-en="Retrieve Booking" data-cn="订单检索">Retrieve Tra cứu</div>
+          <div class="step-token" data-vi="Kiểm tra trạng thái TICKETED" data-en="Verify TICKETED Status" data-cn="查验 TICKETED 出票状态">Kiểm tra trạng thái TICKETED</div>
         </a>
       </div>
     </div>
@@ -1319,8 +1364,8 @@ code, pre {
       <span class="callout-icon">⚠️</span>
       <div class="bi">
         <span class="vi"><strong>Nguyên tắc bất di bất dịch của chuỗi giá vé:</strong> Chuỗi <code>flightValues</code> truyền vào API <code>/flight/book</code> BẮT BUỘC phải lấy từ kết quả của API <code>/flight/select</code> (tuyệt đối không lấy trực tiếp từ Search). Nếu thời gian từ lúc Select đến khi Book vượt quá 15 phút, cần gọi <code>/flight/pricequote</code> để xác minh giá không bị nhảy.</span>
-        <span class="cn"><strong>状态链核心规则：</strong>调用 <code>/flight/book</code> 时的 <code>flightValues</code> 必须来自 <code>/flight/select</code> 的返回结果，严禁直接使用 <code>/flight/search</code> 的原始串。</span>
-        <span class="en"><strong>State Chaining Rule:</strong> flightValues passed to /flight/book MUST come directly from /flight/select response.</span>
+        <span class="en"><strong>State Chaining Rule:</strong> The <code>flightValues</code> token passed to <code>/flight/book</code> MUST be retrieved directly from the <code>/flight/select</code> response (never use the raw string from Search). If elapsed time exceeds 15 minutes, invoke <code>/flight/pricequote</code> to verify price stability.</span>
+        <span class="cn"><strong>状态链核心规则：</strong>调用 <code>/flight/book</code> 时的 <code>flightValues</code> 必须来自 <code>/flight/select</code> 的返回结果，严禁直接使用 <code>/flight/search</code> 的原始串。若从验价到生单间隔超过 15 分钟，建议调用 <code>/flight/pricequote</code> 二次核价以防运价跳变。</span>
       </div>
     </div>
   </div>
@@ -1330,8 +1375,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">03</div>
       <div class="section-titles">
-        <h2>Search &amp; Low Fare Calendar — Tìm Chuyến Bay &amp; Lịch Vé Rẻ</h2>
-        <div class="subtitle">Tìm kiếm thời gian thực chuyến bay 1 chiều, khứ hồi và ma trận vé rẻ theo tháng</div>
+        <h2 data-vi="Tìm Chuyến Bay & Lịch Vé Rẻ — Tìm Vé 1 Chiều, Khứ Hồi & Giá Rẻ Tháng" data-en="Flight Search & Low Fare Calendar — One-Way, Round-Trip & Monthly Matrix" data-cn="航班查询与低价日历 — 单程/往返搜索及月度低价矩阵">Tìm Chuyến Bay & Lịch Vé Rẻ — Tìm Vé 1 Chiều, Khứ Hồi & Giá Rẻ Tháng</h2>
+        <div class="subtitle" data-vi="Tìm kiếm thời gian thực chuyến bay 1 chiều, khứ hồi và ma trận vé rẻ theo tháng" data-en="Real-time availability search for one-way/round-trip flights and monthly lowest fare calendar" data-cn="实时查询单程、往返航班运价库存，以及按月低价日历推荐">Tìm kiếm thời gian thực chuyến bay 1 chiều, khứ hồi và ma trận vé rẻ theo tháng</div>
       </div>
     </div>
 
@@ -1340,21 +1385,21 @@ code, pre {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/search</span>
-        <span class="ep-title"><span class="vi">Tìm kiếm chuyến bay theo ngày / </span>Search Flights</span>
+        <span class="ep-title" data-vi="Tìm kiếm chuyến bay theo ngày" data-en="Search Flights by Date" data-cn="实时航班运价查询">Tìm kiếm chuyến bay theo ngày</span>Search Flights</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
         <table class="field-table">
-          <thead><tr><th>Tham số</th><th>Kiểu</th><th>Bắt buộc</th><th>Ý nghĩa &amp; Ràng buộc nghiệp vụ</th></tr></thead>
+          <thead><tr><th data-vi="Tham số" data-en="Parameter" data-cn="参数名称">Tham số</th><th data-vi="Kiểu" data-en="Type" data-cn="数据类型">Kiểu</th><th data-vi="Bắt buộc" data-en="Required" data-cn="必填">Bắt buộc</th><th data-vi="Ý nghĩa &amp; Ràng buộc nghiệp vụ" data-en="Business Rules &amp; Meaning" data-cn="业务规则与说明">Ý nghĩa &amp; Ràng buộc nghiệp vụ</th></tr></thead>
           <tbody>
-            <tr><td><span class="field-name">system</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mã hãng hàng không hoặc GDS (<code>VN</code>, <code>VJ</code>, <code>QH</code>, <code>VU</code>, <code>1A</code>, <code>TR</code>, <code>AK</code>)</td></tr>
-            <tr><td><span class="field-name">adt</span></td><td><span class="field-type">integer</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Số lượng người lớn (&gt;= 12 tuổi). Quy tắc IATA: <code>adt + chd &lt;= 9</code></td></tr>
+            <tr><td><span class="field-name">system</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mã hãng hàng không hoặc GDS (<code>VN</code>, <code>VJ</code>, <code>QH</code>, <code>VU</code>, <code>1A</code>, <code>TR</code>, <code>AK</code>)</td></tr>
+            <tr><td><span class="field-name">adt</span></td><td><span class="field-type">integer</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Số lượng người lớn (&gt;= 12 tuổi). Quy tắc IATA: <code>adt + chd &lt;= 9</code></td></tr>
             <tr><td><span class="field-name">chd</span></td><td><span class="field-type">integer</span></td><td><span class="req-badge req-no">Tùy chọn</span></td><td>Số lượng trẻ em (2 đến dưới 12 tuổi, phải đi cùng người lớn)</td></tr>
             <tr><td><span class="field-name">inf</span></td><td><span class="field-type">integer</span></td><td><span class="req-badge req-no">Tùy chọn</span></td><td>Số lượng em bé (&lt; 2 tuổi, không chiếm ghế, số lượng &lt;= adt)</td></tr>
-            <tr><td><span class="field-name">flights</span></td><td><span class="field-type">array</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mảng chặng bay (1 chiều truyền 1 leg, khứ hồi truyền 2 leg)</td></tr>
-            <tr><td><span class="field-name">flights[].startPoint</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mã sân bay đi theo chuẩn 3 chữ cái IATA (ví dụ: <code>SGN</code>)</td></tr>
-            <tr><td><span class="field-name">flights[].endPoint</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mã sân bay đến theo chuẩn 3 chữ cái IATA (ví dụ: <code>HAN</code>)</td></tr>
-            <tr><td><span class="field-name">flights[].departDate</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Ngày khởi hành (định dạng <code>YYYY-MM-DD</code>, không được ở quá khứ, tối đa 365 ngày)</td></tr>
+            <tr><td><span class="field-name">flights</span></td><td><span class="field-type">array</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mảng chặng bay (1 chiều truyền 1 leg, khứ hồi truyền 2 leg)</td></tr>
+            <tr><td><span class="field-name">flights[].startPoint</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mã sân bay đi theo chuẩn 3 chữ cái IATA (ví dụ: <code>SGN</code>)</td></tr>
+            <tr><td><span class="field-name">flights[].endPoint</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mã sân bay đến theo chuẩn 3 chữ cái IATA (ví dụ: <code>HAN</code>)</td></tr>
+            <tr><td><span class="field-name">flights[].departDate</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Ngày khởi hành (định dạng <code>YYYY-MM-DD</code>, không được ở quá khứ, tối đa 365 ngày)</td></tr>
           </tbody>
         </table>
 
@@ -1439,8 +1484,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">04</div>
       <div class="section-titles">
-        <h2>Select &amp; Reprice — Khóa Giá &amp; Tái Thẩm Định Giá Vé</h2>
-        <div class="subtitle">Xác minh kho chỗ thời gian thực và lấy chuỗi flightValue để đặt chỗ</div>
+        <h2 data-vi="Chọn Giá Vé & Khóa Chỗ — Lấy Chuỗi flightValue Thẩm Định" data-en="Select & Price Lock — Real-Time Seat Validation & flightValue Chain" data-cn="验价选座与锁定价格 — 实时验舱与获取 flightValue 令牌">Chọn Giá Vé & Khóa Chỗ — Lấy Chuỗi flightValue Thẩm Định</h2>
+        <div class="subtitle" data-vi="Xác minh kho chỗ thời gian thực và lấy chuỗi flightValue để đặt chỗ" data-en="Verify real-time seat inventory, reprice fare basis, and acquire locked flightValue token" data-cn="向航司实时验舱核实座位可用性，获取用于后续生单的 flightValue 核心令牌">Xác minh kho chỗ thời gian thực và lấy chuỗi flightValue để đặt chỗ</div>
       </div>
     </div>
 
@@ -1448,7 +1493,7 @@ code, pre {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/select</span>
-        <span class="ep-title"><span class="vi">Xác nhận chọn chuyến bay / </span>Select Flight</span>
+        <span class="ep-title" data-vi="Xác nhận chọn chuyến bay & Khóa chỗ" data-en="Select Flight & Lock Price" data-cn="确认航班并锁定价格 (验舱)">Xác nhận chọn chuyến bay & Khóa chỗ</span>Select Flight</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
@@ -1498,8 +1543,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">05</div>
       <div class="section-titles">
-        <h2>Create Booking — Tạo Đơn Giữ Chỗ (PNR)</h2>
-        <div class="subtitle">Đưa thông tin hành khách lên hệ thống hãng và nhận mã đặt chỗ (bookingCode)</div>
+        <h2 data-vi="Tạo Đơn Giữ Chỗ (PNR) — Đẩy Thông Tin Hành Khách Lên Hãng Bay" data-en="Create Booking — Submit Passenger Details & Acquire Airline PNR" data-cn="创建预订 — 提交旅客信息并生成航司 PNR (bookingCode)">Tạo Đơn Giữ Chỗ (PNR) — Đẩy Thông Tin Hành Khách Lên Hãng Bay</h2>
+        <div class="subtitle" data-vi="Đưa thông tin hành khách lên hệ thống hãng và nhận mã đặt chỗ (bookingCode)" data-en="Submit passenger name records to airline hosts and acquire reservation code (bookingCode / PNR)" data-cn="向航司系统提交旅客名单，生成订座编码 (bookingCode / PNR) 并进入待支付状态">Đưa thông tin hành khách lên hệ thống hãng và nhận mã đặt chỗ (bookingCode)</div>
       </div>
     </div>
 
@@ -1507,18 +1552,18 @@ code, pre {
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
         <span class="ep-path">/api/v1/flight/book</span>
-        <span class="ep-title"><span class="vi">Tạo đặt chỗ (PNR) / </span>Book Flight</span>
+        <span class="ep-title" data-vi="Tạo đặt chỗ (Sinh mã PNR)" data-en="Create Booking (Acquire PNR)" data-cn="创建预订 (生成航司 PNR)">Tạo đặt chỗ (Sinh mã PNR)</span>Book Flight</span>
         <span class="ep-toggle open">▼</span>
       </div>
       <div class="endpoint-body">
         <table class="field-table">
-          <thead><tr><th>Trường</th><th>Kiểu</th><th>Bắt buộc</th><th>Ý nghĩa</th></tr></thead>
+          <thead><tr><th data-vi="Trường (Field)" data-en="Field" data-cn="参数名称">Trường</th><th data-vi="Kiểu" data-en="Type" data-cn="数据类型">Kiểu</th><th data-vi="Bắt buộc" data-en="Required" data-cn="必填">Bắt buộc</th><th data-vi="Ý nghĩa" data-en="Description" data-cn="说明">Ý nghĩa</th></tr></thead>
           <tbody>
-            <tr><td><span class="field-name">system</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mã hãng bay (ví dụ: <code>VN</code>, <code>VJ</code>)</td></tr>
-            <tr><td><span class="field-name">flightValues</span></td><td><span class="field-type">string[]</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Mảng flightValue nhận từ bước <code>/select</code></td></tr>
+            <tr><td><span class="field-name">system</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mã hãng bay (ví dụ: <code>VN</code>, <code>VJ</code>)</td></tr>
+            <tr><td><span class="field-name">flightValues</span></td><td><span class="field-type">string[]</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mảng flightValue nhận từ bước <code>/select</code></td></tr>
             <tr><td><span class="field-name">autoIssue</span></td><td><span class="field-type">boolean</span></td><td><span class="req-badge req-no">Tùy chọn</span></td><td><code>false</code>: Chỉ giữ chỗ sinh mã PNR (khuyên dùng); <code>true</code>: Tự xuất vé ngay sau khi đặt</td></tr>
-            <tr><td><span class="field-name">contact</span></td><td><span class="field-type">object</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Thông tin liên hệ đại lý / người book vé (name, phone, email)</td></tr>
-            <tr><td><span class="field-name">passengers</span></td><td><span class="field-type">array</span></td><td><span class="req-badge req-yes">BẮT BUỘC</span></td><td>Danh sách hành khách (surname, givenName, type, title, gender, dateOfBirth)</td></tr>
+            <tr><td><span class="field-name">contact</span></td><td><span class="field-type">object</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Thông tin liên hệ đại lý / người book vé (name, phone, email)</td></tr>
+            <tr><td><span class="field-name">passengers</span></td><td><span class="field-type">array</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Danh sách hành khách (surname, givenName, type, title, gender, dateOfBirth)</td></tr>
           </tbody>
         </table>
 
@@ -1587,8 +1632,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">06</div>
       <div class="section-titles">
-        <h2>Issue Ticket — Xuất Vé Máy Bay (Trừ Tiền Ký Quỹ B2B)</h2>
-        <div class="subtitle">Thao tác chính thức và không thể đảo ngược — Sinh số vé điện tử 13 chữ số</div>
+        <h2 data-vi="Xuất Vé Máy Bay — Ký Quỹ B2B & Cấp Vé Điện Tử (13 Chữ Số)" data-en="Issue Ticket — Official Issuance & B2B Deposit Deduction (13-Digit e-Ticket)" data-cn="正式出票 — 确认支付并扣减 B2B 授信额度（生成 13 位电子客票号）">Xuất Vé Máy Bay — Ký Quỹ B2B & Cấp Vé Điện Tử (13 Chữ Số)</h2>
+        <div class="subtitle" data-vi="Thao tác chính thức và không thể đảo ngược — Sinh số vé điện tử 13 chữ số" data-en="Irreversible commercial action — Deducts B2B balance and issues official 13-digit airline e-tickets" data-cn="不可逆商业扣款操作 — 扣减 B2B 预存款并生成航司官方 13 位电子客票凭单">Thao tác chính thức và không thể đảo ngược — Sinh số vé điện tử 13 chữ số</div>
       </div>
     </div>
 
@@ -1642,8 +1687,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">07</div>
       <div class="section-titles">
-        <h2>Retrieve Booking — Tra Cứu Tình Trạng Vé &amp; PNR</h2>
-        <div class="subtitle">Đọc lại dữ liệu hành trình, hành khách và trạng thái vé điện tử</div>
+        <h2 data-vi="Tra Cứu Tình Trạng Vé & Đơn Hàng — Đọc Lại PNR & Trạng Thái Vé" data-en="Retrieve Booking — Read Itinerary, Passenger List & e-Ticket Status" data-cn="订单检索 — 查验航程信息、旅客列表及电子客票出票状态">Tra Cứu Tình Trạng Vé & Đơn Hàng — Đọc Lại PNR & Trạng Thái Vé</h2>
+        <div class="subtitle" data-vi="Đọc lại dữ liệu hành trình, hành khách và trạng thái vé điện tử" data-en="Query booking status, airline ticket numbers, and itinerary details anytime" data-cn="随时查询最新订单状态、航司票号及完整行程单数据">Đọc lại dữ liệu hành trình, hành khách và trạng thái vé điện tử</div>
       </div>
     </div>
 
@@ -1671,8 +1716,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">08</div>
       <div class="section-titles">
-        <h2>Ancillary Services &amp; EMD — Hành Lý, Ghế Ngồi &amp; Xuất EMD</h2>
-        <div class="subtitle">Bán các dịch vụ gia tăng trước và sau khi vé đã xuất</div>
+        <h2 data-vi="Hành Lý, Ghế Ngồi & Xuất EMD — Dịch Vụ Gia Tăng Cho Chuyến Bay" data-en="Ancillary Services & EMD — Baggage, Seat Map & Electronic Miscellaneous Documents" data-cn="附加服务与 EMD — 行李额度、机上选座与杂项凭证出票">Hành Lý, Ghế Ngồi & Xuất EMD — Dịch Vụ Gia Tăng Cho Chuyến Bay</h2>
+        <div class="subtitle" data-vi="Bán các dịch vụ gia tăng trước và sau khi vé đã xuất" data-en="Sell and issue extra baggage, advanced seat selection, and ancillary services before or after ticketing" data-cn="支持在出票前或出票后增购预付费行李、机上预选座位及出具 EMD 杂项凭单">Bán các dịch vụ gia tăng trước và sau khi vé đã xuất</div>
       </div>
     </div>
 
@@ -1737,8 +1782,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">09</div>
       <div class="section-titles">
-        <h2>Supplementary Information — Bổ Sung Thông Tin Đặt Chỗ</h2>
-        <div class="subtitle">Thêm em bé, giấy tờ tùy thân, thẻ khách hàng thân thiết và chỉ thị hàng không (OSI/SK/Remark)</div>
+        <h2 data-vi="Bổ Sung Thông Tin Đặt Chỗ — Em Bé, Hộ Chiếu, Bông Sen Vàng & OSI/SK" data-en="Supplementary Booking Data — Infant, Passport, Frequent Flyer & OSI/SK" data-cn="预订信息补充 — 婴儿挂载、护照证件、常客卡号及航司 OSI/SK 指令">Bổ Sung Thông Tin Đặt Chỗ — Em Bé, Hộ Chiếu, Bông Sen Vàng & OSI/SK</h2>
+        <div class="subtitle" data-vi="Thêm em bé, giấy tờ tùy thân, thẻ khách hàng thân thiết và chỉ thị hàng không (OSI/SK/Remark)" data-en="Add infant pax, passport/national ID, frequent flyer cards, and airline service remarks (OSI/SK)" data-cn="出票前后补充关联婴儿、护照证件、常旅客会员卡以及航司业务服务指令 (OSI/SK/Remark)">Thêm em bé, giấy tờ tùy thân, thẻ khách hàng thân thiết và chỉ thị hàng không (OSI/SK/Remark)</div>
       </div>
     </div>
 
@@ -1870,8 +1915,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">10</div>
       <div class="section-titles">
-        <h2>Post-Sale Management — Nghiệp Vụ Hậu Mãi &amp; Xử Lý Vé</h2>
-        <div class="subtitle">Tách đoàn (Split PNR), Đổi vé (Exchange), Hoàn vé (Refund) và Hủy vé trong ngày (Void)</div>
+        <h2 data-vi="Nghiệp Vụ Hậu Mãi & Xử Lý Vé — Tách Đoàn, Đổi Chuyến, Hoàn Vé & Void Vé" data-en="Post-Sale Operations — Split PNR, Change Flight, Refund & Void Ticket" data-cn="售后客票管理 — 订单拆单、改期换开、退票申请与当日作废">Nghiệp Vụ Hậu Mãi & Xử Lý Vé — Tách Đoàn, Đổi Chuyến, Hoàn Vé & Void Vé</h2>
+        <div class="subtitle" data-vi="Tách đoàn (Split PNR), Đổi vé (Exchange), Hoàn vé (Refund) và Hủy vé trong ngày (Void)" data-en="Comprehensive post-booking workflow: Split PNR, flight schedule change, refund application, same-day void, and fare rule verification" data-cn="覆盖客票全生命周期售后服务：订单拆单 (Split PNR)、改期换开 (Exchange)、退票申请 (Refund)、当日作废 (Void) 及客票退改规则查询">Tách đoàn (Split PNR), Đổi vé (Exchange), Hoàn vé (Refund) và Hủy vé trong ngày (Void)</div>
       </div>
     </div>
 
@@ -2073,71 +2118,167 @@ code, pre {
     <div class="section-header">
       <div class="section-num">11</div>
       <div class="section-titles">
-        <h2>Smart Error Code Dictionary — Từ Điển Mã Lỗi Thông Minh</h2>
-        <div class="subtitle">Tra cứu nguyên nhân và giải pháp xử lý ngay lập tức</div>
+        <h2 data-vi="Từ Điển Mã Lỗi Thông Minh — Smart Error Code Dictionary" data-en="Smart Error Code Dictionary — Instant Diagnostic Guide" data-cn="智能错误码字典 — 故障排查与解决方案速查">Từ Điển Mã Lỗi Thông Minh — Smart Error Code Dictionary</h2>
+        <div class="subtitle" data-vi="Tra cứu nguyên nhân và giải pháp xử lý ngay lập tức" data-en="Quick reference for root cause analysis and instant recovery procedures" data-cn="快速检索错误原因并获取官方推荐解决方案">Tra cứu nguyên nhân và giải pháp xử lý ngay lập tức</div>
       </div>
     </div>
 
-    <div class="error-lookup-wrap">
-      <input type="text" class="error-search-input" id="errorSearch" placeholder="Gõ mã lỗi (00004, 00001, token, name, seat, limit...) để tra cứu ngay...">
+        <div class="error-lookup-wrap">
+      <input type="text" class="error-search-input" id="errorSearch" data-vi-ph="Gõ mã lỗi (00004, 00001, token, name, seat, limit...) để tra cứu ngay..." data-en-ph="Type error code (00004, 00001, token, name, seat, limit...) to search..." data-cn-ph="输入错误代码 (00004, 00001, token, name, seat, limit...) 立即检索..." placeholder="Gõ mã lỗi (00004, 00001, token, name, seat, limit...) để tra cứu ngay...">
       
       <table class="field-table" id="errorTable">
         <thead>
           <tr>
-            <th style="width: 15%;">Mã lỗi</th>
-            <th style="width: 25%;">Tên lỗi kỹ thuật</th>
-            <th style="width: 35%;">Nguyên nhân &amp; Ý nghĩa</th>
-            <th style="width: 25%;">Hướng xử lý</th>
+            <th style="width: 15%;" data-vi="Mã lỗi" data-en="Error Code" data-cn="错误代码">Mã lỗi</th>
+            <th style="width: 25%;" data-vi="Tên lỗi kỹ thuật" data-en="Technical Name" data-cn="技术标识">Tên lỗi kỹ thuật</th>
+            <th style="width: 35%;" data-vi="Nguyên nhân &amp; Ý nghĩa" data-en="Root Cause &amp; Meaning" data-cn="故障原因与含义">Nguyên nhân &amp; Ý nghĩa</th>
+            <th style="width: 25%;" data-vi="Hướng xử lý" data-en="Resolution &amp; Workaround" data-cn="排查与解决方案">Hướng xử lý</th>
           </tr>
         </thead>
         <tbody>
           <tr>
             <td><code class="req-badge req-yes">00001</code></td>
             <td><strong>AuthenticationFailed</strong></td>
-            <td>Tài khoản hoặc mật khẩu kết nối API không đúng</td>
-            <td>Kiểm tra lại partnerCode, userName và password được cấp</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Tài khoản hoặc mật khẩu kết nối API không đúng</span>
+                <span class="en">Invalid partnerCode, username, or password for API authentication</span>
+                <span class="cn">API 认证账号、密码或 partnerCode 错误</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Kiểm tra lại partnerCode, userName và password được cấp</span>
+                <span class="en">Verify partnerCode, userName, and password assigned by HNH</span>
+                <span class="cn">请核对 HNH 官方分配的 partnerCode、userName 及密码</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td><code class="req-badge req-yes">00002</code></td>
             <td><strong>Unauthorized</strong></td>
-            <td>Token chưa truyền hoặc đã hết hạn 24 giờ</td>
-            <td>Gọi <code>/api/v1/refresh-token</code> hoặc đăng nhập lại</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Token chưa truyền hoặc đã hết hạn 24 giờ</span>
+                <span class="en">Bearer token missing or expired (exceeded 24 hours)</span>
+                <span class="cn">未携带 Bearer 令牌或令牌已过期（超过24小时）</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Gọi /api/v1/refresh-token hoặc đăng nhập lại</span>
+                <span class="en">Call /api/v1/refresh-token or re-authenticate via /api/v1/sign-in</span>
+                <span class="cn">调用 /api/v1/refresh-token 刷新或重新登录获取新令牌</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td><code class="req-badge req-yes">00004</code></td>
             <td><strong>EndpointNotFound</strong></td>
-            <td>Sai URL endpoint hoặc sai phương thức GET/POST</td>
-            <td>Kiểm tra lại đường dẫn API trong tài liệu</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Sai URL endpoint hoặc sai phương thức GET/POST</span>
+                <span class="en">Endpoint not found or incorrect HTTP method (GET vs POST)</span>
+                <span class="cn">请求端点 URL 错误或 HTTP 方法不匹配 (GET/POST)</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Kiểm tra lại đường dẫn API trong tài liệu</span>
+                <span class="en">Verify exact API URL path and HTTP verb against documentation</span>
+                <span class="cn">请核对文档中该接口的标准路径及请求方法</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td><code class="req-badge req-yes">00010</code></td>
             <td><strong>ValidationNotEmpty</strong></td>
-            <td>Thiếu trường dữ liệu bắt buộc</td>
-            <td>Xem kỹ bảng tham số các trường Required: YES</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Thiếu trường dữ liệu bắt buộc trong request body</span>
+                <span class="en">Missing mandatory field in JSON request payload</span>
+                <span class="cn">JSON 请求体中缺少必填参数字段</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Xem kỹ bảng tham số các trường Required: YES</span>
+                <span class="en">Inspect field specification table and ensure all REQUIRED fields are present</span>
+                <span class="cn">对照参数说明表，补全所有标记为「必填」的字段</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td><code class="req-badge req-yes">00013</code></td>
             <td><strong>SystemNotFound</strong></td>
-            <td>Mã hệ thống truyền vào không tồn tại</td>
-            <td>Gọi <code>/api/v1/system</code> để lấy danh sách mã hợp lệ</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Mã hệ thống truyền vào không tồn tại hoặc chưa kích hoạt</span>
+                <span class="en">Specified airline system code not found or inactive for account</span>
+                <span class="cn">传入的航司或系统代码不存在或未为该账户开通权限</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Gọi /api/v1/system để lấy danh sách mã hợp lệ</span>
+                <span class="en">Call /api/v1/system to list all enabled carrier system codes</span>
+                <span class="cn">调用 /api/v1/system 接口获取已授权开通的系统代码列表</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td><code class="req-badge req-yes">ERR_SEAT</code></td>
             <td><strong>InventorySoldOut</strong></td>
-            <td>Chỗ ngồi hoặc hạng vé giá rẻ đã bị bán hết</td>
-            <td>Yêu cầu khách hàng tìm kiếm lại chuyến bay mới</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Chỗ ngồi hoặc hạng vé giá rẻ đã bị bán hết</span>
+                <span class="en">Selected booking class / seat inventory sold out in real-time</span>
+                <span class="cn">所选舱位或低价配额已售罄（航司实时验舱失败）</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Yêu cầu khách hàng tìm kiếm lại chuyến bay mới</span>
+                <span class="en">Prompt user to re-search flights and choose an available fare bucket</span>
+                <span class="cn">引导用户重新发起航班查询并选择其他可用舱位</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td><code class="req-badge req-yes">ERR_DRIFT</code></td>
             <td><strong>PriceChanged</strong></td>
-            <td>Giá vé của hãng đã biến động sau bước Select</td>
-            <td>Hiển thị giá mới cho khách hàng xác nhận lại</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Giá vé của hãng đã biến động sau bước Select</span>
+                <span class="en">Airline fare basis or taxes changed between select and booking</span>
+                <span class="cn">从验价到生单期间航司基础运价或税费发生变动</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Hiển thị giá mới cho khách hàng xác nhận lại</span>
+                <span class="en">Display updated price quote to traveler for re-confirmation</span>
+                <span class="cn">向旅客展示最新价格复核结果，待确认后继续提交预订</span>
+              </div>
+            </td>
           </tr>
           <tr>
             <td><code class="req-badge req-yes">ERR_LIMIT</code></td>
             <td><strong>InsufficientCreditLimit</strong></td>
-            <td>Hạn mức tài khoản ký quỹ B2B không đủ để xuất vé</td>
-            <td>Liên hệ bộ phận kế toán HNH để nạp thêm hạn mức</td>
+            <td>
+              <div class="bi">
+                <span class="vi">Hạn mức tài khoản ký quỹ B2B không đủ để xuất vé</span>
+                <span class="en">Insufficient B2B deposit credit limit to issue ticket</span>
+                <span class="cn">B2B 预存保证金账户或授信额度不足，无法完成出票扣款</span>
+              </div>
+            </td>
+            <td>
+              <div class="bi">
+                <span class="vi">Liên hệ bộ phận kế toán HNH để nạp thêm hạn mức</span>
+                <span class="en">Top up B2B account deposit balance via HNH finance desk</span>
+                <span class="cn">请联系 HNH 财务或商务团队为账户充值授信额度</span>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -2149,8 +2290,8 @@ code, pre {
     <div class="section-header">
       <div class="section-num">12</div>
       <div class="section-titles">
-        <h2>Full Integration Script — Mã Nguồn Tích Hợp Hoàn Chỉnh</h2>
-        <div class="subtitle">Đoạn mã Python tích hợp hoàn chỉnh: Đăng nhập → Tìm vé → Chọn giá → Giữ chỗ → Xuất vé</div>
+        <h2 data-vi="Mã Nguồn Tích Hợp Hoàn Chỉnh — Full Python Integration Script" data-en="Full Python Integration Script — End-to-End Workflow" data-cn="完整集成代码 — Python 端到端出票流程">Mã Nguồn Tích Hợp Hoàn Chỉnh — Full Python Integration Script</h2>
+        <div class="subtitle" data-vi="Đoạn mã Python tích hợp hoàn chỉnh: Đăng nhập → Tìm vé → Chọn giá → Giữ chỗ → Xuất vé" data-en="Production-ready Python implementation: Sign In → Search → Select → Book PNR → Issue Ticket" data-cn="生产级 Python 集成代码：登录认证 → 航班查询 → 验价选座 → 创建预订 → 正式出票">Đoạn mã Python tích hợp hoàn chỉnh: Đăng nhập → Tìm vé → Chọn giá → Giữ chỗ → Xuất vé</div>
       </div>
     </div>
 
@@ -2202,34 +2343,38 @@ print(<span class="str">"Xuất vé thành công! Số vé:"</span>, issue_res[<
     <div class="section-header">
       <div class="section-num">13</div>
       <div class="section-titles">
-        <h2>Developer Support &amp; SLA — Kênh Hỗ Trợ Kỹ Thuật</h2>
-        <div class="subtitle">Đội ngũ kỹ sư hỗ trợ tích hợp 24/7 của Hồng Ngọc Hà Travel</div>
+        <h2 data-vi="Kênh Hỗ Trợ Kỹ Thuật &amp; SLA — Developer Support" data-en="Developer Support &amp; SLA — 24/7 Technical Assistance" data-cn="开发者支持与 SLA 保障 — 7x24 技术服务">Kênh Hỗ Trợ Kỹ Thuật &amp; SLA — Developer Support</h2>
+        <div class="subtitle" data-vi="Đội ngũ kỹ sư hỗ trợ tích hợp 24/7 của Hồng Ngọc Hà Travel" data-en="Dedicated 24/7 integration engineering team by Hong Ngoc Ha Travel" data-cn="鸿玉荷旅行社 (Hong Ngoc Ha Travel) 7x24 小时技术保障团队">Đội ngũ kỹ sư hỗ trợ tích hợp 24/7 của Hồng Ngọc Hà Travel</div>
       </div>
     </div>
 
-    <div class="hero-meta-grid" style="margin-top: 10px;">
+    <div class="hero-meta-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
       <div class="hero-meta-card">
-        <div class="label">📧 Email Kỹ Thuật API</div>
+        <div class="label" data-vi="📧 Email Kỹ Thuật API" data-en="📧 API Technical Support" data-cn="📧 接口技术支持邮箱">📧 Email Kỹ Thuật API</div>
         <code>api-support@tripota.com.vn</code>
       </div>
       <div class="hero-meta-card">
-        <div class="label">📞 Hotline Nghiệp Vụ Vé 24/7</div>
+        <div class="label" data-vi="📞 Hotline Nghiệp Vụ Vé 24/7" data-en="📞 24/7 Ticketing Desk Hotline" data-cn="📞 7x24 客票业务应急热线">📞 Hotline Nghiệp Vụ Vé 24/7</div>
         <code>+84 (0) 28 3914 9999</code>
       </div>
       <div class="hero-meta-card">
-        <div class="label">💬 Zalo / Telegram Dev</div>
+        <div class="label" data-vi="💬 Zalo / Telegram Dev" data-en="💬 Dev Chat (Zalo / TG)" data-cn="💬 开发者即时通讯群组 (Zalo / TG)">💬 Zalo / Telegram Dev</div>
         <code>@HNH_FlightHub_Support</code>
       </div>
       <div class="hero-meta-card">
-        <div class="label">⚡ Cam Kết Phản Hồi (SLA)</div>
-        <code>Dưới 15 phút cho sự cố xuất vé khẩn cấp</code>
+        <div class="label" data-vi="⚡ Cam Kết Phản Hồi (SLA)" data-en="⚡ Response Commitment (SLA)" data-cn="⚡ 服务级别保障承诺 (SLA)">⚡ Cam Kết Phản Hồi (SLA)</div>
+        <code style="word-break: normal; overflow-wrap: break-word;">
+          <span class="lang-vi">&lt; 15 phút đối với sự cố xuất vé khẩn cấp</span>
+          <span class="lang-en">&lt; 15 minutes for urgent ticketing incidents</span>
+          <span class="lang-cn">&lt; 15 分钟极速响应紧急出票异常</span>
+        </code>
       </div>
     </div>
   </div>
 
   <!-- FOOTER -->
   <footer class="site-footer">
-    <p>Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; TripOTA Flight Hub API &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026</p>
+    <p data-vi="Hong Ngoc Hà Travel (HNH) &nbsp;·&nbsp; Cổng Tích Hợp API B2B &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026" data-en="Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; B2B Aviation Integration Portal &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026" data-cn="Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; B2B 航空分销 API 开发者门户 &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026">Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; B2B Aviation Integration Portal &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026</p>
     <p class="signature">Designed with ♥ by Trung Nguyễn - Platform Expert</p>
   </footer>
 
@@ -2296,6 +2441,11 @@ document.querySelectorAll('.lang-option').forEach(function(opt) {
 applyLanguage(initialLang);
 
 function applyLanguage(lang) {
+  if (!lang) lang = 'vi';
+  document.documentElement.setAttribute('lang', lang);
+  document.body.setAttribute('data-lang', lang);
+  localStorage.setItem('hnh_lang', lang);
+
   document.querySelectorAll('.lang-option').forEach(function(opt) {
     if (opt.getAttribute('data-lang') === lang) opt.classList.add('active');
     else opt.classList.remove('active');
@@ -2315,50 +2465,28 @@ function applyLanguage(lang) {
     langCurLabel.textContent = 'Tất cả / All';
   }
 
-  // Switch hero section spans
-  var heroVi = document.querySelectorAll('.hero .lang-vi');
-  var heroCn = document.querySelectorAll('.hero .lang-cn');
-  var heroEn = document.querySelectorAll('.hero .lang-en');
+  // Update all elements with data-vi
+  document.querySelectorAll('[data-vi]').forEach(function(el) {
+    var txt = '';
+    if (lang === 'all') {
+      var vi = el.getAttribute('data-vi') || '';
+      var en = el.getAttribute('data-en') || '';
+      txt = vi + (en && en !== vi ? ' / ' + en : '');
+    } else {
+      txt = el.getAttribute('data-' + lang) || el.getAttribute('data-vi');
+    }
+    if (txt) {
+      el.innerHTML = txt;
+    }
+  });
 
-  // Switch inline bi spans
-  var biVi = document.querySelectorAll('.bi .vi');
-  var biCn = document.querySelectorAll('.bi .cn');
-  var biEn = document.querySelectorAll('.bi .en');
-
-  if (lang === 'vi') {
-    heroVi.forEach(function(el) { el.style.display = 'block'; });
-    heroCn.forEach(function(el) { el.style.display = 'none'; });
-    heroEn.forEach(function(el) { el.style.display = 'none'; });
-
-    biVi.forEach(function(el) { el.style.display = ''; });
-    biCn.forEach(function(el) { el.style.display = 'none'; });
-    biEn.forEach(function(el) { el.style.display = 'none'; });
-  } else if (lang === 'cn') {
-    heroVi.forEach(function(el) { el.style.display = 'none'; });
-    heroCn.forEach(function(el) { el.style.display = 'block'; });
-    heroEn.forEach(function(el) { el.style.display = 'none'; });
-
-    biVi.forEach(function(el) { el.style.display = 'none'; });
-    biCn.forEach(function(el) { el.style.display = ''; });
-    biEn.forEach(function(el) { el.style.display = 'none'; });
-  } else if (lang === 'en') {
-    heroVi.forEach(function(el) { el.style.display = 'none'; });
-    heroCn.forEach(function(el) { el.style.display = 'none'; });
-    heroEn.forEach(function(el) { el.style.display = 'block'; });
-
-    biVi.forEach(function(el) { el.style.display = 'none'; });
-    biCn.forEach(function(el) { el.style.display = 'none'; });
-    biEn.forEach(function(el) { el.style.display = ''; });
-  } else {
-    // Show all
-    heroVi.forEach(function(el) { el.style.display = 'block'; });
-    heroCn.forEach(function(el) { el.style.display = 'block'; });
-    heroEn.forEach(function(el) { el.style.display = 'block'; });
-
-    biVi.forEach(function(el) { el.style.display = ''; });
-    biCn.forEach(function(el) { el.style.display = ''; });
-    biEn.forEach(function(el) { el.style.display = ''; });
-  }
+  // Update all inputs with placeholders
+  document.querySelectorAll('[data-vi-ph]').forEach(function(el) {
+    var ph = el.getAttribute('data-' + (lang === 'all' ? 'en' : lang) + '-ph') || el.getAttribute('data-vi-ph');
+    if (ph) {
+      el.placeholder = ph;
+    }
+  });
 }
 
 // 3. COLLAPSIBLE ENDPOINTS

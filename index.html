@@ -1008,6 +1008,627 @@ code, pre {
   min-width: 140px;
 }
 
+
+/* ==========================================================================
+   PREMIUM UI/UX PROTOCOL UPGRADE - AIRLINE BRANDING, BADGES & INTERACTION
+   ========================================================================== */
+
+/* FIX LAYOUT & PREVENT SIDEBAR OVERLAP BUG */
+html, body {
+  overflow-x: hidden !important;
+  max-width: 100% !important;
+  width: 100% !important;
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+.header {
+  width: 100% !important;
+  max-width: 100% !important;
+  padding: 0 20px !important;
+  box-sizing: border-box;
+}
+.header-controls {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  padding-right: 4px;
+}
+.theme-btn {
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+.layout {
+  display: flex;
+  padding-top: var(--header-h);
+  min-height: 100vh;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: hidden !important;
+  box-sizing: border-box;
+}
+.main {
+  margin-left: var(--sidebar-w);
+  flex: 1;
+  min-width: 0;
+  width: calc(100% - var(--sidebar-w)) !important;
+  max-width: calc(100% - var(--sidebar-w)) !important;
+  padding: 32px 36px 80px 36px;
+  box-sizing: border-box;
+  overflow-x: hidden !important;
+}
+.endpoint {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden;
+  box-sizing: border-box;
+  border-radius: 14px;
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.endpoint:hover {
+  border-color: var(--border-bright);
+}
+.endpoint-body {
+  padding: 24px;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+/* HERO META CARDS (PREMIUM GLOSS & ACCENTS) */
+.hero-meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 14px;
+  margin: 20px 0;
+}
+.hero-meta-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.hero-meta-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-bright);
+}
+.hero-meta-card.card-docs { border-left: 4px solid #0284c7; }
+.hero-meta-card.card-sandbox { border-left: 4px solid #10b981; }
+.hero-meta-card.card-swagger { border-left: 4px solid #8b5cf6; }
+.hero-meta-card.card-json { border-left: 4px solid #f59e0b; }
+.hero-meta-card.card-sla { border-left: 4px solid #f97316; }
+
+.hero-meta-card .label {
+  font-size: 11.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  margin-bottom: 6px;
+}
+.hero-meta-card a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 13px;
+  transition: color 0.2s;
+}
+.hero-meta-card a:hover {
+  color: var(--accent-hover);
+  text-decoration: underline;
+}
+
+/* SLA BOX TEXT - NEVER WRAP MID-WORD */
+.sla-badge-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  word-break: normal;
+  overflow-wrap: normal;
+  white-space: normal;
+}
+
+/* ==========================================================================
+   SYSTEM CODES - VIBRANT BRAND-COLORED BADGES (PREMIUM PROTOCOL)
+   ========================================================================== */
+.sys-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: default;
+  white-space: nowrap;
+}
+.sys-badge:hover {
+  transform: translateY(-1px) scale(1.05);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+.sys-sep {
+  color: var(--text-muted);
+  font-weight: 400;
+  margin: 0 4px;
+}
+
+/* Domestic Airlines */
+.sys-vn { background: linear-gradient(135deg, #004b87, #002d56); color: #fde047; border: 1px solid #0284c7; }
+.sys-vj { background: linear-gradient(135deg, #e11d48, #be123c); color: #ffffff; border: 1px solid #f43f5e; text-shadow: 0 1px 2px rgba(0,0,0,0.25); }
+.sys-qh { background: linear-gradient(135deg, #059669, #047857); color: #ffffff; border: 1px solid #10b981; }
+.sys-vu { background: linear-gradient(135deg, #0284c7, #0369a1); color: #fef08a; border: 1px solid #38bdf8; }
+.sys-9g { background: linear-gradient(135deg, #ea580c, #c2410c); color: #ffffff; border: 1px solid #fb923c; }
+
+/* Global GDS */
+.sys-1a { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: #ffffff; border: 1px solid #60a5fa; }
+.sys-1g { background: linear-gradient(135deg, #6366f1, #4f46e5); color: #ffffff; border: 1px solid #818cf8; }
+.sys-1b, .sys-1s { background: linear-gradient(135deg, #dc2626, #991b1b); color: #ffffff; border: 1px solid #ef4444; }
+
+/* Direct NDC */
+.sys-tr { background: linear-gradient(135deg, #facc15, #eab308); color: #111827; border: 1px solid #ca8a04; font-weight: 900; }
+.sys-tk { background: linear-gradient(135deg, #b91c1c, #7f1d1d); color: #ffffff; border: 1px solid #dc2626; }
+.sys-pr { background: linear-gradient(135deg, #0284c7, #1e3a8a); color: #ffffff; border: 1px solid #38bdf8; }
+.sys-sq { background: linear-gradient(135deg, #0f172a, #1e293b); color: #fbbf24; border: 1px solid #f59e0b; }
+
+/* LCC & Aggregators */
+.sys-ak { background: linear-gradient(135deg, #ef4444, #dc2626); color: #ffffff; border: 1px solid #f87171; }
+.sys-9c { background: linear-gradient(135deg, #16a34a, #15803d); color: #ffffff; border: 1px solid #22c55e; }
+.sys-th { background: linear-gradient(135deg, #8b5cf6, #6d28d9); color: #ffffff; border: 1px solid #a78bfa; }
+.sys-sh { background: linear-gradient(135deg, #0d9488, #0f766e); color: #ffffff; border: 1px solid #14b8a6; }
+.sys-fo { background: linear-gradient(135deg, #d97706, #b45309); color: #ffffff; border: 1px solid #f59e0b; }
+.sys-w2 { background: linear-gradient(135deg, #0e7490, #155e75); color: #ffffff; border: 1px solid #06b6d4; }
+
+/* Small inline pill for API doc parameters */
+.sys-pill-sm {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 5px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  margin: 1px 3px 1px 0;
+}
+
+/* ==========================================================================
+   CATEGORY PILLS (COLUMN 1)
+   ========================================================================== */
+.cat-pill {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.cat-domestic { background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; }
+.cat-gds { background: #e0e7ff; color: #4338ca; border: 1px solid #c7d2fe; }
+.cat-ndc { background: #dcfce7; color: #15803d; border: 1px solid #bbf7d0; }
+.cat-lcc { background: #ffedd5; color: #c2410c; border: 1px solid #fed7aa; }
+.cat-hub { background: #f3e8ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+
+[data-theme="dark"] .cat-domestic { background: rgba(3, 105, 161, 0.25); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
+[data-theme="dark"] .cat-gds { background: rgba(67, 56, 202, 0.25); color: #818cf8; border-color: rgba(129, 140, 248, 0.3); }
+[data-theme="dark"] .cat-ndc { background: rgba(21, 128, 61, 0.25); color: #4ade80; border-color: rgba(74, 222, 128, 0.3); }
+[data-theme="dark"] .cat-lcc { background: rgba(194, 65, 12, 0.25); color: #fb923c; border-color: rgba(251, 146, 60, 0.3); }
+[data-theme="dark"] .cat-hub { background: rgba(126, 34, 206, 0.25); color: #c084fc; border-color: rgba(192, 132, 252, 0.3); }
+
+/* ==========================================================================
+   CONNECTION TYPE BADGES (COLUMN 4)
+   ========================================================================== */
+.conn-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.conn-ndc { background: #ecfdf5; color: #047857; border: 1px solid #a7f3d0; }
+.conn-ndc .badge-dot { background: #10b981; box-shadow: 0 0 6px #10b981; }
+
+.conn-gds { background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+.conn-gds .badge-dot { background: #3b82f6; box-shadow: 0 0 6px #3b82f6; }
+
+.conn-navitaire { background: #fff7ed; color: #c2410c; border: 1px solid #ffedd5; }
+.conn-navitaire .badge-dot { background: #f97316; }
+
+.conn-altea { background: #eef2ff; color: #4338ca; border: 1px solid #e0e7ff; }
+.conn-altea .badge-dot { background: #6366f1; }
+
+.conn-lcc { background: #fef2f2; color: #b91c1c; border: 1px solid #fee2e2; }
+.conn-lcc .badge-dot { background: #ef4444; }
+
+.conn-hub { background: #faf5ff; color: #7e22ce; border: 1px solid #f3e8ff; }
+.conn-hub .badge-dot { background: #a855f7; }
+
+[data-theme="dark"] .conn-ndc { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border-color: rgba(16, 185, 129, 0.3); }
+[data-theme="dark"] .conn-gds { background: rgba(59, 130, 246, 0.15); color: #93c5fd; border-color: rgba(59, 130, 246, 0.3); }
+[data-theme="dark"] .conn-navitaire { background: rgba(249, 115, 22, 0.15); color: #fdba74; border-color: rgba(249, 115, 22, 0.3); }
+[data-theme="dark"] .conn-altea { background: rgba(99, 102, 241, 0.15); color: #a5b4fc; border-color: rgba(99, 102, 241, 0.3); }
+[data-theme="dark"] .conn-lcc { background: rgba(239, 68, 68, 0.15); color: #fca5a5; border-color: rgba(239, 68, 68, 0.3); }
+[data-theme="dark"] .conn-hub { background: rgba(168, 85, 247, 0.15); color: #d8b4fe; border-color: rgba(168, 85, 247, 0.3); }
+
+/* ==========================================================================
+   PASSENGER PICKER POPUP (MATCHING REFERENCE IMAGE EXACTLY)
+   ========================================================================== */
+.pax-dropdown-wrap {
+  position: relative;
+  width: 100%;
+}
+.pax-summary-btn {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 13px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  box-sizing: border-box;
+  text-align: left;
+}
+.pax-summary-btn:hover, .pax-summary-btn.open {
+  border-color: var(--accent);
+  background: var(--bg-card);
+}
+.pax-summary-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+.pax-icon {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+#pgPaxSummaryText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.pax-popup {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  width: 290px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px -5px rgba(0,0,0,0.18), 0 0 0 1px var(--border);
+  padding: 16px;
+  z-index: 250;
+  box-sizing: border-box;
+}
+.pax-popup.show {
+  display: block;
+  animation: paxFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+@keyframes paxFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.pax-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+.pax-row:last-of-type {
+  border-bottom: none;
+}
+.pax-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.pax-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+.pax-stepper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.stepper-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border-bright);
+  background: var(--bg-card-alt);
+  color: #2563eb;
+  font-size: 18px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+.stepper-btn:hover:not(:disabled) {
+  background: #2563eb;
+  color: #fff;
+  border-color: #2563eb;
+  transform: scale(1.08);
+}
+.stepper-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: var(--border);
+  color: var(--text-muted);
+  background: transparent;
+}
+.stepper-val {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+  min-width: 20px;
+  text-align: center;
+}
+.pax-popup-footer {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.pax-note {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.35;
+  flex: 1;
+}
+.pax-done-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.pax-done-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* ==========================================================================
+   MULTI-CITY ITINERARY BUILDER
+   ========================================================================== */
+.pg-flight-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+.pg-multicity-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 8px;
+}
+.multicity-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+.mc-badge {
+  background: #f3e8ff;
+  color: #7e22ce;
+  border: 1px solid #e9d5ff;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 6px;
+}
+[data-theme="dark"] .mc-badge {
+  background: rgba(126, 34, 206, 0.25);
+  color: #c084fc;
+  border-color: rgba(192, 132, 252, 0.3);
+}
+.mc-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.multicity-legs {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.mc-leg-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.mc-leg-num {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-muted);
+  width: 40px;
+  flex-shrink: 0;
+}
+.mc-leg-row .pg-select {
+  flex: 1.5;
+}
+.mc-leg-row .pg-input {
+  flex: 1;
+}
+
+/* ==========================================================================
+   MUTED FOOTER SIGNATURE
+   ========================================================================== */
+.site-footer .signature {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-muted);
+  opacity: 0.65;
+  margin-top: 6px;
+  letter-spacing: 0.3px;
+}
+.site-footer .heart {
+  color: #ef4444;
+  display: inline-block;
+  font-size: 12px;
+}
+
+
+/* ==========================================================================
+   WHOLE-PAGE COLOR & CONTRAST ELEVATION (PREMIUM PROTOCOL)
+   ========================================================================== */
+
+/* HIGH-CONTRAST SECTION NUMBERS */
+.section-num {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, #0284c7, #0369a1) !important;
+  color: #ffffff !important;
+  border: 1px solid #0284c7 !important;
+  padding: 4px 10px !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.25) !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  min-width: 34px !important;
+  line-height: 1 !important;
+}
+[data-theme="dark"] .section-num {
+  background: linear-gradient(135deg, #0284c7, #075985) !important;
+  color: #ffffff !important;
+  border-color: #38bdf8 !important;
+  box-shadow: 0 2px 8px rgba(56, 189, 248, 0.2) !important;
+}
+
+/* HIGH-CONTRAST METHOD BADGES (POST / GET) */
+.method-post {
+  background: #e0f2fe !important;
+  color: #0284c7 !important;
+  border: 1px solid #bae6fd !important;
+  font-weight: 800 !important;
+}
+.method-get {
+  background: #dcfce7 !important;
+  color: #16a34a !important;
+  border: 1px solid #bbf7d0 !important;
+  font-weight: 800 !important;
+}
+[data-theme="dark"] .method-post {
+  background: rgba(2, 132, 199, 0.25) !important;
+  color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.35) !important;
+}
+[data-theme="dark"] .method-get {
+  background: rgba(22, 163, 74, 0.25) !important;
+  color: #4ade80 !important;
+  border-color: rgba(74, 222, 128, 0.35) !important;
+}
+
+/* HIGH-CONTRAST REQUIRED / OPTIONAL BADGES */
+.req-badge {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  padding: 3px 8px !important;
+  border-radius: 6px !important;
+  letter-spacing: 0.4px !important;
+  text-transform: uppercase !important;
+  line-height: 1.2 !important;
+}
+.req-yes {
+  background: #fee2e2 !important;
+  color: #b91c1c !important;
+  border: 1px solid #fecaca !important;
+  box-shadow: 0 1px 2px rgba(185, 28, 28, 0.06) !important;
+}
+.req-no {
+  background: #f1f5f9 !important;
+  color: #475569 !important;
+  border: 1px solid #e2e8f0 !important;
+}
+[data-theme="dark"] .req-yes {
+  background: rgba(239, 68, 68, 0.2) !important;
+  color: #fca5a5 !important;
+  border-color: rgba(239, 68, 68, 0.35) !important;
+}
+[data-theme="dark"] .req-no {
+  background: rgba(148, 163, 184, 0.12) !important;
+  color: #94a3b8 !important;
+  border-color: rgba(148, 163, 184, 0.2) !important;
+}
+
+/* POLISHED CALLOUT ACCENTS */
+.callout-tip {
+  border-left: 4px solid #10b981 !important;
+}
+.callout-warn {
+  border-left: 4px solid #f59e0b !important;
+}
+.callout-info {
+  border-left: 4px solid #0284c7 !important;
+}
+
+/* SMALL INLINE SYSTEM BADGE */
+.sys-badge-sm {
+  min-width: 32px !important;
+  padding: 1px 6px !important;
+  font-size: 11px !important;
+  border-radius: 5px !important;
+  vertical-align: middle !important;
+  margin: 0 1px !important;
+}
+
+/* TABLE ROW HOVER */
+.field-table tbody tr {
+  transition: background-color 0.15s ease;
+}
+.field-table tbody tr:hover td {
+  background-color: var(--bg-card-alt);
+}
+
 </style>
 </head>
 <body>
@@ -1169,21 +1790,21 @@ code, pre {
 
     <!-- 4 RESOURCE CARDS EMBEDDED IN HERO -->
     <div class="hero-meta-grid">
-      <div class="hero-meta-card">
+      <div class="hero-meta-card card-docs">
         <div class="label" data-vi="📘 Tài liệu chi tiết (Docs)" data-en="📘 Detailed Documentation (Docs)" data-cn="📘 详细技术文档 (Docs)">📘 Tài liệu chi tiết (Docs)</div>
-        <code><a href="https://flight-doc.tripota.com.vn/docs/intro/" target="_blank" style="color:inherit;text-decoration:none;">flight-doc.tripota.com.vn</a></code>
+        <a href="https://flight-doc.tripota.com.vn/docs/intro/" target="_blank">flight-doc.tripota.com.vn</a>
       </div>
-      <div class="hero-meta-card">
+      <div class="hero-meta-card card-sandbox">
         <div class="label" data-vi="🧪 Môi trường Sandbox Test" data-en="🧪 Sandbox Testing Environment" data-cn="🧪 沙箱测试环境 (Sandbox)">🧪 Môi trường Sandbox Test</div>
-        <code><a href="https://sandbox-apihub.tripota.com.vn" target="_blank" style="color:inherit;text-decoration:none;">sandbox-apihub.tripota.com.vn</a></code>
+        <a href="https://sandbox-apihub.tripota.com.vn" target="_blank">sandbox-apihub.tripota.com.vn</a>
       </div>
-      <div class="hero-meta-card">
+      <div class="hero-meta-card card-swagger">
         <div class="label" data-vi="🛠️ Swagger UI Dev Console" data-en="🛠️ Swagger UI Dev Console" data-cn="🛠️ Swagger 交互控制台">🛠️ Swagger UI Dev Console</div>
-        <code><a href="https://flight-api-hub-dev.tripota.com.vn/swagger/index.html" target="_blank" style="color:inherit;text-decoration:none;">Swagger API Console v1.0</a></code>
+        <a href="https://flight-api-hub-dev.tripota.com.vn/swagger/index.html" target="_blank">Swagger API Console v1.0</a>
       </div>
-      <div class="hero-meta-card">
+      <div class="hero-meta-card card-json">
         <div class="label" data-vi="📄 OpenAPI 3.0 Spec JSON" data-en="📄 OpenAPI 3.0 Spec JSON" data-cn="📄 OpenAPI 3.0 规范 JSON">📄 OpenAPI 3.0 Spec JSON</div>
-        <code><a href="https://flight-api-hub-dev.tripota.com.vn/swagger/flight-hub/swagger.json" target="_blank" style="color:inherit;text-decoration:none;">swagger.json (53 Endpoints)</a></code>
+        <a href="https://flight-api-hub-dev.tripota.com.vn/swagger/flight-hub/swagger.json" target="_blank">swagger.json (53 Endpoints)</a>
       </div>
     </div>
   </div>
@@ -1213,114 +1834,114 @@ code, pre {
     <table class="field-table">
       <thead>
         <tr>
-          <th style="width: 25%;" data-vi="Phân nhóm (Category)" data-en="Category" data-cn="系统分类">Phân nhóm (Category)</th>
-          <th style="width: 15%;" data-vi="Mã hệ thống (System Code)" data-en="System Code" data-cn="系统代码">Mã hệ thống (System Code)</th>
-          <th style="width: 35%;" data-vi="Tên Hãng / Nhà cung cấp" data-en="Airline / Provider Name" data-cn="航司 / 渠道名称">Tên Hãng / Nhà cung cấp</th>
+          <th style="width: 22%;" data-vi="Phân nhóm (Category)" data-en="Category" data-cn="系统分类">Phân nhóm (Category)</th>
+          <th style="width: 15%; text-align: center;" data-vi="Mã hệ thống (System Code)" data-en="System Code" data-cn="系统代码">Mã hệ thống (System Code)</th>
+          <th style="width: 38%;" data-vi="Tên Hãng / Nhà cung cấp" data-en="Airline / Provider Name" data-cn="航司 / 渠道名称">Tên Hãng / Nhà cung cấp</th>
           <th style="width: 25%;" data-vi="Phương thức kết nối" data-en="Connection Type" data-cn="对接类型">Phương thức kết nối</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><strong>Domestic Airlines</strong><br><span class="cn">越南国内航司</span></td>
-          <td><code>VN</code></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-vn" title="Vietnam Airlines (Hãng Hàng Không Quốc Gia VN)">VN</span></td>
           <td>Vietnam Airlines (Hãng Hàng Không Quốc Gia VN)</td>
-          <td><span class="req-badge req-no">Direct Sabre / GDS</span></td>
+          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span>Direct Sabre / GDS</span></td>
         </tr>
         <tr>
-          <td><strong>Domestic Airlines</strong><br><span class="cn">越南国内航司</span></td>
-          <td><code>VJ</code></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-vj" title="Vietjet Air (Công ty CP Hàng không Vietjet)">VJ</span></td>
           <td>Vietjet Air (Công ty CP Hàng không Vietjet)</td>
-          <td><span class="req-badge req-no">Navitaire API</span></td>
+          <td><span class="conn-badge conn-navitaire"><span class="badge-dot"></span>Navitaire API</span></td>
         </tr>
         <tr>
-          <td><strong>Domestic Airlines</strong><br><span class="cn">越南国内航司</span></td>
-          <td><code>QH</code></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-qh" title="Bamboo Airways (Hãng Hàng không Tre Việt)">QH</span></td>
           <td>Bamboo Airways (Hãng Hàng không Tre Việt)</td>
-          <td><span class="req-badge req-no">Amadeus Altea API</span></td>
+          <td><span class="conn-badge conn-altea"><span class="badge-dot"></span>Amadeus Altea API</span></td>
         </tr>
         <tr>
-          <td><strong>Domestic Airlines</strong><br><span class="cn">越南国内航司</span></td>
-          <td><code>VU</code></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-vu" title="Vietravel Airlines (Hàng không Lữ hành VN)">VU</span></td>
           <td>Vietravel Airlines (Hàng không Lữ hành VN)</td>
-          <td><span class="req-badge req-no">Direct LCC API</span></td>
+          <td><span class="conn-badge conn-lcc"><span class="badge-dot"></span>Direct LCC API</span></td>
         </tr>
         <tr>
-          <td><strong>Domestic Airlines</strong><br><span class="cn">越南国内航司</span></td>
-          <td><code>9G</code></td>
+          <td><span class="cat-pill cat-domestic" data-vi="Domestic Airlines" data-en="Domestic Airlines" data-cn="越南国内航司">Domestic Airlines</span><br><span class="cn">越南国内航司</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-9g" title="Sun Phu Quoc Airways (Chuyến bay Phú Quốc)">9G</span></td>
           <td>Sun Phu Quoc Airways (Chuyến bay Phú Quốc)</td>
-          <td><span class="req-badge req-no">Charter / Dedicated Hub</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>Charter Hub</span></td>
         </tr>
         <tr>
-          <td><strong>Global GDS</strong><br><span class="cn">全球分销系统</span></td>
-          <td><code>1A</code></td>
+          <td><span class="cat-pill cat-gds" data-vi="Global GDS" data-en="Global GDS" data-cn="全球分销系统">Global GDS</span><br><span class="cn">全球分销系统</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-1a" title="Amadeus Global GDS">1A</span></td>
           <td>Amadeus (GDS Châu Âu / Toàn cầu)</td>
-          <td><span class="req-badge req-yes">✅ NDC &amp; Edifact</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>NDC &amp; Edifact</span></td>
         </tr>
         <tr>
-          <td><strong>Global GDS</strong><br><span class="cn">全球分销系统</span></td>
-          <td><code>1G</code></td>
+          <td><span class="cat-pill cat-gds" data-vi="Global GDS" data-en="Global GDS" data-cn="全球分销系统">Global GDS</span><br><span class="cn">全球分销系统</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-1g" title="Travelport Galileo GDS">1G</span></td>
           <td>Travelport / Galileo (GDS Galileo)</td>
-          <td><span class="req-badge req-yes">✅ Galileo XML Select</span></td>
+          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span>Galileo XML</span></td>
         </tr>
         <tr>
-          <td><strong>Global GDS</strong><br><span class="cn">全球分销系统</span></td>
-          <td><code>1B</code> / <code>1S</code></td>
-          <td>Sabre / Abacus (GDS Sabre Châu Á - TBD)</td>
-          <td><span class="req-badge req-yes">✅ Sabre Web Services</span></td>
+          <td><span class="cat-pill cat-gds" data-vi="Global GDS" data-en="Global GDS" data-cn="全球分销系统">Global GDS</span><br><span class="cn">全球分销系统</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-1b" title="Sabre GDS">1B</span> <span class="sys-sep">/</span> <span class="sys-badge sys-1s" title="Sabre GDS">1S</span></td>
+          <td>Sabre / Abacus (GDS Sabre Châu Á)</td>
+          <td><span class="conn-badge conn-gds"><span class="badge-dot"></span>Sabre Web Services</span></td>
         </tr>
         <tr>
-          <td><strong>Direct NDC</strong><br><span class="cn">航司直连 NDC</span></td>
-          <td><code>TR</code></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-tr" title="Scoot NDC (Singapore)">TR</span></td>
           <td>Scoot Air NDC (Hãng Scoot Singapore trực tiếp)</td>
-          <td><span class="req-badge req-yes">✅ IATA NDC</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
         </tr>
         <tr>
-          <td><strong>Direct NDC</strong><br><span class="cn">航司直连 NDC</span></td>
-          <td><code>TK</code></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-tk" title="Turkish Airlines NDC">TK</span></td>
           <td>Turkish Airlines (Hãng Hàng không Thổ Nhĩ Kỳ)</td>
-          <td><span class="req-badge req-yes">✅ IATA NDC</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
         </tr>
         <tr>
-          <td><strong>Direct NDC</strong><br><span class="cn">航司直连 NDC</span></td>
-          <td><code>PR</code></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-pr" title="Philippine Airlines NDC">PR</span></td>
           <td>Philippine Airlines (Hãng Hàng không Philippines)</td>
-          <td><span class="req-badge req-yes">✅ IATA NDC</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
         </tr>
         <tr>
-          <td><strong>Direct NDC</strong><br><span class="cn">航司直连 NDC</span></td>
-          <td><code>SQ</code></td>
+          <td><span class="cat-pill cat-ndc" data-vi="Direct NDC" data-en="Direct NDC" data-cn="航司直连 NDC">Direct NDC</span><br><span class="cn">航司直连 NDC</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-sq" title="Singapore Airlines NDC">SQ</span></td>
           <td>Singapore Airlines (Hãng Singapore Airlines)</td>
-          <td><span class="req-badge req-yes">✅ IATA NDC</span></td>
+          <td><span class="conn-badge conn-ndc"><span class="badge-dot"></span>IATA NDC Direct</span></td>
         </tr>
         <tr>
-          <td><strong>LCC (Low-Cost)</strong><br><span class="cn">国际低成本航空</span></td>
-          <td><code>AK</code></td>
+          <td><span class="cat-pill cat-lcc" data-vi="LCC (Low-Cost)" data-en="LCC (Low-Cost)" data-cn="国际低成本航空">LCC (Low-Cost)</span><br><span class="cn">国际低成本航空</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-ak" title="AirAsia LCC">AK</span></td>
           <td>AirAsia (Tập đoàn Hàng không Giá rẻ Châu Á)</td>
-          <td><span class="req-badge req-no">Newskies Direct API</span></td>
+          <td><span class="conn-badge conn-navitaire"><span class="badge-dot"></span>Newskies Direct API</span></td>
         </tr>
         <tr>
-          <td><strong>LCC (Low-Cost)</strong><br><span class="cn">国际低成本航空</span></td>
-          <td><code>9C</code></td>
+          <td><span class="cat-pill cat-lcc" data-vi="LCC (Low-Cost)" data-en="LCC (Low-Cost)" data-cn="国际低成本航空">LCC (Low-Cost)</span><br><span class="cn">国际低成本航空</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-9c" title="Spring Airlines (Xuân Thu - TQ)">9C</span></td>
           <td>Spring Airlines (Hãng Hàng không Xuân Thu - TQ)</td>
-          <td><span class="req-badge req-no">LCC Direct Connect</span></td>
+          <td><span class="conn-badge conn-lcc"><span class="badge-dot"></span>LCC Direct Connect</span></td>
         </tr>
         <tr>
-          <td><strong>Aggregators</strong><br><span class="cn">专业聚合/批发渠道</span></td>
-          <td><code>TH</code></td>
+          <td><span class="cat-pill cat-hub" data-vi="Aggregators" data-en="Aggregators" data-cn="专业聚合/批发渠道">Aggregators</span><br><span class="cn">专业聚合/批发渠道</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-th" title="Scoot &amp; Batik Consolidator">TH</span></td>
           <td>Scoot &amp; Batik Consolidator (Tổng hợp Scoot + Batik)</td>
-          <td><span class="req-badge req-no">Specialized Hub</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>Specialized Hub</span></td>
         </tr>
         <tr>
-          <td><strong>Aggregators</strong><br><span class="cn">专业聚合/批发渠道</span></td>
-          <td><code>SH</code></td>
+          <td><span class="cat-pill cat-hub" data-vi="Aggregators" data-en="Aggregators" data-cn="专业聚合/批发渠道">Aggregators</span><br><span class="cn">专业聚合/批发渠道</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-sh" title="SkyHub Aggregator">SH</span></td>
           <td>SkyHub Aggregator (Kênh vé sỉ SkyHub)</td>
-          <td><span class="req-badge req-no">B2B Consolidator</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>B2B Consolidator</span></td>
         </tr>
         <tr>
-          <td><strong>Aggregators</strong><br><span class="cn">专业聚合/批发渠道</span></td>
-          <td><code>FO</code></td>
+          <td><span class="cat-pill cat-hub" data-vi="Aggregators" data-en="Aggregators" data-cn="专业聚合/批发渠道">Aggregators</span><br><span class="cn">专业聚合/批发渠道</span></td>
+          <td style="text-align: center;"><span class="sys-badge sys-fo" title="Flyone Hub">FO</span></td>
           <td>Flyone Hub (Kênh vé liên tuyến Flyone)</td>
-          <td><span class="req-badge req-no">B2B Wholesale</span></td>
+          <td><span class="conn-badge conn-hub"><span class="badge-dot"></span>B2B Wholesale</span></td>
         </tr>
       </tbody>
     </table>
@@ -1365,48 +1986,66 @@ code, pre {
           </select>
         </div>
 
-        <!-- PASSENGERS: ADT (Adults) -->
-        <div class="pg-field">
-          <label data-vi="NGƯỜI LỚN (ADT ≥12T)" data-en="ADULTS (ADT ≥12Y)" data-cn="成人 (ADT ≥12岁)">NGƯỜI LỚN (ADT ≥12T)</label>
-          <select id="pgAdt" class="pg-select">
-            <option value="1" selected data-vi="1 Người lớn (1 ADT)" data-en="1 Adult (1 ADT)" data-cn="1 位成人 (1 ADT)">1 Người lớn (1 ADT)</option>
-            <option value="2" data-vi="2 Người lớn (2 ADT)" data-en="2 Adults (2 ADT)" data-cn="2 位成人 (2 ADT)">2 Người lớn (2 ADT)</option>
-            <option value="3" data-vi="3 Người lớn (3 ADT)" data-en="3 Adults (3 ADT)" data-cn="3 位成人 (3 ADT)">3 Người lớn (3 ADT)</option>
-            <option value="4" data-vi="4 Người lớn (4 ADT)" data-en="4 Adults (4 ADT)" data-cn="4 位成人 (4 ADT)">4 Người lớn (4 ADT)</option>
-            <option value="5" data-vi="5 Người lớn (5 ADT)" data-en="5 Adults (5 ADT)" data-cn="5 位成人 (5 ADT)">5 Người lớn (5 ADT)</option>
-            <option value="6" data-vi="6 Người lớn (6 ADT)" data-en="6 Adults (6 ADT)" data-cn="6 位成人 (6 ADT)">6 Người lớn (6 ADT)</option>
-            <option value="7" data-vi="7 Người lớn (7 ADT)" data-en="7 Adults (7 ADT)" data-cn="7 位成人 (7 ADT)">7 Người lớn (7 ADT)</option>
-            <option value="8" data-vi="8 Người lớn (8 ADT)" data-en="8 Adults (8 ADT)" data-cn="8 位成人 (8 ADT)">8 Người lớn (8 ADT)</option>
-            <option value="9" data-vi="9 Người lớn (9 ADT)" data-en="9 Adults (9 ADT)" data-cn="9 位成人 (9 ADT)">9 Người lớn (9 ADT)</option>
-          </select>
-        </div>
+        <!-- COMPACT SINGLE PASSENGER PICKER (MATCHING REFERENCE IMAGE) -->
+        <div class="pg-field pax-picker-field">
+          <label data-vi="HÀNH KHÁCH" data-en="PASSENGERS" data-cn="乘机人数">HÀNH KHÁCH</label>
+          <div class="pax-dropdown-wrap">
+            <button type="button" class="pax-summary-btn" id="pgPaxBtn" aria-haspopup="true" aria-expanded="false">
+              <span class="pax-summary-content">
+                <span class="pax-icon">👥</span>
+                <span id="pgPaxSummaryText">1 Người lớn</span>
+              </span>
+              <span class="dropdown-chevron">▼</span>
+            </button>
 
-        <!-- PASSENGERS: CHD (Children) -->
-        <div class="pg-field">
-          <label data-vi="TRẺ EM (CHD 2-11T)" data-en="CHILDREN (CHD 2-11Y)" data-cn="儿童 (CHD 2-11岁)">TRẺ EM (CHD 2-11T)</label>
-          <select id="pgChd" class="pg-select">
-            <option value="0" selected data-vi="0 Trẻ em (0 CHD)" data-en="0 Children (0 CHD)" data-cn="0 儿童 (0 CHD)">0 Trẻ em (0 CHD)</option>
-            <option value="1" data-vi="1 Trẻ em (1 CHD)" data-en="1 Child (1 CHD)" data-cn="1 位儿童 (1 CHD)">1 Trẻ em (1 CHD)</option>
-            <option value="2" data-vi="2 Trẻ em (2 CHD)" data-en="2 Children (2 CHD)" data-cn="2 位儿童 (2 CHD)">2 Trẻ em (2 CHD)</option>
-            <option value="3" data-vi="3 Trẻ em (3 CHD)" data-en="3 Children (3 CHD)" data-cn="3 位儿童 (3 CHD)">3 Trẻ em (3 CHD)</option>
-            <option value="4" data-vi="4 Trẻ em (4 CHD)" data-en="4 Children (4 CHD)" data-cn="4 位儿童 (4 CHD)">4 Trẻ em (4 CHD)</option>
-            <option value="5" data-vi="5 Trẻ em (5 CHD)" data-en="5 Children (5 CHD)" data-cn="5 位儿童 (5 CHD)">5 Trẻ em (5 CHD)</option>
-            <option value="6" data-vi="6 Trẻ em (6 CHD)" data-en="6 Children (6 CHD)" data-cn="6 位儿童 (6 CHD)">6 Trẻ em (6 CHD)</option>
-            <option value="7" data-vi="7 Trẻ em (7 CHD)" data-en="7 Children (7 CHD)" data-cn="7 位儿童 (7 CHD)">7 Trẻ em (7 CHD)</option>
-            <option value="8" data-vi="8 Trẻ em (8 CHD)" data-en="8 Children (8 CHD)" data-cn="8 位儿童 (8 CHD)">8 Trẻ em (8 CHD)</option>
-          </select>
-        </div>
+            <!-- DROPDOWN POPUP CARD -->
+            <div class="pax-popup" id="pgPaxPopup">
+              <!-- Row 1: ADT -->
+              <div class="pax-row">
+                <div class="pax-info">
+                  <div class="pax-title" data-vi="Người lớn" data-en="Adults" data-cn="成人">Người lớn</div>
+                  <div class="pax-sub" data-vi="Từ 12 tuổi" data-en="Ages 12+" data-cn="12周岁及以上">Từ 12 tuổi</div>
+                </div>
+                <div class="pax-stepper">
+                  <button type="button" class="stepper-btn" id="btnAdtMinus" disabled aria-label="Decrease Adults">−</button>
+                  <span class="stepper-val" id="valAdt">1</span>
+                  <button type="button" class="stepper-btn" id="btnAdtPlus" aria-label="Increase Adults">+</button>
+                </div>
+              </div>
 
-        <!-- PASSENGERS: INF (Infants) -->
-        <div class="pg-field">
-          <label data-vi="EM BÉ (INF <2T)" data-en="INFANTS (INF <2Y)" data-cn="婴儿 (INF <2岁)">EM BÉ (INF <2T)</label>
-          <select id="pgInf" class="pg-select">
-            <option value="0" selected data-vi="0 Em bé (0 INF)" data-en="0 Infants (0 INF)" data-cn="0 婴儿 (0 INF)">0 Em bé (0 INF)</option>
-            <option value="1" data-vi="1 Em bé (1 INF)" data-en="1 Infant (1 INF)" data-cn="1 位婴儿 (1 INF)">1 Em bé (1 INF)</option>
-            <option value="2" data-vi="2 Em bé (2 INF)" data-en="2 Infants (2 INF)" data-cn="2 位婴儿 (2 INF)">2 Em bé (2 INF)</option>
-            <option value="3" data-vi="3 Em bé (3 INF)" data-en="3 Infants (3 INF)" data-cn="3 位婴儿 (3 INF)">3 Em bé (3 INF)</option>
-            <option value="4" data-vi="4 Em bé (4 INF)" data-en="4 Infants (4 INF)" data-cn="4 位婴儿 (4 INF)">4 Em bé (4 INF)</option>
-          </select>
+              <!-- Row 2: CHD -->
+              <div class="pax-row">
+                <div class="pax-info">
+                  <div class="pax-title" data-vi="Trẻ em" data-en="Children" data-cn="儿童">Trẻ em</div>
+                  <div class="pax-sub" data-vi="Từ 2 - dưới 12 tuổi" data-en="Ages 2-11" data-cn="2-11周岁">Từ 2 - dưới 12 tuổi</div>
+                </div>
+                <div class="pax-stepper">
+                  <button type="button" class="stepper-btn" id="btnChdMinus" disabled aria-label="Decrease Children">−</button>
+                  <span class="stepper-val" id="valChd">0</span>
+                  <button type="button" class="stepper-btn" id="btnChdPlus" aria-label="Increase Children">+</button>
+                </div>
+              </div>
+
+              <!-- Row 3: INF -->
+              <div class="pax-row">
+                <div class="pax-info">
+                  <div class="pax-title" data-vi="Trẻ sơ sinh" data-en="Infants" data-cn="婴儿">Trẻ sơ sinh</div>
+                  <div class="pax-sub" data-vi="Dưới 2 tuổi" data-en="Under 2 yrs" data-cn="未满2周岁 (不占座)">Dưới 2 tuổi</div>
+                </div>
+                <div class="pax-stepper">
+                  <button type="button" class="stepper-btn" id="btnInfMinus" disabled aria-label="Decrease Infants">−</button>
+                  <span class="stepper-val" id="valInf">0</span>
+                  <button type="button" class="stepper-btn" id="btnInfPlus" aria-label="Increase Infants">+</button>
+                </div>
+              </div>
+
+              <!-- Rule notice footer -->
+              <div class="pax-popup-footer">
+                <div class="pax-note" data-vi="Tối đa 9 khách có ghế (ADT + CHD). Em bé ≤ Người lớn." data-en="Max 9 seated passengers (ADT + CHD). Infants ≤ Adults." data-cn="最多9名占座旅客 (ADT + CHD)。婴儿数 ≤ 成人数。">Tối đa 9 khách có ghế (ADT + CHD). Em bé ≤ Người lớn.</div>
+                <button type="button" class="pax-done-btn" id="btnPaxDone" data-vi="Xong" data-en="Done" data-cn="完成">Xong</button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- STANDARD FLIGHT ROW (ONE-WAY & ROUND-TRIP) -->
@@ -1671,7 +2310,7 @@ code, pre {
         <table class="field-table">
           <thead><tr><th data-vi="Tham số" data-en="Parameter" data-cn="参数名称">Tham số</th><th data-vi="Kiểu" data-en="Type" data-cn="数据类型">Kiểu</th><th data-vi="Bắt buộc" data-en="Required" data-cn="必填">Bắt buộc</th><th data-vi="Ý nghĩa &amp; Ràng buộc nghiệp vụ" data-en="Business Rules &amp; Meaning" data-cn="业务规则与说明">Ý nghĩa &amp; Ràng buộc nghiệp vụ</th></tr></thead>
           <tbody>
-            <tr><td><span class="field-name">system</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mã hãng hàng không hoặc GDS (<code>VN</code>, <code>VJ</code>, <code>QH</code>, <code>VU</code>, <code>1A</code>, <code>TR</code>, <code>AK</code>)</td></tr>
+            <tr><td><span class="field-name">system</span></td><td><span class="field-type">string</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Mã hãng hàng không hoặc GDS (<span class="sys-badge sys-vn sys-badge-sm">VN</span>, <span class="sys-badge sys-vj sys-badge-sm">VJ</span>, <span class="sys-badge sys-qh sys-badge-sm">QH</span>, <span class="sys-badge sys-vu sys-badge-sm">VU</span>, <span class="sys-badge sys-1a sys-badge-sm">1A</span>, <span class="sys-badge sys-tr sys-badge-sm">TR</span>, <span class="sys-badge sys-ak sys-badge-sm">AK</span>)</td></tr>
             <tr><td><span class="field-name">adt</span></td><td><span class="field-type">integer</span></td><td><span class="req-badge req-yes" data-vi="BẮT BUỘC" data-en="REQUIRED" data-cn="必填">BẮT BUỘC</span></td><td>Số lượng người lớn (&gt;= 12 tuổi). Quy tắc IATA: <code>adt + chd &lt;= 9</code></td></tr>
             <tr><td><span class="field-name">chd</span></td><td><span class="field-type">integer</span></td><td><span class="req-badge req-no">Tùy chọn</span></td><td>Số lượng trẻ em (2 đến dưới 12 tuổi, phải đi cùng người lớn)</td></tr>
             <tr><td><span class="field-name">inf</span></td><td><span class="field-type">integer</span></td><td><span class="req-badge req-no">Tùy chọn</span></td><td>Số lượng em bé (&lt; 2 tuổi, không chiếm ghế, số lượng &lt;= adt)</td></tr>
@@ -2642,11 +3281,11 @@ print(<span class="str">"Xuất vé thành công! Số vé:"</span>, issue_res[<
       </div>
       <div class="hero-meta-card">
         <div class="label" data-vi="⚡ Cam Kết Phản Hồi (SLA)" data-en="⚡ Response Commitment (SLA)" data-cn="⚡ 服务级别保障承诺 (SLA)">⚡ Cam Kết Phản Hồi (SLA)</div>
-        <code style="word-break: normal; overflow-wrap: break-word;">
-          <span class="lang-vi">&lt; 15 phút đối với sự cố xuất vé khẩn cấp</span>
+        <div class="sla-badge-text">
+          <span class="lang-vi">&lt; 15 phút đối với sự cố xuất vé khẩn&nbsp;cấp</span>
           <span class="lang-en">&lt; 15 minutes for urgent ticketing incidents</span>
           <span class="lang-cn">&lt; 15 分钟极速响应紧急出票异常</span>
-        </code>
+        </div>
       </div>
     </div>
   </div>
@@ -2654,7 +3293,7 @@ print(<span class="str">"Xuất vé thành công! Số vé:"</span>, issue_res[<
   <!-- FOOTER -->
   <footer class="site-footer">
     <p class="footer-copy" data-vi="Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; Cổng Tích Hợp API B2B &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026" data-en="Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; B2B Aviation Integration Portal &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026" data-cn="Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; B2B 航空分销 API 开发者门户 &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026">Hong Ngoc Ha Travel (HNH) &nbsp;·&nbsp; B2B Aviation Integration Portal &nbsp;·&nbsp; v1.0 &nbsp;·&nbsp; 2026</p>
-    <p class="signature">Crafted with <span class="heart">♥</span> by Trung Nguyễn · Platform Expert</p>
+    <p class="signature">Designed with <span class="heart">♥</span> by Trung Nguyễn - Platform Expert</p>
   </footer>
 
 </main>
@@ -2766,6 +3405,7 @@ function applyLanguage(lang) {
       el.placeholder = ph;
     }
   });
+  if (typeof updatePaxUI === "function") updatePaxUI();
 }
 
 // 3. COLLAPSIBLE ENDPOINTS
@@ -2842,14 +3482,13 @@ window.addEventListener('scroll', function() {
   }
 });
 
-// 6. SIDEBAR NAV CLICK SCROLL (AUTO-EXPAND COLLAPSED ENDPOINT)
+// 6. SIDEBAR NAV CLICK SCROLL (PREVENTS HORIZONTAL SCROLL UNDER SIDEBAR)
 document.querySelectorAll('.nav-link[data-target]').forEach(function(link) {
   link.addEventListener('click', function(e) {
     e.preventDefault();
     var id = this.getAttribute('data-target');
     var el = document.getElementById(id);
     if (el) {
-      // If target is inside an endpoint and collapsed, open it!
       if (el.classList.contains('endpoint')) {
         var body = el.querySelector('.endpoint-body');
         var toggle = el.querySelector('.ep-toggle');
@@ -2858,14 +3497,30 @@ document.querySelectorAll('.nav-link[data-target]').forEach(function(link) {
           if (toggle) toggle.classList.add('open');
         }
       }
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var headerH = 76;
+      var rect = el.getBoundingClientRect();
+      var targetY = rect.top + (window.pageYOffset || document.documentElement.scrollTop) - headerH;
+      window.scrollTo({
+        top: targetY,
+        left: 0,
+        behavior: 'smooth'
+      });
       document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active'); });
       this.classList.add('active');
     }
   });
 });
 
-// 7. SANDBOX CURL PLAYGROUND GENERATOR (ONE-WAY, ROUND-TRIP, MULTI-CITY & FLEXIBLE PAX)
+// Guard against unwanted horizontal window scroll
+window.addEventListener('scroll', function() {
+  if (window.scrollX !== 0) {
+    window.scrollTo(0, window.scrollY);
+  }
+});
+
+// 7. SANDBOX CURL PLAYGROUND GENERATOR (IATA PAX RULES + ONE-WAY / ROUND-TRIP / MULTI-CITY)
+var paxState = { adt: 1, chd: 0, inf: 0 };
+
 function initDynamicDates() {
   var today = new Date();
   
@@ -2901,6 +3556,147 @@ function initDynamicDates() {
 }
 initDynamicDates();
 
+function updatePaxUI() {
+  // Strict Aviation Rules:
+  // 1. adt + chd <= 9 (Max 9 seated passengers)
+  // 2. inf <= adt (Lap infants cannot exceed adult count)
+  // 3. adt >= 1
+  var totalSeats = paxState.adt + paxState.chd;
+
+  var bAdtMinus = document.getElementById('btnAdtMinus');
+  var bAdtPlus = document.getElementById('btnAdtPlus');
+  var bChdMinus = document.getElementById('btnChdMinus');
+  var bChdPlus = document.getElementById('btnChdPlus');
+  var bInfMinus = document.getElementById('btnInfMinus');
+  var bInfPlus = document.getElementById('btnInfPlus');
+
+  if (bAdtMinus) bAdtMinus.disabled = (paxState.adt <= 1);
+  if (bAdtPlus) bAdtPlus.disabled = (totalSeats >= 9);
+
+  if (bChdMinus) bChdMinus.disabled = (paxState.chd <= 0);
+  if (bChdPlus) bChdPlus.disabled = (totalSeats >= 9);
+
+  if (bInfMinus) bInfMinus.disabled = (paxState.inf <= 0);
+  if (bInfPlus) bInfPlus.disabled = (paxState.inf >= paxState.adt);
+
+  var vAdt = document.getElementById('valAdt');
+  var vChd = document.getElementById('valChd');
+  var vInf = document.getElementById('valInf');
+  if (vAdt) vAdt.textContent = paxState.adt;
+  if (vChd) vChd.textContent = paxState.chd;
+  if (vInf) vInf.textContent = paxState.inf;
+
+  var lang = document.documentElement.getAttribute('lang') || 'vi';
+  var parts = [];
+  if (lang === 'cn') {
+    parts.push(paxState.adt + ' 成人');
+    if (paxState.chd > 0) parts.push(paxState.chd + ' 儿童');
+    if (paxState.inf > 0) parts.push(paxState.inf + ' 婴儿');
+  } else if (lang === 'en') {
+    parts.push(paxState.adt + ' Adult' + (paxState.adt > 1 ? 's' : ''));
+    if (paxState.chd > 0) parts.push(paxState.chd + ' Child' + (paxState.chd > 1 ? 'ren' : ''));
+    if (paxState.inf > 0) parts.push(paxState.inf + ' Infant' + (paxState.inf > 1 ? 's' : ''));
+  } else {
+    parts.push(paxState.adt + ' Người lớn');
+    if (paxState.chd > 0) parts.push(paxState.chd + ' Trẻ em');
+    if (paxState.inf > 0) parts.push(paxState.inf + ' Em bé');
+  }
+  var summaryTextEl = document.getElementById('pgPaxSummaryText');
+  if (summaryTextEl) summaryTextEl.textContent = parts.join(', ');
+
+  updateSandboxCurl();
+}
+
+function initPaxEvents() {
+  var bAdtPlus = document.getElementById('btnAdtPlus');
+  var bAdtMinus = document.getElementById('btnAdtMinus');
+  var bChdPlus = document.getElementById('btnChdPlus');
+  var bChdMinus = document.getElementById('btnChdMinus');
+  var bInfPlus = document.getElementById('btnInfPlus');
+  var bInfMinus = document.getElementById('btnInfMinus');
+
+  if (bAdtPlus) {
+    bAdtPlus.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (paxState.adt + paxState.chd < 9) {
+        paxState.adt++;
+        updatePaxUI();
+      }
+    });
+  }
+  if (bAdtMinus) {
+    bAdtMinus.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (paxState.adt > 1) {
+        paxState.adt--;
+        if (paxState.inf > paxState.adt) paxState.inf = paxState.adt;
+        updatePaxUI();
+      }
+    });
+  }
+  if (bChdPlus) {
+    bChdPlus.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (paxState.adt + paxState.chd < 9) {
+        paxState.chd++;
+        updatePaxUI();
+      }
+    });
+  }
+  if (bChdMinus) {
+    bChdMinus.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (paxState.chd > 0) {
+        paxState.chd--;
+        updatePaxUI();
+      }
+    });
+  }
+  if (bInfPlus) {
+    bInfPlus.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (paxState.inf < paxState.adt) {
+        paxState.inf++;
+        updatePaxUI();
+      }
+    });
+  }
+  if (bInfMinus) {
+    bInfMinus.addEventListener('click', function(e) {
+      e.stopPropagation();
+      if (paxState.inf > 0) {
+        paxState.inf--;
+        updatePaxUI();
+      }
+    });
+  }
+
+  var paxBtn = document.getElementById('pgPaxBtn');
+  var paxPopup = document.getElementById('pgPaxPopup');
+  if (paxBtn && paxPopup) {
+    paxBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      paxPopup.classList.toggle('show');
+      paxBtn.classList.toggle('open');
+    });
+    var btnDone = document.getElementById('btnPaxDone');
+    if (btnDone) {
+      btnDone.addEventListener('click', function(e) {
+        e.stopPropagation();
+        paxPopup.classList.remove('show');
+        paxBtn.classList.remove('open');
+      });
+    }
+    document.addEventListener('click', function(e) {
+      if (!paxBtn.contains(e.target) && !paxPopup.contains(e.target)) {
+        paxPopup.classList.remove('show');
+        paxBtn.classList.remove('open');
+      }
+    });
+  }
+}
+initPaxEvents();
+
 function updateSandboxCurl() {
   var tripTypeEl = document.getElementById('pgTripType');
   var tripType = tripTypeEl ? tripTypeEl.value : 'oneway';
@@ -2925,20 +3721,6 @@ function updateSandboxCurl() {
   var systemEl = document.getElementById('pgSystem');
   var system = systemEl ? systemEl.value : 'VN';
 
-  var adtEl = document.getElementById('pgAdt');
-  var chdEl = document.getElementById('pgChd');
-  var infEl = document.getElementById('pgInf');
-
-  var adt = parseInt(adtEl ? adtEl.value : 1) || 1;
-  var chd = parseInt(chdEl ? chdEl.value : 0) || 0;
-  var inf = parseInt(infEl ? infEl.value : 0) || 0;
-
-  // IATA Rule: inf <= adt
-  if (inf > adt && infEl) {
-    inf = adt;
-    infEl.value = String(adt);
-  }
-
   var flights = [];
 
   if (tripType === 'multicity') {
@@ -2949,7 +3731,6 @@ function updateSandboxCurl() {
     var r2 = (document.getElementById('mcRoute2') ? document.getElementById('mcRoute2').value : 'DAD-SGN').split('-');
     var d2 = document.getElementById('mcDate2') ? document.getElementById('mcDate2').value : '';
 
-    // Keep dates sequential
     var mc1El = document.getElementById('mcDate1');
     if (mc1El && d0) {
       mc1El.min = d0;
@@ -2988,13 +3769,13 @@ function updateSandboxCurl() {
 
   var payload = {
     system: system,
-    adt: adt,
-    chd: chd,
-    inf: inf,
+    adt: paxState.adt,
+    chd: paxState.chd,
+    inf: paxState.inf,
     flights: flights
   };
 
-    var payloadJson = JSON.stringify(payload, null, 2);
+  var payloadJson = JSON.stringify(payload, null, 2);
   var curlLines = [
     'curl -X POST "https://sandbox-apihub.tripota.com.vn/api/v1/flight/search" \\',
     '  -H "Content-Type: application/json" \\',
@@ -3008,14 +3789,16 @@ function updateSandboxCurl() {
   }
 }
 
-['pgTripType', 'pgSystem', 'pgAdt', 'pgChd', 'pgInf', 'pgRoute', 'pgDate', 'pgReturnDate', 'mcRoute0', 'mcDate0', 'mcRoute1', 'mcDate1', 'mcRoute2', 'mcDate2'].forEach(function(id) {
+['pgTripType', 'pgSystem', 'pgRoute', 'pgDate', 'pgReturnDate', 'mcRoute0', 'mcDate0', 'mcRoute1', 'mcDate1', 'mcRoute2', 'mcDate2'].forEach(function(id) {
   var el = document.getElementById(id);
   if (el) {
     el.addEventListener('change', updateSandboxCurl);
     el.addEventListener('input', updateSandboxCurl);
   }
 });
-updateSandboxCurl();
+updatePaxUI();
+
+// 8.
 
 // 8. GLOBAL SEARCH & ERROR FILTER
 document.getElementById('globalSearch').addEventListener('input', function() {

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HNH Flight Hub API — Tài Liệu & Hướng Dẫn Tích Hợp Đại Lý | Partner Integration Guide</title>
+<title>Hong Ngoc Ha Travel — Flight Hub API | B2B Partner Integration Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -42,11 +42,11 @@
   --code-num: #fde68a;
   --code-comment: #64748b;
   --sidebar-w: 290px;
-  --header-h: 64px;
+  --header-h: 68px;
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.06);
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.04);
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.04);
-  --glass-bg: rgba(255, 255, 255, 0.88);
+  --glass-bg: rgba(255, 255, 255, 0.94);
 }
 
 [data-theme="dark"] {
@@ -82,7 +82,7 @@
   --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
   --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.4);
   --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.5);
-  --glass-bg: rgba(10, 14, 26, 0.88);
+  --glass-bg: rgba(10, 14, 26, 0.94);
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -94,6 +94,8 @@ body {
   line-height: 1.6;
   font-size: 14px;
   transition: background-color 0.25s ease, color 0.25s ease;
+  word-break: normal;
+  overflow-wrap: break-word;
 }
 
 code, pre {
@@ -101,7 +103,7 @@ code, pre {
 }
 
 /* ============================================================
-   HEADER & TOP RESOURCE BAR
+   HEADER & TOP RESOURCE BAR (FIXED LAYOUT & BRANDING)
    ============================================================ */
 .header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -110,26 +112,29 @@ code, pre {
   -webkit-backdrop-filter: blur(14px);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; padding: 0 24px;
-  gap: 16px;
+  display: flex; align-items: center; padding: 0 20px;
+  gap: 14px;
   transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .header-brand {
   display: flex; align-items: center; gap: 12px;
   text-decoration: none;
+  flex-shrink: 0;
 }
 .header-brand img.logo {
-  height: 34px;
+  height: 38px;
   width: auto;
+  max-width: 130px;
   object-fit: contain;
   display: block;
 }
 .header-brand-title {
   display: flex; flex-direction: column;
+  white-space: nowrap;
 }
 .header-brand-title .title {
-  font-size: 14px; font-weight: 700; color: var(--text-primary);
+  font-size: 13.5px; font-weight: 700; color: var(--text-primary);
   letter-spacing: -0.01em;
   display: flex; align-items: center; gap: 6px;
 }
@@ -142,13 +147,14 @@ code, pre {
 
 /* Quick 4 Resource Links */
 .header-resources {
-  display: flex; align-items: center; gap: 8px;
-  margin-left: 16px;
+  display: flex; align-items: center; gap: 6px;
+  margin-left: 10px;
+  flex-shrink: 0;
 }
 .res-pill {
   display: inline-flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 500;
-  padding: 5px 11px; border-radius: 8px;
+  font-size: 11.5px; font-weight: 500;
+  padding: 5px 9px; border-radius: 8px;
   text-decoration: none;
   background: var(--bg-card-alt);
   border: 1px solid var(--border);
@@ -173,48 +179,13 @@ code, pre {
 .header-controls {
   margin-left: auto;
   display: flex; align-items: center; gap: 10px;
-}
-
-/* Language Switcher */
-.lang-toggle {
-  display: flex; background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  border-radius: 8px; padding: 2px;
-}
-.lang-btn {
-  background: none; border: none;
-  color: var(--text-muted); font-size: 11.5px; font-weight: 600;
-  padding: 4px 9px; border-radius: 6px; cursor: pointer;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-.lang-btn:hover { color: var(--text-primary); }
-.lang-btn.active {
-  background: var(--bg-card);
-  color: var(--accent);
-  box-shadow: var(--shadow-sm);
-}
-
-/* Theme Toggle */
-.theme-btn {
-  background: var(--bg-card-alt);
-  border: 1px solid var(--border);
-  color: var(--text-secondary);
-  padding: 6px 10px; border-radius: 8px; cursor: pointer;
-  display: flex; align-items: center; gap: 6px;
-  font-size: 12px; font-weight: 500;
-  transition: all 0.2s;
-  font-family: inherit;
-}
-.theme-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  flex-shrink: 0;
 }
 
 /* Search bar in nav */
 .nav-search {
   position: relative;
-  width: 210px;
+  width: 190px;
 }
 .nav-search input {
   width: 100%;
@@ -238,6 +209,89 @@ code, pre {
   color: var(--text-muted);
   font-size: 12px;
   pointer-events: none;
+}
+
+/* DROPDOWN LANGUAGE SELECTOR */
+.lang-dropdown-wrap {
+  position: relative;
+}
+.lang-dropdown-btn {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px; font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+.lang-dropdown-btn:hover {
+  border-color: var(--accent);
+}
+.lang-dropdown-btn .dropdown-chevron {
+  font-size: 9px; color: var(--text-muted);
+  transition: transform 0.2s;
+}
+.lang-dropdown-btn.open .dropdown-chevron {
+  transform: rotate(180deg);
+}
+.lang-dropdown-menu {
+  display: none;
+  position: absolute; top: calc(100% + 6px); right: 0;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-lg);
+  padding: 6px;
+  min-width: 160px;
+  z-index: 200;
+  backdrop-filter: blur(12px);
+}
+.lang-dropdown-menu.show { display: block; }
+.lang-option {
+  width: 100%;
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none;
+  padding: 8px 12px;
+  font-size: 12.5px; font-weight: 500;
+  color: var(--text-secondary);
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  font-family: inherit;
+}
+.lang-option:hover {
+  background: var(--bg-card-alt);
+  color: var(--accent);
+}
+.lang-option.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+  font-weight: 600;
+}
+.dropdown-divider {
+  height: 1px; background: var(--border);
+  margin: 4px 0;
+}
+
+/* Theme Toggle */
+.theme-btn {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  padding: 6px 10px; border-radius: 8px; cursor: pointer;
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 500;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+.theme-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
 }
 
 /* Reading Progress Bar */
@@ -359,7 +413,7 @@ code, pre {
   margin-bottom: 16px;
 }
 .hero h1 {
-  font-size: 30px; font-weight: 800;
+  font-size: 28px; font-weight: 800;
   letter-spacing: -0.02em;
   margin-bottom: 8px;
   color: var(--text-primary);
@@ -371,11 +425,11 @@ code, pre {
 }
 .hero-desc {
   font-size: 13.5px; color: var(--text-muted);
-  max-width: 820px; line-height: 1.65;
+  max-width: 860px; line-height: 1.65;
   margin-bottom: 24px;
 }
 .hero-meta-grid {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 14px;
 }
 .hero-meta-card {
@@ -389,9 +443,14 @@ code, pre {
   text-transform: uppercase; letter-spacing: 0.05em;
   color: var(--text-muted); margin-bottom: 4px;
 }
+/* Fixed word break: no break-all on prose text */
 .hero-meta-card code {
   font-size: 12px; color: var(--accent);
-  font-weight: 600; word-break: break-all;
+  font-weight: 600;
+  word-break: normal;
+  overflow-wrap: break-word;
+  white-space: normal;
+  display: inline-block;
 }
 
 /* SECTION BLOCKS */
@@ -548,10 +607,13 @@ code, pre {
 .req-no { background: var(--bg-card-alt); color: var(--text-muted); }
 
 /* BILINGUAL / TRILINGUAL PARAGRAPH BLOCKS */
-.bi { display: flex; flex-direction: column; gap: 3px; }
+.bi { display: flex; flex-direction: column; gap: 4px; }
 .bi .en { color: var(--text-secondary); font-size: 13px; }
 .bi .cn { color: var(--text-muted); font-size: 12.5px; font-family: 'Noto Sans SC', sans-serif; }
 .bi .vi { color: var(--text-primary); font-size: 13px; font-weight: 500; }
+
+/* Dedicated Language Switch classes for hero and titles */
+.lang-vi, .lang-cn, .lang-en { display: block; }
 
 /* ENDPOINT CARDS */
 .endpoint {
@@ -562,6 +624,7 @@ code, pre {
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: border-color 0.2s;
+  scroll-margin-top: calc(var(--header-h) + 20px);
 }
 .endpoint:hover { border-color: var(--border-bright); }
 .endpoint-header {
@@ -733,8 +796,8 @@ code, pre {
   <a href="#overview" class="header-brand">
     <img src="logo-hnh.png" alt="Hong Ngoc Ha Travel Logo" class="logo" onerror="this.onerror=null; this.src='LOGO%20HNH_TV%201265x657.png';">
     <div class="header-brand-title">
-      <div class="title">HNH <span class="hub">Flight Hub</span> API</div>
-      <div class="sub">B2B Integration Portal</div>
+      <div class="title">Hong Ngoc Ha Travel — <span class="hub">Flight Hub API</span></div>
+      <div class="sub">B2B Aviation Partner Integration Portal</div>
     </div>
   </a>
 
@@ -758,15 +821,23 @@ code, pre {
     <!-- Search Bar -->
     <div class="nav-search">
       <span class="search-icon">🔍</span>
-      <input type="text" id="globalSearch" placeholder="Tìm kiếm API, mã lỗi (Ctrl+K)...">
+      <input type="text" id="globalSearch" placeholder="Tìm API, mã lỗi (Ctrl+K)...">
     </div>
 
-    <!-- Language Selector (All / VN / CN / EN) -->
-    <div class="lang-toggle">
-      <button class="lang-btn active" data-lang="all">Tất cả</button>
-      <button class="lang-btn" data-lang="vi">🇻🇳 VN</button>
-      <button class="lang-btn" data-lang="cn">🇨🇳 中文</button>
-      <button class="lang-btn" data-lang="en">🇬🇧 EN</button>
+    <!-- Dropdown Language Selector (Compact & Clean) -->
+    <div class="lang-dropdown-wrap">
+      <button class="lang-dropdown-btn" id="langDropdownBtn" type="button" aria-haspopup="true" aria-expanded="false">
+        <span id="langCurFlag">🇻🇳</span>
+        <span id="langCurLabel">Tiếng Việt</span>
+        <span class="dropdown-chevron">▼</span>
+      </button>
+      <div class="lang-dropdown-menu" id="langDropdownMenu">
+        <button class="lang-option" data-lang="vi"><span class="opt-flag">🇻🇳</span> Tiếng Việt (VN)</button>
+        <button class="lang-option" data-lang="cn"><span class="opt-flag">🇨🇳</span> 简体中文 (CN)</button>
+        <button class="lang-option" data-lang="en"><span class="opt-flag">🇬🇧</span> English (EN)</button>
+        <div class="dropdown-divider"></div>
+        <button class="lang-option active" data-lang="all"><span class="opt-flag">🌐</span> Tất cả / All</button>
+      </div>
     </div>
 
     <!-- Theme Switcher (Default Light) -->
@@ -852,15 +923,26 @@ code, pre {
 <!-- MAIN CONTENT -->
 <main class="main">
 
-  <!-- HERO SECTION -->
+  <!-- HERO SECTION WITH FULL MULTILINGUAL SWITCH -->
   <div class="hero" id="overview">
-    <div class="hero-badge">HNH B2B Aviation Integration Portal v1.0</div>
-    <h1>HNH <span>Flight Hub</span> API</h1>
-    <div class="sub-hero">Hướng Dẫn Tích Hợp API Dành Cho Đại Lý &amp; Đối Tác OTA (Việt Nam &amp; Quốc Tế)</div>
+    <div class="hero-badge">
+      <span class="lang-vi">HỆ THỐNG KẾT NỐI API VÉ MÁY BAY B2B V1.0</span>
+      <span class="lang-cn">HNH 航空 B2B 开发者门户 V1.0</span>
+      <span class="lang-en">HNH B2B AVIATION INTEGRATION PORTAL V1.0</span>
+    </div>
+
+    <h1>Hong Ngoc Ha Travel — <span>Flight Hub API</span></h1>
+
+    <div class="sub-hero">
+      <span class="lang-vi">Cổng Tài Liệu &amp; Hướng Dẫn Tích Hợp API Dành Cho Đại Lý &amp; Đối Tác OTA</span>
+      <span class="lang-cn">合作伙伴集成指南 | 航司与 GDS 直连分销接口文档</span>
+      <span class="lang-en">Partner Integration Guide | B2B Air Ticketing &amp; GDS API Documentation</span>
+    </div>
     
     <p class="hero-desc">
-      Hệ thống cổng kết nối API vé máy bay B2B tiêu chuẩn doanh nghiệp của <strong>Hồng Ngọc Hà Travel (HNH)</strong>. Cung cấp kết nối trực tiếp đến toàn bộ các hãng hàng không nội địa Việt Nam (<strong>Vietnam Airlines</strong>, <strong>Vietjet Air</strong>, <strong>Bamboo Airways</strong>, <strong>Vietravel Airlines</strong>), các hệ thống phân phối toàn cầu <strong>GDS (Amadeus, Sabre, Galileo)</strong>, các kết nối chuẩn <strong>NDC (Scoot TR, Turkish TK, Singapore SQ, Philippine PR)</strong> và các hãng giá rẻ <strong>LCC (AirAsia AK, Spring Airlines 9C)</strong>.
-      <br><span style="opacity:0.85;">This guide provides a complete, production-ready integration workflow for Vietnamese travel agents, corporate OTAs, and Chinese/international partners.</span>
+      <span class="lang-vi">Hệ thống cổng kết nối API vé máy bay B2B tiêu chuẩn doanh nghiệp của <strong>Hồng Ngọc Hà Travel</strong>. Cung cấp kết nối trực tiếp đến toàn bộ các hãng hàng không nội địa Việt Nam (<strong>Vietnam Airlines</strong>, <strong>Vietjet Air</strong>, <strong>Bamboo Airways</strong>, <strong>Vietravel Airlines</strong>), các hệ thống phân phối toàn cầu <strong>GDS (Amadeus, Sabre, Galileo)</strong>, các kết nối chuẩn <strong>NDC (Scoot TR, Turkish TK, Singapore SQ, Philippine PR)</strong> và các hãng giá rẻ <strong>LCC (AirAsia AK, Spring Airlines 9C)</strong>.</span>
+      <span class="lang-cn">本文档为中国及全球 OTA / 代理商提供越南航线及国际航班 API 完整集成指引。涵盖 <strong>Vietnam Airlines (VN)</strong>、<strong>Vietjet Air (VJ)</strong>、<strong>Amadeus (1A)</strong>、<strong>Sabre (1S/1B)</strong>、<strong>Direct NDC (TR, TK, PR, SQ)</strong> 以及 <strong>LCC 廉航 (AirAsia AK, Spring Airlines 9C)</strong> 的认证、搜索、验价、预订、出票与售后全流程。</span>
+      <span class="lang-en">Enterprise-grade flight booking API service provided by <strong>Hong Ngoc Ha Travel (HNH)</strong>. Delivering direct connectivity to all Vietnamese domestic airlines (<strong>Vietnam Airlines</strong>, <strong>Vietjet Air</strong>, <strong>Bamboo Airways</strong>, <strong>Vietravel Airlines</strong>), global distribution systems <strong>GDS (Amadeus, Sabre, Galileo)</strong>, direct <strong>NDC (Scoot TR, Turkish TK, Singapore SQ, Philippine PR)</strong>, and <strong>LCCs (AirAsia AK, Spring Airlines 9C)</strong>.</span>
     </p>
 
     <!-- 4 RESOURCE CARDS EMBEDDED IN HERO -->
@@ -898,10 +980,11 @@ code, pre {
       <span class="callout-icon">💡</span>
       <div class="bi">
         <span class="vi"><strong>Quy chuẩn phân nhóm nguồn vé (System Code):</strong><br>
-        1. <strong>LCC (Low-Cost Carriers)</strong>: AirAsia (<code>AK</code>) và Spring Airlines (<code>9C</code>) được kết nối theo kênh giá rẻ chuyên biệt, không phải nguồn thứ cấp.<br>
+        1. <strong>LCC (Low-Cost Carriers)</strong>: AirAsia (<code>AK</code>) và Spring Airlines (<code>9C</code>) được kết nối theo kênh giá rẻ chuyên biệt.<br>
         2. <strong>Aggregators / Consolidators</strong>: Các hub bán sỉ và tích hợp vé <code>TH</code> (Scoot &amp; Batik), <code>SH</code> (SkyHub), <code>FO</code> (Flyone).<br>
         3. <strong>Phân biệt Scoot</strong>: <code>TR</code> là Direct NDC chính thức kết nối Scoot Singapore; <code>TH</code> là kênh Aggregator tổng hợp vé Scoot &amp; Batik Air.</span>
         <span class="cn"><strong>系统代码分类指引：</strong>AK 与 9C 属于 LCC 低成本航司，TH、SH、FO 属于专业聚合渠道 (Aggregators)，TR 为酷航直连 NDC。</span>
+        <span class="en"><strong>System Code Guidelines:</strong> AK and 9C are classified as LCCs. TH, SH, and FO are specialized Aggregators / Consolidators. TR is direct Scoot NDC.</span>
       </div>
     </div>
 
@@ -1021,13 +1104,13 @@ code, pre {
     </table>
   </div>
 
-  <!-- SECTION: SANDBOX PLAYGROUND -->
+  <!-- SECTION: SANDBOX PLAYGROUND (DYNAMIC FUTURE DATE) -->
   <div class="section" id="playground">
     <div class="section-header">
       <div class="section-num">⚡</div>
       <div class="section-titles">
         <h2>Interactive Sandbox cURL Generator — Tạo Lệnh Test Nhanh</h2>
-        <div class="subtitle">Chọn chặng bay và số lượng hành khách để sinh ngay lệnh cURL trỏ thẳng vào Sandbox</div>
+        <div class="subtitle">Tự động lấy ngày tương lai (Hôm nay + 7 ngày), sinh lệnh cURL trỏ thẳng vào Sandbox</div>
       </div>
     </div>
 
@@ -1057,8 +1140,8 @@ code, pre {
           </select>
         </div>
         <div class="pg-field">
-          <label>Ngày bay (Depart Date)</label>
-          <input type="date" id="pgDate" value="2026-05-20">
+          <label>Ngày bay (Depart Date — Tương lai)</label>
+          <input type="date" id="pgDate">
         </div>
         <div class="pg-field">
           <label>Hành khách (Passengers)</label>
@@ -1076,7 +1159,7 @@ code, pre {
           <span class="code-lang">Lệnh Sandbox cURL (Chạy ngay trên Terminal)</span>
           <button class="copy-btn" id="pgCopyBtn">Copy cURL</button>
         </div>
-        <pre id="pgCurlOutput">curl -X POST "https://sandbox-apihub.tripota.com.vn/api/v1/flight/search"   -H "Content-Type: application/json"   -H "Authorization: Bearer YOUR_SANDBOX_TOKEN"   -d '{"system":"VN","adt":1,"chd":0,"inf":0,"flights":[{"leg":0,"startPoint":"SGN","endPoint":"HAN","departDate":"2026-05-20"}]}'</pre>
+        <pre id="pgCurlOutput">curl -X POST "https://sandbox-apihub.tripota.com.vn/api/v1/flight/search"   -H "Content-Type: application/json"   -H "Authorization: Bearer YOUR_SANDBOX_TOKEN"   -d '{"system":"VN","adt":1,"chd":0,"inf":0,"flights":[{"leg":0,"startPoint":"SGN","endPoint":"HAN","departDate":"2026-11-17"}]}'</pre>
       </div>
     </div>
   </div>
@@ -1132,7 +1215,7 @@ code, pre {
           <pre>{
   <span class="key">"accessToken"</span>: <span class="str">"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."</span>,
   <span class="key">"refreshToken"</span>: <span class="str">"d7a18f4e-9b2c-4e8a-a6d1-8c4e5f7a9b0c"</span>,
-  <span class="key">"expiresAt"</span>: <span class="str">"2026-05-21T08:30:00Z"</span>,
+  <span class="key">"expiresAt"</span>: <span class="str">"2026-11-11T08:30:00Z"</span>,
   <span class="key">"expiresIn"</span>: <span class="num">86400</span>
 }</pre>
         </div>
@@ -1212,7 +1295,7 @@ code, pre {
           <div class="step-token">Sinh mã PNR (bookingCode)</div>
         </a>
         <div class="flow-arrow">→</div>
-        <a href="#ancillary" class="flow-node">
+        <a href="#baggage" class="flow-node">
           <div class="step-badge">Bước 4 (Tùy chọn)</div>
           <div class="step-title">Add-ons Dịch vụ</div>
           <div class="step-token">Mua Ghế, Hành lý, EMD</div>
@@ -1237,6 +1320,7 @@ code, pre {
       <div class="bi">
         <span class="vi"><strong>Nguyên tắc bất di bất dịch của chuỗi giá vé:</strong> Chuỗi <code>flightValues</code> truyền vào API <code>/flight/book</code> BẮT BUỘC phải lấy từ kết quả của API <code>/flight/select</code> (tuyệt đối không lấy trực tiếp từ Search). Nếu thời gian từ lúc Select đến khi Book vượt quá 15 phút, cần gọi <code>/flight/pricequote</code> để xác minh giá không bị nhảy.</span>
         <span class="cn"><strong>状态链核心规则：</strong>调用 <code>/flight/book</code> 时的 <code>flightValues</code> 必须来自 <code>/flight/select</code> 的返回结果，严禁直接使用 <code>/flight/search</code> 的原始串。</span>
+        <span class="en"><strong>State Chaining Rule:</strong> flightValues passed to /flight/book MUST come directly from /flight/select response.</span>
       </div>
     </div>
   </div>
@@ -1286,7 +1370,7 @@ code, pre {
       <span class="key">"leg"</span>: <span class="num">0</span>,
       <span class="key">"startPoint"</span>: <span class="str">"SGN"</span>,
       <span class="key">"endPoint"</span>: <span class="str">"HAN"</span>,
-      <span class="key">"departDate"</span>: <span class="str">"2026-05-20"</span>
+      <span class="key">"departDate"</span>: <span class="str">"2026-11-17"</span>
     }
   ]
 }</pre>
@@ -1310,8 +1394,8 @@ code, pre {
           <span class="key">"flightNumber"</span>: <span class="str">"VN210"</span>,
           <span class="key">"startPoint"</span>: <span class="str">"SGN"</span>,
           <span class="key">"endPoint"</span>: <span class="str">"HAN"</span>,
-          <span class="key">"startDate"</span>: <span class="str">"2026-05-20T07:00:00"</span>,
-          <span class="key">"endDate"</span>: <span class="str">"2026-05-20T09:15:00"</span>,
+          <span class="key">"startDate"</span>: <span class="str">"2026-11-17T07:00:00"</span>,
+          <span class="key">"endDate"</span>: <span class="str">"2026-11-17T09:15:00"</span>,
           <span class="key">"seatClass"</span>: <span class="str">"E"</span>,
           <span class="key">"seatRemaining"</span>: <span class="num">9</span>
         }
@@ -1342,8 +1426,8 @@ code, pre {
   <span class="key">"system"</span>: <span class="str">"VN"</span>,
   <span class="key">"startPoint"</span>: <span class="str">"SGN"</span>,
   <span class="key">"endPoint"</span>: <span class="str">"HAN"</span>,
-  <span class="key">"fromDate"</span>: <span class="str">"2026-05-01"</span>,
-  <span class="key">"toDate"</span>: <span class="str">"2026-05-31"</span>
+  <span class="key">"fromDate"</span>: <span class="str">"2026-11-01"</span>,
+  <span class="key">"toDate"</span>: <span class="str">"2026-11-30"</span>
 }</pre>
         </div>
       </div>
@@ -1393,7 +1477,9 @@ code, pre {
         <div class="callout callout-tip">
           <span class="callout-icon">💡</span>
           <div class="bi">
-            <span class="vi"><strong>Kinh nghiệm thực chiến:</strong> Nếu khách hàng giữ chỗ (Book) xong nhưng mất 20-30 phút mới hoàn tất thanh toán, luôn gọi <code>/pricequote</code> trước khi bấm <code>/issueticket</code> để tránh rủi ro hãng bay cập nhật phụ thu nhiên liệu bất ngờ.</span>
+            <span class="vi"><strong>Lưu ý quan trọng:</strong> Nếu khách hàng giữ chỗ (Book) xong nhưng mất 20-30 phút mới hoàn tất thanh toán, luôn gọi <code>/pricequote</code> trước khi bấm <code>/issueticket</code> để tránh rủi ro hãng bay cập nhật phụ thu nhiên liệu bất ngờ.</span>
+            <span class="cn"><strong>重要说明：</strong>如果预订与最终出票间隔超过 20 分钟，建议调用此接口确认价格未发生变动。</span>
+            <span class="en"><strong>Important Note:</strong> Call this endpoint if booking hold duration exceeds 20 minutes to prevent unexpected fare changes.</span>
           </div>
         </div>
         <div class="code-block">
@@ -1467,7 +1553,7 @@ code, pre {
   <span class="key">"status"</span>: <span class="kw">true</span>,
   <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
   <span class="key">"bookingStatus"</span>: <span class="str">"HOLD"</span>,
-  <span class="key">"timeLimit"</span>: <span class="str">"2026-05-20T12:00:00Z"</span>,
+  <span class="key">"timeLimit"</span>: <span class="str">"2026-11-17T12:00:00Z"</span>,
   <span class="key">"totalPrice"</span>: <span class="num">2000000</span>,
   <span class="key">"trackingId"</span>: <span class="str">"trk_b9104fa2"</span>
 }</pre>
@@ -1646,16 +1732,150 @@ code, pre {
     </div>
   </div>
 
+  <!-- SECTION: SUPPLEMENTARY UPDATES -->
+  <div class="section" id="supplementary">
+    <div class="section-header">
+      <div class="section-num">09</div>
+      <div class="section-titles">
+        <h2>Supplementary Information — Bổ Sung Thông Tin Đặt Chỗ</h2>
+        <div class="subtitle">Thêm em bé, giấy tờ tùy thân, thẻ khách hàng thân thiết và chỉ thị hàng không (OSI/SK/Remark)</div>
+      </div>
+    </div>
+
+    <!-- Infant -->
+    <div class="endpoint" id="infant">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/infant</span>
+        <span class="ep-title"><span class="vi">Thêm em bé vào booking / </span>Add Infant</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Gán em bé (dưới 2 tuổi) đi kèm cùng người lớn trong PNR đã tạo.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Thêm Em Bé</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"infant"</span>: {
+    <span class="key">"surname"</span>: <span class="str">"NGUYEN"</span>,
+    <span class="key">"givenName"</span>: <span class="str">"MINH BE"</span>,
+    <span class="key">"dateOfBirth"</span>: <span class="str">"2025-10-10"</span>,
+    <span class="key">"accompaniedPassengerIndex"</span>: <span class="num">1</span>
+  }
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Document -->
+    <div class="endpoint" id="document">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/adddocument</span>
+        <span class="ep-title"><span class="vi">Thêm giấy tờ tùy thân (Hộ chiếu/CCCD) / </span>Add Document</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Cập nhật thông tin hộ chiếu (Passport) hoặc CCCD vào PNR theo chuẩn DOCS của GDS.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Thêm Hộ Chiếu</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"documents"</span>: [
+    {
+      <span class="key">"passengerIndex"</span>: <span class="num">1</span>,
+      <span class="key">"documentType"</span>: <span class="str">"P"</span>,
+      <span class="key">"documentNumber"</span>: <span class="str">"C1234567"</span>,
+      <span class="key">"nationality"</span>: <span class="str">"VNM"</span>,
+      <span class="key">"expiryDate"</span>: <span class="str">"2032-12-31"</span>
+    }
+  ]
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Membership -->
+    <div class="endpoint" id="membership">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/addmembership</span>
+        <span class="ep-title"><span class="vi">Thêm thẻ khách hàng thân thiết / </span>Add Frequent Flyer Membership</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Thẻ Bông Sen Vàng (Lotusmiles)</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"memberships"</span>: [
+    { <span class="key">"passengerIndex"</span>: <span class="num">1</span>, <span class="key">"airline"</span>: <span class="str">"VN"</span>, <span class="key">"membershipNumber"</span>: <span class="str">"VN123456789"</span> }
+  ]
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- OSI / SK / Remark -->
+    <div class="endpoint" id="osi-sk-remark">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/addosi</span>
+        <span class="ep-title"><span class="vi">Thêm chỉ thị hãng (OSI / SK / Remark) / </span>Add OSI / SK / Remark</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Truyền các chỉ thị dịch vụ đặc biệt (Other Service Information) hoặc ghi chú vào PNR.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Thêm OSI</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"osi"</span>: { <span class="key">"code"</span>: <span class="str">"CTCM"</span>, <span class="key">"text"</span>: <span class="str">"84901234567"</span> }
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Update Contact & Pax -->
+    <div class="endpoint" id="update-contact">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/updatecontact</span>
+        <span class="ep-title"><span class="vi">Cập nhật thông tin liên hệ &amp; hành khách / </span>Update Contact &amp; Passenger</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Cập Nhật Liên Hệ</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"contact"</span>: {
+    <span class="key">"name"</span>: <span class="str">"NGUYEN VAN AN"</span>,
+    <span class="key">"phone"</span>: <span class="str">"+84988776655"</span>,
+    <span class="key">"email"</span>: <span class="str">"an.nguyen@email.com"</span>
+  }
+}</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- SECTION: AFTER SALES -->
   <div class="section" id="post-sale">
     <div class="section-header">
-      <div class="section-num">09</div>
+      <div class="section-num">10</div>
       <div class="section-titles">
         <h2>Post-Sale Management — Nghiệp Vụ Hậu Mãi &amp; Xử Lý Vé</h2>
         <div class="subtitle">Tách đoàn (Split PNR), Đổi vé (Exchange), Hoàn vé (Refund) và Hủy vé trong ngày (Void)</div>
       </div>
     </div>
 
+    <!-- Split -->
     <div class="endpoint" id="split">
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
@@ -1676,6 +1896,48 @@ code, pre {
       </div>
     </div>
 
+    <!-- Change Flight (before ticketing) -->
+    <div class="endpoint" id="changeflight">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/changeflight</span>
+        <span class="ep-title"><span class="vi">Thay đổi hành trình khi chưa xuất vé / </span>Change Flight</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Đổi giờ hoặc chuyến bay cho đơn đặt chỗ đang ở trạng thái giữ chỗ (HOLD) chưa thanh toán.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Đổi Chuyến Bay Giữ Chỗ</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"flightValues"</span>: [<span class="str">"&lt;flightValues chuyến bay mới&gt;"</span>]
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cancel Booking -->
+    <div class="endpoint" id="cancel">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/cancelbooking</span>
+        <span class="ep-title"><span class="vi">Hủy giữ chỗ PNR (Chưa xuất vé) / </span>Cancel Booking</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Giải phóng chỗ ngồi trên hệ thống hãng khi khách hàng không tiếp tục thanh toán đơn giữ chỗ.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Hủy Giữ Chỗ</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Refund -->
     <div class="endpoint" id="refund">
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
@@ -1684,7 +1946,7 @@ code, pre {
         <span class="ep-toggle">▼</span>
       </div>
       <div class="endpoint-body collapsed">
-        <p style="color:var(--text-secondary); margin-bottom:12px;">Bước 1 gửi <code>confirm: false</code> để kiểm tra phí hoàn và số tiền thực nhận. Bước 2 gửi <code>confirm: true</code> kèm <code>refundValue</code> để hoàn tiền vào tài khoản B2B.</p>
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Bước 1 gửi <code>confirm: false</code> để tính phí hoàn và số tiền thực nhận. Bước 2 gửi <code>confirm: true</code> kèm <code>refundValue</code> để hoàn tiền vào tài khoản B2B.</p>
         <div class="code-block">
           <div class="code-header"><span class="code-lang">Bước 1: Tính Phí Hoàn Vé (confirm: false)</span><button class="copy-btn">Copy</button></div>
           <pre>{
@@ -1696,6 +1958,7 @@ code, pre {
       </div>
     </div>
 
+    <!-- Void -->
     <div class="endpoint" id="void">
       <div class="endpoint-header">
         <span class="ep-method ep-post">POST</span>
@@ -1719,12 +1982,96 @@ code, pre {
         </div>
       </div>
     </div>
+
+    <!-- Exchange Ticket (3-step flow) -->
+    <div class="endpoint" id="exchange">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/exchange-search</span>
+        <span class="ep-title"><span class="vi">Đổi vé máy bay (Quy trình 3 bước) / </span>Exchange Ticket</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Quy trình 3 bước: 1. <code>/exchange-search</code> (Tìm chuyến bay thay thế) → 2. <code>/exchange-reprice</code> (Tính phí chênh lệch và phí đổi) → 3. <code>/exchange-confirm</code> (Xác nhận đổi vé).</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Bước 1: Tìm Chuyến Bay Đổi Vé</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"ticketNumber"</span>: <span class="str">"7382410985231"</span>,
+  <span class="key">"flights"</span>: [{ <span class="key">"leg"</span>: <span class="num">0</span>, <span class="key">"departDate"</span>: <span class="str">"2026-11-25"</span> }]
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fare Rule -->
+    <div class="endpoint" id="farerule">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/farerule</span>
+        <span class="ep-title"><span class="vi">Tra cứu điều kiện vé (Fare Rule) / </span>Get Fare Rules</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Lấy quy định hoàn, đổi, hành lý miễn cước của hạng đặt chỗ.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Tra Cứu Điều Kiện Vé</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"flightValues"</span>: [<span class="str">"&lt;flightValue&gt;"</span>],
+  <span class="key">"isMiniRule"</span>: <span class="kw">true</span>
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Check-in Online -->
+    <div class="endpoint" id="checkin-online">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/checkin-online</span>
+        <span class="ep-title"><span class="vi">Làm thủ tục chuyến bay trực tuyến / </span>Online Check-in</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Thực hiện check-in trực tuyến trước giờ bay (thường từ 24h đến 60 phút trước giờ khởi hành).</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Check-in Trực Tuyến</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"bookingCode"</span>: <span class="str">"HNH89Z"</span>,
+  <span class="key">"passengerIndex"</span>: <span class="num">1</span>
+}</pre>
+        </div>
+      </div>
+    </div>
+
+    <!-- Carbon Emission -->
+    <div class="endpoint" id="emission">
+      <div class="endpoint-header">
+        <span class="ep-method ep-post">POST</span>
+        <span class="ep-path">/api/v1/flight/compute-emission</span>
+        <span class="ep-title"><span class="vi">Tính toán phát thải CO2 chuyến bay / </span>CO2 Carbon Emission</span>
+        <span class="ep-toggle">▼</span>
+      </div>
+      <div class="endpoint-body collapsed">
+        <p style="color:var(--text-secondary); margin-bottom:12px;">Phục vụ các OTA quốc tế và khách hàng doanh nghiệp báo cáo phát thải ESG.</p>
+        <div class="code-block">
+          <div class="code-header"><span class="code-lang">Payload Tính Phát Thải CO2</span><button class="copy-btn">Copy</button></div>
+          <pre>{
+  <span class="key">"system"</span>: <span class="str">"VN"</span>,
+  <span class="key">"flightValues"</span>: [<span class="str">"&lt;flightValue&gt;"</span>]
+}</pre>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- SECTION: ERROR CODE SEARCH -->
   <div class="section" id="errors">
     <div class="section-header">
-      <div class="section-num">10</div>
+      <div class="section-num">11</div>
       <div class="section-titles">
         <h2>Smart Error Code Dictionary — Từ Điển Mã Lỗi Thông Minh</h2>
         <div class="subtitle">Tra cứu nguyên nhân và giải pháp xử lý ngay lập tức</div>
@@ -1797,13 +2144,13 @@ code, pre {
     </div>
   </div>
 
-  <!-- SECTION: FULL EXAMPLE -->
+  <!-- SECTION: FULL EXAMPLE (REMOVED 'THỰC CHIẾN') -->
   <div class="section" id="example">
     <div class="section-header">
-      <div class="section-num">11</div>
+      <div class="section-num">12</div>
       <div class="section-titles">
-        <h2>Full Integration Script — Mã Nguồn Mẫu Hoàn Chỉnh</h2>
-        <div class="subtitle">Đoạn mã Python thực chiến: Đăng nhập → Tìm vé → Chọn giá → Giữ chỗ → Xuất vé</div>
+        <h2>Full Integration Script — Mã Nguồn Tích Hợp Hoàn Chỉnh</h2>
+        <div class="subtitle">Đoạn mã Python tích hợp hoàn chỉnh: Đăng nhập → Tìm vé → Chọn giá → Giữ chỗ → Xuất vé</div>
       </div>
     </div>
 
@@ -1823,7 +2170,7 @@ headers = {<span class="str">"Authorization"</span>: f<span class="str">"Bearer 
 <span class="cmt"># 2. Tìm chuyến bay SGN - HAN</span>
 search_res = requests.post(f<span class="str">"{BASE_URL}/api/v1/flight/search"</span>, headers=headers, json={
     <span class="str">"system"</span>: <span class="str">"VN"</span>, <span class="str">"adt"</span>: <span class="num">1</span>, <span class="str">"chd"</span>: <span class="num">0</span>, <span class="str">"inf"</span>: <span class="num">0</span>,
-    <span class="str">"flights"</span>: [{<span class="str">"leg"</span>: <span class="num">0</span>, <span class="str">"startPoint"</span>: <span class="str">"SGN"</span>, <span class="str">"endPoint"</span>: <span class="str">"HAN"</span>, <span class="str">"departDate"</span>: <span class="str">"2026-05-20"</span>}]
+    <span class="str">"flights"</span>: [{<span class="str">"leg"</span>: <span class="num">0</span>, <span class="str">"startPoint"</span>: <span class="str">"SGN"</span>, <span class="str">"endPoint"</span>: <span class="str">"HAN"</span>, <span class="str">"departDate"</span>: <span class="str">"2026-11-17"</span>}]
 }).json()
 raw_val = search_res[<span class="str">"fareDatas"</span>][<span class="num">0</span>][<span class="str">"options"</span>][<span class="num">0</span>][<span class="str">"flightValues"</span>]
 
@@ -1850,10 +2197,10 @@ print(<span class="str">"Xuất vé thành công! Số vé:"</span>, issue_res[<
     </div>
   </div>
 
-  <!-- SECTION: SUPPORT -->
+  <!-- SECTION: SUPPORT (FIXED WORD BREAK BUG) -->
   <div class="section" id="support">
     <div class="section-header">
-      <div class="section-num">12</div>
+      <div class="section-num">13</div>
       <div class="section-titles">
         <h2>Developer Support &amp; SLA — Kênh Hỗ Trợ Kỹ Thuật</h2>
         <div class="subtitle">Đội ngũ kỹ sư hỗ trợ tích hợp 24/7 của Hồng Ngọc Hà Travel</div>
@@ -1875,7 +2222,7 @@ print(<span class="str">"Xuất vé thành công! Số vé:"</span>, issue_res[<
       </div>
       <div class="hero-meta-card">
         <div class="label">⚡ Cam Kết Phản Hồi (SLA)</div>
-        <code>&lt; 15 phút đối với sự cố xuất vé khẩn cấp</code>
+        <code>Dưới 15 phút cho sự cố xuất vé khẩn cấp</code>
       </div>
     </div>
   </div>
@@ -1889,7 +2236,7 @@ print(<span class="str">"Xuất vé thành công! Số vé:"</span>, issue_res[<
 </main>
 </div>
 
-<!-- JAVASCRIPT: THEME, LANGUAGE, PLAYGROUND, SEARCH, PROGRESS -->
+<!-- JAVASCRIPT: THEME, DROPDOWN LANGUAGE, PLAYGROUND, SEARCH, PROGRESS -->
 <script>
 // 1. THEME TOGGLE (DEFAULT LIGHT)
 var currentTheme = localStorage.getItem('hnh_theme') || 'light';
@@ -1915,47 +2262,102 @@ function updateThemeUI(theme) {
   }
 }
 
-// 2. LANGUAGE TOGGLE (all, vi, cn, en) - Supports ?lang=vi URL param
-var urlParams = new URLSearchParams(window.location.search);
-var initialLang = urlParams.get('lang') || localStorage.getItem('hnh_lang') || 'all';
+// 2. DROPDOWN LANGUAGE SELECTOR WITH DYNAMIC HERO SWITCH
+var langBtn = document.getElementById('langDropdownBtn');
+var langMenu = document.getElementById('langDropdownMenu');
+var langCurFlag = document.getElementById('langCurFlag');
+var langCurLabel = document.getElementById('langCurLabel');
 
-document.querySelectorAll('.lang-btn').forEach(function(btn) {
-  if (btn.getAttribute('data-lang') === initialLang) {
-    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
-    btn.classList.add('active');
+langBtn.addEventListener('click', function(e) {
+  e.stopPropagation();
+  langMenu.classList.toggle('show');
+  langBtn.classList.toggle('open');
+});
+
+document.addEventListener('click', function(e) {
+  if (!langBtn.contains(e.target) && !langMenu.contains(e.target)) {
+    langMenu.classList.remove('show');
+    langBtn.classList.remove('open');
   }
-  btn.addEventListener('click', function() {
-    document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
-    this.classList.add('active');
+});
+
+var urlParams = new URLSearchParams(window.location.search);
+var initialLang = urlParams.get('lang') || localStorage.getItem('hnh_lang') || 'vi';
+
+document.querySelectorAll('.lang-option').forEach(function(opt) {
+  opt.addEventListener('click', function() {
     var lang = this.getAttribute('data-lang');
     localStorage.setItem('hnh_lang', lang);
     applyLanguage(lang);
+    langMenu.classList.remove('show');
+    langBtn.classList.remove('open');
   });
 });
 applyLanguage(initialLang);
 
 function applyLanguage(lang) {
-  var enEls = document.querySelectorAll('.bi .en');
-  var cnEls = document.querySelectorAll('.bi .cn');
-  var viEls = document.querySelectorAll('.bi .vi');
+  document.querySelectorAll('.lang-option').forEach(function(opt) {
+    if (opt.getAttribute('data-lang') === lang) opt.classList.add('active');
+    else opt.classList.remove('active');
+  });
 
   if (lang === 'vi') {
-    enEls.forEach(function(el) { el.style.display = 'none'; });
-    cnEls.forEach(function(el) { el.style.display = 'none'; });
-    viEls.forEach(function(el) { el.style.display = ''; });
+    langCurFlag.textContent = '🇻🇳';
+    langCurLabel.textContent = 'Tiếng Việt';
   } else if (lang === 'cn') {
-    enEls.forEach(function(el) { el.style.display = 'none'; });
-    cnEls.forEach(function(el) { el.style.display = ''; });
-    viEls.forEach(function(el) { el.style.display = 'none'; });
+    langCurFlag.textContent = '🇨🇳';
+    langCurLabel.textContent = '中文 (CN)';
   } else if (lang === 'en') {
-    enEls.forEach(function(el) { el.style.display = ''; });
-    cnEls.forEach(function(el) { el.style.display = 'none'; });
-    viEls.forEach(function(el) { el.style.display = 'none'; });
+    langCurFlag.textContent = '🇬🇧';
+    langCurLabel.textContent = 'English';
+  } else {
+    langCurFlag.textContent = '🌐';
+    langCurLabel.textContent = 'Tất cả / All';
+  }
+
+  // Switch hero section spans
+  var heroVi = document.querySelectorAll('.hero .lang-vi');
+  var heroCn = document.querySelectorAll('.hero .lang-cn');
+  var heroEn = document.querySelectorAll('.hero .lang-en');
+
+  // Switch inline bi spans
+  var biVi = document.querySelectorAll('.bi .vi');
+  var biCn = document.querySelectorAll('.bi .cn');
+  var biEn = document.querySelectorAll('.bi .en');
+
+  if (lang === 'vi') {
+    heroVi.forEach(function(el) { el.style.display = 'block'; });
+    heroCn.forEach(function(el) { el.style.display = 'none'; });
+    heroEn.forEach(function(el) { el.style.display = 'none'; });
+
+    biVi.forEach(function(el) { el.style.display = ''; });
+    biCn.forEach(function(el) { el.style.display = 'none'; });
+    biEn.forEach(function(el) { el.style.display = 'none'; });
+  } else if (lang === 'cn') {
+    heroVi.forEach(function(el) { el.style.display = 'none'; });
+    heroCn.forEach(function(el) { el.style.display = 'block'; });
+    heroEn.forEach(function(el) { el.style.display = 'none'; });
+
+    biVi.forEach(function(el) { el.style.display = 'none'; });
+    biCn.forEach(function(el) { el.style.display = ''; });
+    biEn.forEach(function(el) { el.style.display = 'none'; });
+  } else if (lang === 'en') {
+    heroVi.forEach(function(el) { el.style.display = 'none'; });
+    heroCn.forEach(function(el) { el.style.display = 'none'; });
+    heroEn.forEach(function(el) { el.style.display = 'block'; });
+
+    biVi.forEach(function(el) { el.style.display = 'none'; });
+    biCn.forEach(function(el) { el.style.display = 'none'; });
+    biEn.forEach(function(el) { el.style.display = ''; });
   } else {
     // Show all
-    enEls.forEach(function(el) { el.style.display = ''; });
-    cnEls.forEach(function(el) { el.style.display = ''; });
-    viEls.forEach(function(el) { el.style.display = ''; });
+    heroVi.forEach(function(el) { el.style.display = 'block'; });
+    heroCn.forEach(function(el) { el.style.display = 'block'; });
+    heroEn.forEach(function(el) { el.style.display = 'block'; });
+
+    biVi.forEach(function(el) { el.style.display = ''; });
+    biCn.forEach(function(el) { el.style.display = ''; });
+    biEn.forEach(function(el) { el.style.display = ''; });
   }
 }
 
@@ -2017,7 +2419,7 @@ window.addEventListener('scroll', function() {
   var bar = document.getElementById('progressBar');
   if (bar) bar.style.width = pct + '%';
 
-  var sections = ['overview', 'systems', 'playground', 'auth', 'flow', 'search', 'select', 'book', 'issue', 'retrieve', 'ancillary', 'post-sale', 'errors', 'example', 'support'];
+  var sections = ['overview', 'systems', 'playground', 'auth', 'flow', 'search', 'select', 'book', 'issue', 'retrieve', 'ancillary', 'supplementary', 'post-sale', 'errors', 'example', 'support'];
   var cur = '';
   sections.forEach(function(id) {
     var el = document.getElementById(id);
@@ -2033,19 +2435,53 @@ window.addEventListener('scroll', function() {
   }
 });
 
-// 6. SIDEBAR NAV CLICK SCROLL
+// 6. SIDEBAR NAV CLICK SCROLL (AUTO-EXPAND COLLAPSED ENDPOINT)
 document.querySelectorAll('.nav-link[data-target]').forEach(function(link) {
   link.addEventListener('click', function(e) {
     e.preventDefault();
     var id = this.getAttribute('data-target');
     var el = document.getElementById(id);
     if (el) {
+      // If target is inside an endpoint and collapsed, open it!
+      if (el.classList.contains('endpoint')) {
+        var body = el.querySelector('.endpoint-body');
+        var toggle = el.querySelector('.ep-toggle');
+        if (body && body.classList.contains('collapsed')) {
+          body.classList.remove('collapsed');
+          if (toggle) toggle.classList.add('open');
+        }
+      }
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      document.querySelectorAll('.nav-link').forEach(function(l) { l.classList.remove('active'); });
+      this.classList.add('active');
     }
   });
 });
 
-// 7. SANDBOX CURL PLAYGROUND GENERATOR
+// 7. SANDBOX CURL PLAYGROUND GENERATOR (DYNAMIC FUTURE DATE)
+function initDynamicDate() {
+  var today = new Date();
+  var future = new Date();
+  future.setDate(today.getDate() + 7); // Mặc định hôm nay + 7 ngày
+
+  var yyyy = future.getFullYear();
+  var mm = String(future.getMonth() + 1).padStart(2, '0');
+  var dd = String(future.getDate()).padStart(2, '0');
+  var defaultDateStr = yyyy + '-' + mm + '-' + dd;
+
+  var todayYyyy = today.getFullYear();
+  var todayMm = String(today.getMonth() + 1).padStart(2, '0');
+  var todayDd = String(today.getDate()).padStart(2, '0');
+  var minDateStr = todayYyyy + '-' + todayMm + '-' + todayDd;
+
+  var dateInput = document.getElementById('pgDate');
+  if (dateInput) {
+    dateInput.value = defaultDateStr;
+    dateInput.min = minDateStr; // Không cho phép chọn ngày quá khứ
+  }
+}
+initDynamicDate();
+
 function updateSandboxCurl() {
   var route = document.getElementById('pgRoute').value.split('-');
   var system = document.getElementById('pgSystem').value;
@@ -2067,10 +2503,10 @@ function updateSandboxCurl() {
     ]
   };
 
-  var curlCmd = 'curl -X POST "https://sandbox-apihub.tripota.com.vn/api/v1/flight/search" \\\n' +
-                '  -H "Content-Type: application/json" \\\n' +
-                '  -H "Authorization: Bearer YOUR_SANDBOX_TOKEN" \\\n' +
-                '  -d \'' + JSON.stringify(payload).replace(/'/g, "\\'") + '\'';
+  var curlCmd = 'curl -X POST "https://sandbox-apihub.tripota.com.vn/api/v1/flight/search" \\n' +
+                '  -H "Content-Type: application/json" \\n' +
+                '  -H "Authorization: Bearer YOUR_SANDBOX_TOKEN" \\n' +
+                '  -d \'' + JSON.stringify(payload) + '\'';
 
   document.getElementById('pgCurlOutput').textContent = curlCmd;
 }
